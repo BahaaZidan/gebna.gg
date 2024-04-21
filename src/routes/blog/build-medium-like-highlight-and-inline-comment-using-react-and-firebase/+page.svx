@@ -11,18 +11,18 @@ A few days ago, I sat out to achieve the same inline commenting and highlight fu
 
 Join me as I walk you through how I did it and what are the lessons learned from this weekend project. To be as concise as possible, I won't be detailing every single line of code or every component of this project. You're encouraged to read the full project on [the repo](https://github.com/BahaaZidan/nextjs-blog-inline-comments).
 
-# Things I assume you're familiar with
+## Things I assume you're familiar with
 
 - [JavaScript](https://javascript.info/) / [TypeScript](https://www.typescriptlang.org/docs/handbook/)
 - [React](https://reactjs.org/tutorial/tutorial.html)
 - [Next.js](https://nextjs.org/docs) (it's just React with SSR and bunch of convenient features.)
 - [Firebase](https://firebase.google.com/) (I'll be using FireStore.)
 
-# What we're building
+## What we're building
 
 We're building a blog where anyone can create posts, edit posts, create comments, and most importantly create comments on a certain quote from the post. We're not going to tackle authentication or authorization in this project. We're not going to polish the UI either.
 
-# The data model
+## The data model
 
 For this is a simple project that shouldn't take more than a few days, I tried to model the problem into the simplest possible thing. I'll be discussing different approaches that might be better and less limited towards the end. Also please note that while I'm using FireStore here, this model can be achieved in practically any relational or non-relational database out there.
 
@@ -44,7 +44,7 @@ As for quotes. They include include metadata about the location of the quote in 
 
 ![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1647452449117/zK3DFwvbo.png)
 
-# API
+## API
 
 Given the scale and the time I had to finish this project, I chose not to make a dedicated backend server. And have the client query FireStore directly. But to avoid mess, I had all the code that queried FireStore in one file: [posts.ts](https://github.com/BahaaZidan/nextjs-blog-inline-comments/blob/master/lib/http/posts.ts). If this is to be a production-grade code, I'd make a dedicated GraphQL or REST server that abstracted the implementation from the clients. Here's a peek at a few methods in that file:
 
@@ -80,13 +80,13 @@ export async function createPost(post: { slug: string; title: string; content: s
 }
 ```
 
-# The client
+## The client
 
 I'm going to use [Next.js's blog example](https://github.com/vercel/next.js/tree/canary/examples/blog) as a starting point. This gives me the blog home, about, and post pages. I then changed the code so that the posts are queried from FireStore and not from a local MDX file (see [posts/index.tsx](https://github.com/BahaaZidan/nextjs-blog-inline-comments/blob/master/pages/posts/index.tsx)). I also added two pages: [create-post](https://github.com/BahaaZidan/nextjs-blog-inline-comments/blob/master/pages/create-post.tsx), and [edit-post](https://github.com/BahaaZidan/nextjs-blog-inline-comments/blob/master/pages/posts/%5Bslug%5D/edit.tsx).
 
 All of that gave me good foundation to introduce the comment feature. In contrast to the posts which are rendered server-side, the comments are rendered client-side. For the `comments`, I added all the state management code in the [[slug].tsx](https://github.com/BahaaZidan/nextjs-blog-inline-comments/blob/master/pages/posts/%5Bslug%5D/index.tsx) page.
 
-# Inline comments
+## Inline comments
 
 To support inline-commenting we need to introduce two things: [the `Range` object](https://developer.mozilla.org/en-US/docs/Web/API/Range) and [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath).
 
@@ -107,7 +107,7 @@ Note that we also store the `postVersionID` that the quote is referencing. That 
 
 Also note that for a medium-like selection popup, we used a library called [react-highlight-pop](https://github.com/codeshifu/react-highlight-pop). It basically listens to the `mouseUp` event, gets the `window.Selection()` object, and renders a popup at it's position.
 
-# Click on highlight-pop to scroll
+## Click on highlight-pop to scroll
 
 The last piece of the puzzle here is how can we allow the user to click on a highlight/quote in a comment and scroll to it's position in the post.
 
@@ -142,7 +142,7 @@ const handleQuoteClick = (quote) => {
 
 Because we're modifying the DOM directly the XPaths in the other comments won't work if the user clicks on other comments. That's why we keep track of the created mark element. And delete it every time the user clicks. That would limit us to only displaying one highlight at a time. But for the sake of prototyping, it works 🎉🎉🎉
 
-# Lessons learned
+## Lessons learned
 
 Having finished this project. There are a few things I would've done differently. The most important one. Is how I stored and retrieved the quotes. In this version we store metadata about the Range and the XPath of both the start and end containers. This works but it's very brittle and limited. And honestly I don't like storing client-specific concepts in the backend.
 

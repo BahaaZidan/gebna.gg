@@ -5,17 +5,17 @@ date: '2022-02-14'
 
 Have you ever been curious about building a video game ? Do you have an idea about how web sockets work but can't utilize that knowledge to create something ? If so, join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
 
-# What game are we building ?
+## What game are we building ?
 
 We're building a game called Tic-Tac-Toe. For the uninitiated, [Tic-Tac-Toe](https://en.wikipedia.org/wiki/Tic-tac-toe) is a game for two players who take turns marking the spaces in a three-by-three board (grid) with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.
 
 A simple game. But the moment we start thinking about representing/storing the game state and broadcasting changes in the game state to players and spectators, the project starts looking a little bit more challenging.
 
-# Breaking things down
+## Breaking things down
 
 I'm going to split the game into two projects: a server and a client. As you may have guessed, most of the magic will happen on the server. And so most of the focus of this article is going to be on the server and I'll create a very minimal client that just proves that every thing works together. Keep in mind that I won't be going through every single line of code in an attempt to be as concise as possible. You're encouraged to read through the github repos for this project: [server](https://github.com/BahaaZidan/x51-server) + [client](https://github.com/BahaaZidan/x51-web-client).
 
-# Initial server setup
+## Initial server setup
 
 To start we need to setup a node project with the TypeScript compiler, environment variables, .gitignore, and automatic restart on change. Thankfully you won't have to do all of that manually, you can clone the starting boilerplate [here](https://github.com/BahaaZidan/boilerplates/tree/master/node-typescript).
 
@@ -27,7 +27,7 @@ npm i socket.io uuid lodash
 
 We'll be using socket.io, as it allows us to focus on the bigger picture and not have to worry about the low level details of establishing and maintaining [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) connections.
 
-# The state
+## The state
 
 The first thing we need to think about is what state do we need to store ? Since we support multiple rooms, each room can have multiple participants: 2 players and any number of spectators in case of Tic-Tac-Toe, we need a place to store each room and it's respective state. A [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) is an ideal data structure for that. For the sake of simplicity, we'll store everything in one object in memory on the server:
 
@@ -265,7 +265,7 @@ Here's the full [`XORoomState.ts`](https://github.com/BahaaZidan/x51-server/blob
 
 That was a lot. And we haven't even gotten into any WebSockets or Realtime shenanigans yet 😅. The good news is that we're done with the most difficult part of this endeavor. In an online game (or any game for that matter), managing the state can be extremely messy and challenging. But since we've put a lot of thought and effort into how to represent it and the operations that can be done to it, our actual sockets code is going to be very simple. As it will just involve mapping the operations we just defined in our `XORoomState.ts` class into events that are broadcasted bi-directionally between the server and clients. And since we'll be using socket.io, we won't even have to worry about the low level details of that bi-directional communication.
 
-# Events, events everywhere
+## Events, events everywhere
 
 We know what our state look like. We've defined the operations that can be done on it. But where exactly is this state going to be stored ? What's our source of truth ? It can't be the client. Because then each client would have it's own version of the state and syncing that would be a nightmare. The optimal approach here is to make the server a single source of truth. With that constraint, we don't have to worry about conflicting versions of the state from multiple clients. Clients just emit an event with a minimal payload. The server then handles that event and then emits the new version of the state to all clients.
 
@@ -446,7 +446,7 @@ xoNameSpace.on('connection', (socket) => {
 
 With that we're done with the server part of this project✅. I didn't go through every single line of code as I tried to be as concise as possible. But I would highly suggest you take a look at the [server github repo](https://github.com/BahaaZidan/x51-server/tree/master/src). It's only 3 files. Each file about 100 lines of code. But reading them will further enhance your understanding.
 
-# The client
+## The client
 
 We're going to build a very minimal client using React. I won't go through every line of code here. I'll focus on how we stitch our SocketIO client with our SocketIO server.
 

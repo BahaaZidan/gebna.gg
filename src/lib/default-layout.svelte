@@ -1,8 +1,8 @@
-<script lang="ts">
-	export let title: string;
-	export let date: string;
-	export let data;
-	export let form;
+<script>
+	/** @type {string}*/
+	export let title;
+	/** @type {string}*/
+	export let date;
 </script>
 
 <article class="prose prose-lg p-4">

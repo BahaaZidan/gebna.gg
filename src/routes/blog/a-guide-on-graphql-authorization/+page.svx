@@ -7,7 +7,7 @@ The GraphQL spec is very open-ended. It leaves many concerns to be implemented b
 
 I'll assume that the reader already have a basic understanding of backend development in general and have built at least basic GraphQL APIs before. If you haven't, please take a quick look at the [official graphql tutorial](https://graphql.org/learn/).
 
-# Authentication
+## Authentication
 
 Before we get into authorization, let's have a super basic authentication setup in our GraphQL server. We won't get into the login/signup flows. But we should at the very least have a way to identify who exactly is using our GraphQL API.
 
@@ -29,7 +29,7 @@ const server = new ApolloServer({
 
 Here we're using apollo-server. The same can be implemented using any other spec-compliant graphql server. Implementing `getAuthenticatedUser` function is beyond the scope of this article. But no matter how it's implemented. It should return a Promise of a user object. That way, queries won't have to be blocked on authenticated user unless it is necessary.
 
-# Possible Approaches
+## Possible Approaches
 
 Now when it comes to authorization, there are many approaches out there. Most of them can be boiled down to these 3:
 
@@ -254,6 +254,6 @@ We can extend the directive by defining more scopes. We can also have one query 
 
 So we get the same composability we had using middlewares. But now we define our authorizations declaratively within our schema without having to worry about implementation or order of execution. Everything we need declared in one place: the schema.
 
-# Conclusion
+## Conclusion
 
 Any of these approaches can work. It all depends on the size and complexity of your project. If you're building a toy project then having imperative auth checks right there in your resolvers might not be so bad. If you're building something serious, I invite you to consider either the middleware or the directive approach. Personally, I tend to prefer the auth directive as it allows me to include all API concerns in the schema. I think of it the same way I think of css-in-js and JSX allowing frontend devs to include everything a component needs in one place. In future articles, I'll show you how I use directives to handle data validation as well.
