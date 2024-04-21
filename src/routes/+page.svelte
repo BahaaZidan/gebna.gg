@@ -15,6 +15,7 @@
 			<div class="text-4xl font-bold">
 				{article.title}
 			</div>
+			<div class="text-lg">{article.publishDate}</div>
 		</a>
 		{#if index !== articles.length - 1}
 			<div class="divider"></div>
