@@ -2,11 +2,13 @@
 	const glob_import = import.meta.glob<{ metadata: Record<string, any> }>('./blog/**/*.svx', {
 		eager: true
 	});
-	const articles = Array.from(Object.entries(glob_import)).map((x) => ({
-		path: x[0].replace('/+page.svx', '').replace('./', '/'),
-		publishDate: x[1].metadata.date,
-		title: x[1].metadata.title
-	}));
+	const articles = Array.from(Object.entries(glob_import))
+		.map((x) => ({
+			path: x[0].replace('/+page.svx', '').replace('./', '/'),
+			publishDate: x[1].metadata.date,
+			title: x[1].metadata.title
+		}))
+		.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 </script>
 
 <div class="flex flex-col p-4 max-w-[65ch]">
