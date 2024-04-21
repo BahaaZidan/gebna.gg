@@ -1,15 +1,7 @@
 ---
 title: How to Deploy Apollo GraphQL API on Vercel Serverless Functions
 date: '2022-05-21'
-tags: ['infrastructure']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## How to Deploy Apollo GraphQL API on Vercel Serverless Functions
 
 Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it:
 

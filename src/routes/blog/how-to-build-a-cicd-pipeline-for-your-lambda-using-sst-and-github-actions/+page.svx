@@ -1,15 +1,7 @@
 ---
 title: How to Build a CI/CD Pipeline for Your Lambda Using SST and GitHub Actions
 date: '2022-09-18'
-tags: ['ci-cd']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## How to Build a CI/CD Pipeline for Your Lambda Using SST and GitHub Actions
 
 Many people developing on AWS Lambda have chosen to use [SST](https://sst.dev/) for it's great feature-set including: easy to use console, composable serverless constructs, and live lambda development.
 

@@ -1,15 +1,7 @@
 ---
 title: Build Medium like highlight and inline comment using React and Firebase
 date: '2022-03-17'
-tags: ['firebase']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## Build Medium like highlight and inline comment using React and Firebase
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
 

@@ -1,15 +1,7 @@
 ---
 title: Secure Your GraphQL API With This One Line of Code
 date: '2022-09-18'
-tags: ['security', 'GraphQL']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## Secure Your GraphQL API With This One Line of Code
 
 One the greatest things about having a GraphQL API is the flexibility it gives your users to query the types you expose. A user can choose to query one field in one type or they can choose to query every type you expose. That's great and all but it opens the door for a very dangerous denial-of-service attack.
 

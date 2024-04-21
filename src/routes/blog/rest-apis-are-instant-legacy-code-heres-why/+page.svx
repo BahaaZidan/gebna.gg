@@ -1,15 +1,7 @@
 ---
 title: REST APIs are instant legacy code. Here's why
 date: '2022-05-05'
-tags: ['GraphQL']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## REST APIs are instant legacy code. Here's why
 
 REST APIs have been the industry standard for a very long time. They're so ubiquitous to the point of making it nearly impossible for developers to think API in a different way. This post tries to poke at the status quo and invites us to rethink the way we do things by discussing some flaws of that convention.
 

@@ -1,15 +1,7 @@
 ---
 title: How to build a game with Socket.io and TypeScript
 date: '2022-02-14'
-tags: ['realtime']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## How to build a game with Socket.io and TypeScript
 
 Have you ever been curious about building a video game ? Do you have an idea about how web sockets work but can't utilize that knowledge to create something ? If so, join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
 

@@ -1,15 +1,7 @@
 ---
 title: A Guide on GraphQL Authorization
 date: '2022-09-16'
-tags: ['GraphQL']
-draft: false
-images: ['/static/img/rehype-syntax-highlighting-cover.png']
-layout: PostLayout
 ---
-
-<TOCInline toc={props.toc} asDisclosure toHeading={2} />
-
-## A Guide on GraphQL Authorization
 
 The GraphQL spec is very open-ended. It leaves many concerns to be implemented by programmers as they see fit. Among the concerns that are not strictly outlined in the spec are Authentication and Authorization. In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
 
