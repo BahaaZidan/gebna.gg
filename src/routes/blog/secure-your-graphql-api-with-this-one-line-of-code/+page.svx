@@ -48,7 +48,7 @@ This will return a list of articles and with each article return its' author. An
 
 There's a very easy fix to this specific attack. We limit the depth any query can have. If a query have more we simply return `BAD_INPUT` error. This can be achieved by using a validation rule in your GraphQL server. I'm using apollo-server here. But most GraphQL servers support this feature. We don't even have to define this validation rule ourselves. There's a ready made package for it:
 
-```
+```bash
 npm install graphql-depth-limit
 ```
 
