@@ -3,10 +3,6 @@ title: 6 Rules to stay sane building software
 date: '2020-04-03'
 ---
 
-<h1 class="btn btn-primary">lolo</h1>
-
-## {title}
-
 For most people this post will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
 
 ## Don't compromise code quality
