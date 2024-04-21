@@ -1,0 +1,109 @@
+---
+title: REST APIs are instant legacy code. Here's why
+date: '2022-05-05'
+tags: ['GraphQL']
+draft: false
+images: ['/static/img/rehype-syntax-highlighting-cover.png']
+layout: PostLayout
+---
+
+<TOCInline toc={props.toc} asDisclosure toHeading={2} />
+
+## REST APIs are instant legacy code. Here's why
+
+REST APIs have been the industry standard for a very long time. They're so ubiquitous to the point of making it nearly impossible for developers to think API in a different way. This post tries to poke at the status quo and invites us to rethink the way we do things by discussing some flaws of that convention.
+
+Some experience building or using REST APIs is assumed. I won't be getting into implementation details.
+
+# The example
+
+Say you want to build an app where people can query information about cats. A cat app. You want to create an API to serve the client `domain/api/:cat_name`. That API takes the name of the cat and returns a cat object that contains its age, species, weight, .. etc. Now lets poke at that example and see if we find any flaws in it.
+
+# There's no contract
+
+The biggest and most important flaw in a REST API is the fact that there's no contract between a client and an API. In our example if a client (a web app) sends an HTTP request to `domain/api/:cat_name`, we don't know what we're getting. Say a developer wanted to add the `favorite_food` field or change the type of `age` field from an `integer` to a `float`. There's nothing in place that tells the client what kind of response they will be getting. What is the shape/schema of that response ? We don't know. If the API ends up returning a dog object instead of a cat object no error is going to scream at us.
+
+The example might seem contrived but it showcases a flaw in REST that developers need to deal with almost everyday. A backend developer changes the response of a REST endpoint and forgets to update the documentation or even worse, there's no documentation and the developer needs to notify the person who owns the parts of the client app that use that endpoint. Because of the way REST APIs are implemented we have to maintain a documentation that does the simple task of describing each endpoint.
+
+Documentation doesn't really solve the issue. The fact that there's no contract enforced **_at runtime_** between a REST endpoint and the client requesting it still stands. So to tackle this, we need to implement type checks ourselves to make sure the API is returning an object with the correct schema. Which adds more complexity to our code.
+
+# Which fields to return ?
+
+Another challenge with REST is picking which fields to return in an API response. In our example, to return the full `cat` object, maybe you need to hit an external service to get the birthdate and make two database queries to get the rest of the object. That means that always returning the **full** `cat` object is going to be a waste of resources. Even though not all clients are using the same fields. The iOS app might not by displaying the birthdate. So paying resources to hit the external service to return the birthdate to a client that doesn't need it is a waste.
+
+To tackle this, developers usually incorporate the [backend-for-frontend pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends) or BFF for short. Instead of deploying one API that's used by both your web and mobile apps, you deploy an API for each. Each API will return results that are tailored specifically for that certain client's needs. That introduces a massive overhead. Instead of having to maintain and secure one API, you now have to maintain one API for each client type you have. Also as you can imagine, that usually results in codebases that are very hard to maintain as there will be so much code duplication between the implementation of these "specifically tailored" endpoints.
+
+There doesn't seem to be a solution that solves any of these problems within the REST way of doing things. But if we take a step back we might see a way of building APIs that solves these problems by design.
+
+# Remember GraphQL ?
+
+GraphQL was developed and used internally by engineers at Facebook (now Meta) in 2012. Its initial public release was in 2015 and its first stable release was in 2018. At the heart of any GraphQL implementation is a description of what types of objects it can return, described in a GraphQL type system and returned in the GraphQL Schema. That **_schema_** is the **_contract_** between the server and the client. The schema is exposed by the server and is then introspected by the client. I won't be getting into the details of how that is implemented in this post. But I'll be discussing how a GraphQL API doesn't have any of the problems we discussed earlier. Here's an example from [the official spec page](https://github.com/graphql/graphql-spec):
+
+```graphql
+enum Episode {
+  NEWHOPE
+  EMPIRE
+  JEDI
+}
+
+interface Character {
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
+}
+
+type Human implements Character {
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
+  homePlanet: String
+}
+
+type Droid implements Character {
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
+  primaryFunction: String
+}
+```
+
+The schema is written is GrpahQL schema definition language or SDL for short. As you can see the syntax is very concise and is able to express primitives and object types fairly easily. Here's how we can express how these objects can be queried by clients:
+
+```graphql
+type Query {
+  hero(episode: Episode): Character
+  human(id: String!): Human
+  droid(id: String!): Droid
+}
+```
+
+Now whenever a client wants to consume our API, they just need to send an HTTP request with a query payload that looks like that:
+
+```graphql
+query HeroNameQuery {
+  hero {
+    name
+  }
+}
+```
+
+Now we get the response like that:
+
+```
+{
+  "hero": {
+    "name": "R2-D2"
+  }
+}
+```
+
+# Conclusions
+
+There are many positive consequences of having that typed schema in a GraphQL server.
+The biggest one is that there's a contract between server and client now. So if a client queries a field that doesn't exist the server will error out. And whenever the server changes anything in response types the client will know as the schema is exposed on every query to the server.
+Also, we no longer need to have a different API for each client. Each client can query the exact set of fields it needs. And the server will return exactly what they need while only running the resolvers it needs.
+
+All of that and we barely scratched the surface of what having that type system in place can do to make our apps better than ever. But that's enough for one post. Please let me know what you think. Have you tried GraphQL before ?
