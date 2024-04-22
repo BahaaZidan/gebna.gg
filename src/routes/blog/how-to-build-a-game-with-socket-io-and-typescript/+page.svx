@@ -261,7 +261,7 @@ It might look a bit gnarly. But it's actually quite simple. To decide whether or
 
 Here's the full [`XORoomState.ts`](https://github.com/BahaaZidan/x51-server/blob/master/src/XORoomState.ts) file.
 
-%[https://giphy.com/gifs/teamcoco-work-type-Oj5w7lOaR5ieNpuBhn]
+![computer guy finally done](https://ant.gebna.gg/computer_guy_finally_done.gif)
 
 That was a lot. And we haven't even gotten into any WebSockets or Realtime shenanigans yet 😅. The good news is that we're done with the most difficult part of this endeavor. In an online game (or any game for that matter), managing the state can be extremely messy and challenging. But since we've put a lot of thought and effort into how to represent it and the operations that can be done to it, our actual sockets code is going to be very simple. As it will just involve mapping the operations we just defined in our `XORoomState.ts` class into events that are broadcasted bi-directionally between the server and clients. And since we'll be using socket.io, we won't even have to worry about the low level details of that bi-directional communication.
 
@@ -665,6 +665,6 @@ const XO = () => {
 };
 ```
 
-%[https://giphy.com/gifs/quizizz-l0Iyl55kTeh71nTXy]
+![All done!](https://ant.gebna.gg/all_done.gif)
 
 Thank you for reading all the way through. Learning WebSockets and how to utilize them was challenging to me. I hope I was able to explain a good use case for them and how to use sockets in action. Please let me know if the article (or the code) can be improved in any way in the comments down below. 👋
