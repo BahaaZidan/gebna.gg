@@ -67,7 +67,7 @@ This approach is fine for toy projects. But it becomes a hell to maintain very q
 
 ### Middleware
 
-A much better approach is using middlewares. Continuing with our `editArticle` example, let's see how can this approach be better. I'm gonna be using [graphql-shield](https://www.graphql-shield.com/docs) for these examples. But the same can be achieved using any middleware library.
+A much better approach is using middlewares. Continuing with our `editArticle` example, let's see how can this approach be better. I'm gonna be using [graphql-shield](https://github.com/maticzav/graphql-shield) for these examples. But the same can be achieved using any middleware library.
 
 We first start by defining our rules. These are functions that return a boolean. If true, execution will continue.
 
