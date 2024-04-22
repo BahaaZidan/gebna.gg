@@ -11,6 +11,7 @@ const config = {
 		vitePreprocess(),
 		mdsvex({
 			layout: {
+				blog: 'src/lib/blog-layout.svelte',
 				_: 'src/lib/default-layout.svelte'
 			}
 		})
