@@ -5,7 +5,7 @@ date: '2022-03-17'
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
 
-![Gif description](https://media.giphy.com/media/zvqlk3zlcDxqh1p6av/giphy.gif)
+![Gif description](https://ant.gebna.gg/giphy.gif)
 
 **_Note that this isn't a full tutorial. It's more of a brief walkthrough of a side project I did._**
 
