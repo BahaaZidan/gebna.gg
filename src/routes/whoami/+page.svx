@@ -1,3 +1,9 @@
+---
+title: Gebna contact info and resume
+description: Contact information and resume for Gebna, GebnaTorky, or Bahaa Zidan
+date: '2024-04-22'
+---
+
 ## Ways to contact me
 - [Email: The best way to contact me](mailto:gebnatorky@gmail.com)
 - [LinkedIn: My digital resume](https://www.linkedin.com/in/bahaazidan/)

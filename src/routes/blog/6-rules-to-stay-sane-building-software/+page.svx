@@ -1,9 +1,10 @@
 ---
 title: 6 Rules to stay sane building software
+description: For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
 date: '2020-04-03'
 ---
 
-For most people this post will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
+For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
 
 ## Don't compromise code quality
 
@@ -45,6 +46,6 @@ This one I really love 💕. A backend dev who knows something or two about fron
 
 A lot of neat solutions to very complex problems in one field came from or were at least inspired by a completely different field. So don't limit your possibilities to one field.
 
-This is my first post here. I really hope it was useful. Please share your opinions and if you have another rule of your own, please share that as well.
+This is my first article here. I really hope it was useful. Please share your opinions and if you have another rule of your own, please share that as well.
 
 Thank you.

@@ -11,6 +11,11 @@
 		.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 </script>
 
+<svelte:head>
+	<title>Gebna blog</title>
+	<meta name="description" content="Gebna, GebnaTorky, or Bahaa Zidan" />
+</svelte:head>
+
 <div class="flex flex-col p-4 max-w-[65ch]">
 	{#each articles as article, index}
 		<a class="link-hover" href={article.path}>

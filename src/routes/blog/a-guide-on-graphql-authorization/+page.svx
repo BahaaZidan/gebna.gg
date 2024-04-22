@@ -1,5 +1,6 @@
 ---
 title: A Guide on GraphQL Authorization
+description: In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
 date: '2022-09-16'
 ---
 

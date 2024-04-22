@@ -1,5 +1,6 @@
 ---
 title: How to build a game with Socket.io and TypeScript
+description: Join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
 date: '2022-02-14'
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: How to Build a CI/CD Pipeline for Your Lambda Using SST and GitHub Actions
+description: In this article, I'll give you two options to consider If you want to include your SST project in a CI/CD pipeline.
 date: '2022-09-18'
 ---
 
