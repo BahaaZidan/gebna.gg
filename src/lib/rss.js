@@ -1,4 +1,3 @@
-import mime from 'mime-types';
 import xml from 'xml';
 
 function ifTruePush(bool, array, data) {
@@ -84,7 +83,7 @@ function generateXML(data) {
 						_attr: {
 							url: item.enclosure.url,
 							length: item.enclosure.size,
-							type: item.enclosure.type || mime.lookup(item.enclosure.file)
+							type: item.enclosure.type
 						}
 					}
 				});
@@ -94,7 +93,7 @@ function generateXML(data) {
 						_attr: {
 							url: item.enclosure.url,
 							length: item.enclosure.size || 0,
-							type: item.enclosure.type || mime.lookup(item.enclosure.url)
+							type: item.enclosure.type
 						}
 					}
 				});
