@@ -1,5 +1,5 @@
 import { getArticles } from '$lib';
-import RSS from 'rss';
+import RSS from '$lib/rss';
 
 export async function GET() {
 	const feed = new RSS({

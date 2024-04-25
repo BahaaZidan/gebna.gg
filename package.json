@@ -17,7 +17,9 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/typography": "^0.5.12",
 		"@types/eslint": "^8.56.0",
+		"@types/mime-types": "^2.1.4",
 		"@types/rss": "^0.0.32",
+		"@types/xml": "^1.0.11",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.19",
@@ -38,6 +40,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"rss": "^1.2.2"
+		"mime-types": "^2.1.35",
+		"rss": "^1.2.2",
+		"xml": "^1.0.1"
 	}
 }

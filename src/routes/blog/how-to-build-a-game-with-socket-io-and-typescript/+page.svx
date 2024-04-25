@@ -540,11 +540,11 @@ useEffect(() => {
 }, [xoSocket, history])
 ```
 
-![image.png](https://ant.gebna.gg/tt-9BaHlv.png)
+![new game](https://ant.gebna.gg/tt-9BaHlv.png)
 
 Now let's build our [`XO.tsx`](https://github.com/BahaaZidan/x51-web-client/blob/master/src/pages/XO/XO.tsx) component where the game will take place. By the end it should look like this:
 
-![image.png](https://ant.gebna.gg/35GW9U0yk.png)
+![tic tac toe board](https://ant.gebna.gg/35GW9U0yk.png)
 
 Nothing fancy, but it successfully connects 2 players and let them play the game in real time 👍
 
