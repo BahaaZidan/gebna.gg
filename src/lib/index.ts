@@ -10,8 +10,8 @@ export function getArticles() {
 		.map((x) => {
 			return {
 				path: x[0].replace('/+page.svx', '').replace('../routes', ''),
-				publishDate: x[1].metadata.date,
-				title: x[1].metadata.title
+				publishDate: x[1].metadata?.date,
+				title: x[1].metadata?.title
 			};
 		})
 		.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
