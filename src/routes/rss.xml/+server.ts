@@ -1,32 +1,46 @@
 import { getArticles } from '$lib';
-import RSS from '$lib/rss';
+import { Feed } from 'feed';
 
 export async function GET() {
-	const feed = new RSS({
+	const feed = new Feed({
 		title: 'Gebna blog',
 		description: "Gebna, GebnaTorky, or Bahaa Zidan's Blog",
-		site_url: 'https://gebna.gg/',
-		feed_url: 'https://gebna.gg/rss.xml',
-		managingEditor: 'gebnatorky@gmail.com (Bahaa Zidan)',
-		webMaster: 'gebnatorky@gmail.com (Bahaa Zidan)',
+		id: 'https://gebna.gg/',
+		link: 'https://gebna.gg/',
+		language: 'en', // optional, used only in RSS 2.0, possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
+		favicon: 'https://gebna.gg/favicon.svg',
 		copyright: `Copyright ${new Date().getFullYear().toString()}, Bahaa Zidan / Gebna`,
-		language: 'en-US',
-		pubDate: new Date().toUTCString(),
+		generator: '🍉', // optional, default = 'Feed for Node.js'
+		feedLinks: {
+			rss: 'https://gebna.gg/rss.xml'
+		},
+		author: {
+			name: 'Gebna / Bahaa Zidan',
+			email: 'gebnatorky@gmail.com',
+			link: 'https://gebna.gg/whoami'
+		},
 		ttl: 60
 	});
 	const articles = getArticles();
 
 	for (const article of articles) {
-		feed.item({
+		feed.addItem({
 			title: article.title,
 			description: article.description,
-			url: `https://gebna.gg${article.path}`,
-			author: 'Gebna (Bahaa Zidan)',
-			date: article.publishDate
+			link: `https://gebna.gg${article.path}`,
+			id: `https://gebna.gg${article.path}`,
+			author: [
+				{
+					name: 'Gebna / Bahaa Zidan',
+					email: 'gebnatorky@gmail.com',
+					link: 'https://gebna.gg/whoami'
+				}
+			],
+			date: new Date(article.publishDate)
 		});
 	}
 
-	return new Response(feed.xml({ indent: true }), {
+	return new Response(feed.rss2(), {
 		headers: {
 			'Content-Type': 'application/xml; charset=utf-8'
 		}
