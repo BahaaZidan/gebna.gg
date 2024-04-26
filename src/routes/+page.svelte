@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getArticles } from '$lib';
+	import slugify from 'slugify';
 
 	const articles = getArticles();
 </script>
@@ -13,9 +14,12 @@
 	<div class="flex flex-col p-4 max-w-[65ch]">
 		{#each articles as article, index}
 			<a class="link-hover" href={article.path}>
-				<div class="text-4xl font-bold">
+				<h2
+					class="text-4xl font-bold"
+					style:--articleTitle="title_{slugify(article.title, { strict: true, lower: true })}"
+				>
 					{article.title}
-				</div>
+				</h2>
 				<div class="text-lg">{article.publishDate}</div>
 			</a>
 			{#if index !== articles.length - 1}
@@ -24,3 +28,11 @@
 		{/each}
 	</div>
 </div>
+
+<style>
+	a {
+		& h2 {
+			view-transition-name: var(--articleTitle);
+		}
+	}
+</style>
