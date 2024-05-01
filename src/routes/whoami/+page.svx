@@ -7,5 +7,7 @@ date: '2024-04-22'
 ## Ways to contact me
 - [Email: The best way to contact me](mailto:gebnatorky@gmail.com)
 - [LinkedIn: My digital resume](https://www.linkedin.com/in/bahaazidan/)
-- [Twitter: I see no value in that website](https://twitter.com/GebnaTorky)
 - [GitHub: Most of what I build is proprietary but it doesn't hurt to link it in case I open source something valuable](https://github.com/BahaaZidan)
+- [Twitter: I see no value in that website](https://twitter.com/GebnaTorky)
+- [Youtube: My empty channel](https://youtube.com/@GebnaTorky)
+- [Twitch: I don't stream](https://www.twitch.tv/gebnatorky)
