@@ -22,6 +22,29 @@
 	<slot></slot>
 </article>
 
+<div class="hero">
+	<div class="hero-content text-center">
+		<div class="max-w-md flex flex-col gap-2">
+			<h1 class="text-2xl font-bold">Thank you for reading!</h1>
+			<ul>
+				<li>
+					For any questions or comments, feel free to <a href="/whoami" class="link">contact me</a>
+				</li>
+				<li>
+					Add <a href="/rss.xml" class="link">my blog's rss</a>
+					to your feed
+				</li>
+				<li><a href="/support" class="link">Buy me a coffee</a></li>
+			</ul>
+			<p>
+				You're not obligated to do any of that. I wholeheartedly appreciate you taking the time to
+				read my work.
+			</p>
+			<p>🍉</p>
+		</div>
+	</div>
+</div>
+
 <style>
 	article {
 		& h1 {

@@ -89,5 +89,3 @@ npx vercel dev
 The Vercel CLI will run it locally with [HMR](https://webpack.js.org/concepts/hot-module-replacement/) and everything. By default, you'll find your API on http://localhost:3000/api/graphql
 
 And to deploy the API all you need to do is push these changes to the main branch of your repo. That will work if you've already created a Vercel project and connected your git repo to it.
-
-I hope this was useful. If you have any questions, don't hesitate to leave a comment. Thank you for reading.

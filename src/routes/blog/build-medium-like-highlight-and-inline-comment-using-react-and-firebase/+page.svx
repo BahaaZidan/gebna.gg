@@ -151,4 +151,4 @@ A better approach would've been to process the post's content on the server. And
 
 Also I'm storing the full content of the post version every time the user edits. This is unnecessary. Like git, we can just store the deltas between every subsequent version and construct the full post on the fly in the server-side.
 
-Overall, I learned so much building this thing. I hope I was able to relay some of what I learned to you. This isn't a full tutorial it's more of a brief walkthrough of a side project I did. Feel free to ask me any questions if anything is unclear. Thank you for reading.
+Overall, I learned so much building this thing. I hope I was able to relay some of what I learned to you. This isn't a full tutorial it's more of a brief walkthrough of a side project I did.

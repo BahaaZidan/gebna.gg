@@ -667,5 +667,3 @@ const XO = () => {
 ```
 
 ![All done!](https://ant.gebna.gg/all_done.gif)
-
-Thank you for reading all the way through. Learning WebSockets and how to utilize them was challenging to me. I hope I was able to explain a good use case for them and how to use sockets in action. Please let me know if the article (or the code) can be improved in any way in the comments down below. 👋

@@ -20,21 +20,18 @@
 </script>
 
 <div class="p-4 flex flex-col gap-3">
-	<h2 class="text-2xl font-bold">Fiat</h2>
 	<iframe
 		id="kofiframe"
 		src="https://ko-fi.com/gebna/?hidefeed=true&widget=true&embed=true&preview=true"
-		class="w-full sm:w-[25rem] h-[712px] mx-auto"
+		class="w-full sm:w-[25rem] h-[665px] mx-auto"
 		title="gebna"
 	></iframe>
-	<h2 class="text-2xl font-bold">Crypto</h2>
+	<h2 class="text-2xl font-bold">Crypto addresses</h2>
 	<ul class="flex flex-col gap-3">
 		{#each coins as coin}
 			<li>
 				<span>{coin.label}: </span>
-				<a class="break-words link" target="_new" href="{coin.protocol}:{coin.address}"
-					>{coin.address}</a
-				>
+				<a class="break-words link" href="{coin.protocol}:{coin.address}">{coin.address}</a>
 			</li>
 		{/each}
 	</ul>
