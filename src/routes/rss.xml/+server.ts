@@ -27,6 +27,7 @@ export async function GET() {
 		feed.addItem({
 			title: article.title,
 			description: article.description,
+			content: `<p>${article.description}</p> <div style="margin-top: 50px; font-style: italic;"> <strong><a href="https://gebna.gg${article.path}">Keep reading</a>.</strong> </div> <br /> <br />`,
 			link: `https://gebna.gg${article.path}`,
 			id: `https://gebna.gg${article.path}`,
 			author: [
