@@ -7,6 +7,8 @@
 	export let description;
 	/** @type {string}*/
 	export let date;
+	/** @type {string}*/
+	export let image;
 </script>
 
 <svelte:head>
@@ -15,10 +17,12 @@
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content="website" />
+	<meta property="og:image" content={image} />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:creator" content="@GebnaTorky" />
 	<meta name="twitter:description" content={description} />
 	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:image" content={image} />
 </svelte:head>
 
 <article class="prose prose-lg p-4 mx-auto">
