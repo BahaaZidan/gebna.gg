@@ -18,6 +18,7 @@
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:creator" content="@GebnaTorky" />
 	<meta name="twitter:description" content={description} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <article class="prose prose-lg p-4 mx-auto">
