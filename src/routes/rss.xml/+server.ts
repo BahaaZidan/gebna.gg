@@ -8,7 +8,7 @@ export async function GET() {
 		id: 'https://gebna.gg/',
 		link: 'https://gebna.gg/',
 		language: 'en', // optional, used only in RSS 2.0, possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
-		favicon: 'https://gebna.gg/favicon.svg',
+		favicon: 'https://gebna.gg/favicon.ico',
 		copyright: `Copyright ${new Date().getFullYear().toString()}, Bahaa Zidan / Gebna`,
 		generator: '🍉', // optional, default = 'Feed for Node.js'
 		feedLinks: {
