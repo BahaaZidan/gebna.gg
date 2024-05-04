@@ -3,6 +3,7 @@
 	import '$lib/prism-vsc-dark-plus.css';
 
 	import { onNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	onNavigate((navigation) => {
 		// @ts-ignore
@@ -17,6 +18,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<link rel="canonical" href={$page.url.toString()} />
+</svelte:head>
 
 <div class="navbar bg-base-100 font-mono px-4 gap-2">
 	<a class="btn btn-primary text-lg" href="/">gebna.gg</a>
