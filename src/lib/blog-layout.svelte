@@ -47,10 +47,6 @@
 				</li>
 				<li><a href="/support" class="link">Buy me a coffee</a></li>
 			</ul>
-			<p>
-				You're not obligated to do any of that. I wholeheartedly appreciate you taking the time to
-				read my work.
-			</p>
 			<p>🍉</p>
 		</div>
 	</div>
