@@ -2,6 +2,7 @@
 title: Build Medium like highlight and inline comment using React and Firebase
 description: I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
 date: '2022-03-17'
+image: 'https://ant.gebna.gg/build-medium-like-highlight-and-inline-comment-using-react-and-firebase.jpg'
 ---
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.

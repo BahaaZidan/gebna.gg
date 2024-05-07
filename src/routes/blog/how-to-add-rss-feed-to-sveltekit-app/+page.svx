@@ -1,8 +1,8 @@
-
 ---
 title: How to add an RSS feed to your SvelteKit app
 description: A step by step tutorial on adding an RSS feed to a SvelteKit project
 date: '2024-05-07'
+image: 'https://ant.gebna.gg/how-to-add-rss-feed-to-sveltekit-app.jpg'
 ---
 
 1. Install the [**Feed** npm package](https://www.npmjs.com/package/feed) to your project. 

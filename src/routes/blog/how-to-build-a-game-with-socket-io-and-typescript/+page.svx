@@ -2,6 +2,7 @@
 title: How to build a game with Socket.io and TypeScript
 description: Join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
 date: '2022-02-14'
+image: 'https://ant.gebna.gg/how-to-build-a-game-with-socket-io-and-typescript.jpg'
 ---
 
 Have you ever been curious about building a video game ? Do you have an idea about how web sockets work but can't utilize that knowledge to create something ? If so, join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
