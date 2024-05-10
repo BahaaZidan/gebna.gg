@@ -13,6 +13,22 @@ export async function GET() {
 			xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
 			xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 		>
+				<url>
+					<loc>https://gebna.gg/</loc>
+					<lastmod>2024-05-10</lastmod>
+				</url>
+				<url>
+					<loc>https://gebna.gg/whoami</loc>
+					<lastmod>2024-05-10</lastmod>
+				</url>
+				<url>
+					<loc>https://gebna.gg/support</loc>
+					<lastmod>2024-05-10</lastmod>
+				</url>
+				<url>
+          <loc>https://gebna.gg/recommendations</loc>
+          <lastmod>2024-05-10</lastmod>
+        </url>
       ${articles
 				.map(
 					(article) => `
