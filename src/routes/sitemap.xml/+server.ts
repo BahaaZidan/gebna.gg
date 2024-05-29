@@ -1,5 +1,7 @@
 import { getArticles } from '$lib';
 
+export const prerender = true;
+
 export async function GET() {
 	const articles = getArticles();
 	return new Response(

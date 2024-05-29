@@ -1,6 +1,8 @@
 import { getArticles } from '$lib';
 import { Feed } from 'feed';
 
+export const prerender = true;
+
 export async function GET() {
 	const feed = new Feed({
 		title: 'Gebna blog',
