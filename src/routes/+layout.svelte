@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href={$page.url.toString().split('?')[0]} />
+	<link rel="canonical" href="https://gebna.gg{$page.url.pathname}" />
 </svelte:head>
 
 <div class="navbar bg-base-100 font-mono px-4 gap-2">

@@ -20,7 +20,7 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content={image} />
-	<meta property="og:url" content={$page.url.toString().split('?')[0]} />
+	<meta property="og:url" content="https://gebna.gg{$page.url.pathname}" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
