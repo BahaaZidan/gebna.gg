@@ -5,6 +5,8 @@
 	import { onNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 
+	let { children } = $props();
+
 	onNavigate((navigation) => {
 		// @ts-ignore
 		if (!document.startViewTransition) return;
@@ -29,4 +31,4 @@
 	<a class="btn btn-ghost text-lg" href="/rss.xml">rss</a>
 </div>
 
-<slot />
+{@render children()}
