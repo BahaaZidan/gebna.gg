@@ -4,8 +4,6 @@ import { mdsvex } from 'mdsvex';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
-	// for more information about preprocessors
 	extensions: ['.svelte', '.svx'],
 	preprocess: [
 		vitePreprocess(),
@@ -16,7 +14,6 @@ const config = {
 			}
 		})
 	],
-
 	kit: {
 		adapter: adapter({
 			pages: 'build',

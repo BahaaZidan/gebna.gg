@@ -1,15 +1,17 @@
-<script>
+<script lang="ts">
 	import slugify from 'slugify';
 	import { page } from '$app/stores';
+	import type { Snippet } from 'svelte';
 
-	/** @type {string}*/
-	export let title;
-	/** @type {string}*/
-	export let description;
-	/** @type {string}*/
-	export let date;
-	/** @type {string}*/
-	export let image;
+	type Props = {
+		title: string;
+		description: string;
+		date: string;
+		image: string;
+		children: Snippet;
+	};
+
+	let { title, description, date, image, children }: Props = $props();
 </script>
 
 <svelte:head>
@@ -35,7 +37,7 @@
 	<h4>Written by <a href="/whoami">Bahaa Zidan</a></h4>
 	<h4>{date}</h4>
 	<div class="divider"></div>
-	<slot></slot>
+	{@render children()}
 </article>
 
 <div class="hero">

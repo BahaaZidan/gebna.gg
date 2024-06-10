@@ -1,10 +1,13 @@
-<script>
-	/** @type {string}*/
-	export let title;
-	/** @type {string}*/
-	export let description;
-	/** @type {string}*/
-	export let date;
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	type Props = {
+		title: string;
+		description: string;
+		children: Snippet;
+	};
+
+	let { title, description, children }: Props = $props();
 </script>
 
 <svelte:head>
@@ -13,5 +16,5 @@
 </svelte:head>
 
 <div class="prose prose-lg p-4">
-	<slot></slot>
+	{@render children()}
 </div>
