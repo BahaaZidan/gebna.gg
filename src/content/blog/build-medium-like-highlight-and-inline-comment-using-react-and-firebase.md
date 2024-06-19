@@ -7,7 +7,7 @@ heroImage: "/hero-images/build-medium-like-highlight-and-inline-comment-using-re
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
 
-![Gif description](https://ant.gebna.gg/giphy.gif)
+![Gif of Medium's highlight function](/content/giphy.gif)
 
 **_Note that this isn't a full tutorial. It's more of a brief walkthrough of a side project I did._**
 
@@ -28,23 +28,23 @@ We're building a blog where anyone can create posts, edit posts, create comments
 
 For this is a simple project that shouldn't take more than a few days, I tried to model the problem into the simplest possible thing. I'll be discussing different approaches that might be better and less limited towards the end. Also please note that while I'm using FireStore here, this model can be achieved in practically any relational or non-relational database out there.
 
-![The data model](https://ant.gebna.gg/3MLjE5kqf.png)
+![The data model](/content/3MLjE5kqf.png)
 
 I started a `posts` collection. A `post` document stores a slug (which acts as an ID), a title, and a date:
 
-![The post document](https://ant.gebna.gg/3MflQ5v0y.png)
+![The post document](/content/3MflQ5v0y.png)
 
 It also has 3 sub-collections: comments, quotes, and versions. A version stores the actual textual content of the post, it has an ID, and a date. That way it's easy to support versioning and rollback in the future. But it is also very important that our `quotes` are linked to a certain `versionID` to handle the cases where a quote has been taken from an outdated version of the post. Also for convenience, a comment may include a `DocumentReference` to a quote.
 
 Versions sample:
-![Versions](https://ant.gebna.gg/-yBrlHRPs.png)
+![Versions](/content/-yBrlHRPs.png)
 
 Comments sample:
-![Comments](https://ant.gebna.gg/C4iNUedwz.png)
+![Comments](/content/C4iNUedwz.png)
 
 As for quotes. They include include metadata about the location of the quote in the post. These fields will be more meaningful when we start tackling the UI portion of this project. But for now here's a sample data of the quote:
 
-![Quotes](https://ant.gebna.gg/zK3DFwvbo.png)
+![Quotes](/content/zK3DFwvbo.png)
 
 ## API
 
@@ -96,7 +96,7 @@ All of that gave me good foundation to introduce the comment feature. In contras
 
 To support inline-commenting we need to introduce two things: [the `Range` object](https://developer.mozilla.org/en-US/docs/Web/API/Range) and [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath).
 
-![Inline comments](https://ant.gebna.gg/lp3NNvxSAo.png)
+![Inline comments](/content/lp3NNvxSAo.png)
 
 When the user highlights part of the text of the post. We can get an object that contains information about that selection:
 
@@ -107,7 +107,7 @@ const range = selection.getRangeAt(0);
 
 The `Range` object contains information about the text selected, the html parent node of that text, and the start and end offsets of the selected text within it's text node. We'll store the start and end offsets in FireStore to be able to retrieve the highlight in the future. But how can we store the html node of that selection ? We can't. That's where XPath becomes useful. XPath stands for XML Path Language. It uses a non-XML syntax to provide a flexible way of addressing (pointing to) different parts of an XML document. And since HTML is XML, we can store an XPath expression in the database instead. That would make the quote data sample shown before sensible:
 
-![Range](https://ant.gebna.gg/zK3DFwvbo.png)
+![Range](/content/zK3DFwvbo.png)
 
 Note that we also store the `postVersionID` that the quote is referencing. That is to allow us to easily handle user edits.
 
@@ -117,7 +117,7 @@ Also note that for a medium-like selection popup, we used a library called [reac
 
 The last piece of the puzzle here is how can we allow the user to click on a highlight/quote in a comment and scroll to it's position in the post.
 
-![Highlight in action](https://ant.gebna.gg/VAtRFyyxo.png)
+![Highlight in action](/content/VAtRFyyxo.png)
 
 Since we have the XPath and Range information. We can just wrap a quote in a `<mark>` tag and scroll to it.
 

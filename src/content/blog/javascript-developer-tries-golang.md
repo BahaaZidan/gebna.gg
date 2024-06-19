@@ -64,7 +64,7 @@ This example is directly from the awesome article: [defer, panic, and recover](h
 
 One of the biggest sources of memes on JavaScript is type coercion. JavaScript tries to automatically change the types of your values depending on the operation you're trying to do. While type coercion can be handy sometimes, it often leads to bugs and confusion among newcomers.
 
-![patrick star javascript type coercion](https://ant.gebna.gg/best-js-meme-to-date-2.png)
+![patrick star javascript type coercion](/content/best-js-meme-to-date-2.png)
 
 **In Go**, assignment between items of different types requires an explicit conversion. It will not compile if you're trying to assign a `string` to an `int` or try to add two mismatched types. While this simplicity may make Go a little bit harder to write, it makes it so easy to read and maintain which is a recurring theme.
 
@@ -128,7 +128,7 @@ Again, this makes Golang so easy to read and maintain.
 
 Don't get me wrong, I love TypeScript. I can't imagine myself going back to the dark times of having to `console.log` everything just to get to know what I'm working with. But the type system might be a little too rich for my taste. I often run into situations where I have to do a lot of type gymnastics when I'm using it. This is especially true when building libraries.
 A complex type system also leads to very complicated, sometimes unhelpful error messages:
-![very long typescript error](https://ant.gebna.gg/52309247-629da100-2954-11e9-9f85-06a86d04a108.png)
+![very long typescript error](/content/52309247-629da100-2954-11e9-9f85-06a86d04a108.png)
 
 In contrast, Go has a very simple type system. You have the usual primitives like int, string, ... etc. You have arrays, slices, and structs. You have interfaces and functions. Generics were later added to the language. That's it.
 The compiler is very fast and will display very concise/helpful error messages most of the time.

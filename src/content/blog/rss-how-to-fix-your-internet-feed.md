@@ -30,7 +30,7 @@ There are countless RSS readers out there. Any operating system you use will pro
 I mainly use Mac and iOS so I picked [NetNewsWire](https://netnewswire.com/). It is open source, looks good, and can sync across my laptop and my phone through iCloud.
 
 Here's how my RSS reader looks:
-![RSS reader screenshot](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.24.17%E2%80%AFPM.webp)
+![RSS reader screenshot](/content/Screenshot%202024-05-03%20at%206.24.17%E2%80%AFPM.webp)
 
 For demonstration, I added three feeds. [My rss feed](https://gebna.gg/rss.xml) included. You can see the reader combining all of the feeds together. It can keep track of what I read. It has "Reader" mode, which basically scraps the website for the entire article content and shows it to me in reader in case the website only puts summary in their feed. I can star articles as a way of bookmarking them. I can do a lot. I'm in control here. I can add 10, 100, or thousands of feeds if I wanted to. And I can do so from across the internet. I'm not tied to one platform.
 
@@ -41,7 +41,7 @@ Let's see how we can add the [Fireship channel](https://www.youtube.com/@Fireshi
 
 On the channel page, click the about button.
 A dialog will open. At the bottom of that dialog, you'll find a share channel button. Click it, then click the "Copy channel ID" option.
-![copy channel id](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.46.12%E2%80%AFPM.webp)
+![copy channel id](/content/Screenshot%202024-05-03%20at%206.46.12%E2%80%AFPM.webp)
 
 Now all you need to do is paste that id at the end of this link:
 
@@ -49,10 +49,10 @@ Now all you need to do is paste that id at the end of this link:
 <pre>https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA</pre>
 
 Add the full url to your RSS reader:
-![add url to rss reader](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.53.33%E2%80%AFPM.webp)
+![add url to rss reader](/content/Screenshot%202024-05-03%20at%206.53.33%E2%80%AFPM.webp)
 
 And voila! Every time a video is uploaded you'll get notified by your reader instead. No need to visit youtube's horrible home page that doesn't actually show you the people you're subscribed to.
-![reader after adding fireship](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.54.15%E2%80%AFPM.webp)
+![reader after adding fireship](/content/Screenshot%202024-05-03%20at%206.54.15%E2%80%AFPM.webp)
 
 Youtube is an exception. In my experience, I've always found the RSS feed of any website in the header, footer, or a simple google search.
 

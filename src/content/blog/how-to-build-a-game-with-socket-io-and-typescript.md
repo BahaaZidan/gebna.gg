@@ -272,7 +272,7 @@ It might look a bit gnarly. But it's actually quite simple. To decide whether or
 
 Here's the full [`XORoomState.ts`](https://github.com/BahaaZidan/x51-server/blob/master/src/XORoomState.ts) file.
 
-![computer guy finally done](https://ant.gebna.gg/computer_guy_finally_done.gif)
+![computer guy finally done](/content/computer_guy_finally_done.gif)
 
 That was a lot. And we haven't even gotten into any WebSockets or Realtime shenanigans yet 😅. The good news is that we're done with the most difficult part of this endeavor. In an online game (or any game for that matter), managing the state can be extremely messy and challenging. But since we've put a lot of thought and effort into how to represent it and the operations that can be done to it, our actual sockets code is going to be very simple. As it will just involve mapping the operations we just defined in our `XORoomState.ts` class into events that are broadcasted bi-directionally between the server and clients. And since we'll be using socket.io, we won't even have to worry about the low level details of that bi-directional communication.
 
@@ -281,10 +281,10 @@ That was a lot. And we haven't even gotten into any WebSockets or Realtime shena
 We know what our state look like. We've defined the operations that can be done on it. But where exactly is this state going to be stored ? What's our source of truth ? It can't be the client. Because then each client would have it's own version of the state and syncing that would be a nightmare. The optimal approach here is to make the server a single source of truth. With that constraint, we don't have to worry about conflicting versions of the state from multiple clients. Clients just emit an event with a minimal payload. The server then handles that event and then emits the new version of the state to all clients.
 
 Here's how creating a room would work:
-![Untitled Diagram (1).png](https://ant.gebna.gg/u_ASZFy52.png)
+![Untitled Diagram (1).png](/content/u_ASZFy52.png)
 
 Here's how making a move would work:
-![Copy of Untitled Diagram (1).png](https://ant.gebna.gg/38rCnMGNI.png)
+![Copy of Untitled Diagram (1).png](/content/38rCnMGNI.png)
 
 Keep in mind that each operation would generally include 2 events. An event the client emits to the server whenever it wants to do an operation. Another event the server emits whenever the state changes. Again, the server is the single source of truth here. So no client would be sending new versions of the state. The client will only be allowed to send an event with minimal payload. For example when a player makes a move, they won't send the whole board. They will only send the slot they want to make a move on. The server will then decide whether that was a valid move or not and only emits a new state then.
 
@@ -557,11 +557,11 @@ useEffect(() => {
 }, [xoSocket, history]);
 ```
 
-![new game](https://ant.gebna.gg/tt-9BaHlv.png)
+![new game](/content/tt-9BaHlv.png)
 
 Now let's build our [`XO.tsx`](https://github.com/BahaaZidan/x51-web-client/blob/master/src/pages/XO/XO.tsx) component where the game will take place. By the end it should look like this:
 
-![tic tac toe board](https://ant.gebna.gg/35GW9U0yk.png)
+![tic tac toe board](/content/35GW9U0yk.png)
 
 Nothing fancy, but it successfully connects 2 players and let them play the game in real time 👍
 
@@ -683,4 +683,4 @@ const XO = () => {
 };
 ```
 
-![All done!](https://ant.gebna.gg/all_done.gif)
+![All done!](/content/all_done.gif)

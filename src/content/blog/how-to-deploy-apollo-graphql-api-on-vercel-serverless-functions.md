@@ -77,7 +77,7 @@ export default apolloServer.start().then(() => {
 
 All we need is to create an instance of ApolloServer from `apollo-server-micro`, start the server, and then create a handler. **Pay attention** to the `path` option in the `createHandler` method. The `path` needs to match the actual path of your serverless function. In our case it's `/api/graphql`. After creating the handler we'll return our handler function wrapped with `cors`. micro doesn't ship with a built-in `cors` module. So we have to use `micro-cors` for that. Lastly, we're checking for the method type and returning a constant _200 ok_ if it's `OPTIONS` to handle [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) otherwise, we let our apollo server handle the request like normal.
 
-![That's all folks!](https://ant.gebna.gg/that's_all_folks.gif)
+![That's all folks!](/content/that's_all_folks.gif)
 
 ## That's it
 
