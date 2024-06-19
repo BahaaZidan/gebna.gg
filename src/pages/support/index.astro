@@ -30,11 +30,11 @@ const coins = [
   </head>
   <body>
     <Header />
-    <main class="p-4 flex flex-col gap-3">
+    <main class="flex flex-col gap-3 p-4">
       <iframe
         id="kofiframe"
         src="https://ko-fi.com/gebna/?hidefeed=true&widget=true&embed=true&preview=true"
-        class="w-full sm:w-[25rem] h-[665px] mx-auto"
+        class="mx-auto h-[665px] w-full sm:w-[25rem]"
         title="gebna"></iframe>
       <h2 class="text-2xl font-bold">Crypto addresses</h2>
       <ul class="flex flex-col gap-3">
@@ -43,7 +43,7 @@ const coins = [
             <li>
               <span>{coin.label}: </span>
               <a
-                class="break-words link"
+                class="link break-words"
                 href={`${coin.protocol}:${coin.address}`}
               >
                 {coin.address}

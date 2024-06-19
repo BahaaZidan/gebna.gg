@@ -1,8 +1,8 @@
 ---
 title: How to build a game with Socket.io and TypeScript
 description: Join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
-pubDate: '2022-02-14'
-heroImage: '/hero-images/how-to-build-a-game-with-socket-io-and-typescript.jpg'
+pubDate: "2022-02-14"
+heroImage: "/hero-images/how-to-build-a-game-with-socket-io-and-typescript.jpg"
 ---
 
 Have you ever been curious about building a video game ? Do you have an idea about how web sockets work but can't utilize that knowledge to create something ? If so, join me as I try to build a small game on the web and hoping to learn a thing or two along the way.
@@ -36,25 +36,25 @@ The first thing we need to think about is what state do we need to store ? Since
 ```ts
 const TheBossObject = {
   xo: {
-    name: 'Tic Tac Toe',
+    name: "Tic Tac Toe",
     rooms: new Map<string, XORoomState>(),
   },
-}
+};
 ```
 
 Before we start thinking about the particular rules and logic of Tic-Tac-Toe we need to implement a data structure that abstracts the state of any game room. There are a few aspects that are common in most games:
 
 ```ts
 abstract class RoomState {
-  protected connectedPlayers: Array<Player> = []
-  protected abstract gameState: any
-  protected status: 'notReady' | 'ready' | 'inProgress' | 'done' = 'notReady'
-  protected minPlayers: number
-  protected maxPlayers: number
+  protected connectedPlayers: Array<Player> = [];
+  protected abstract gameState: any;
+  protected status: "notReady" | "ready" | "inProgress" | "done" = "notReady";
+  protected minPlayers: number;
+  protected maxPlayers: number;
 
   constructor(minPlayers: number, maxPlayers: number) {
-    this.minPlayers = minPlayers
-    this.maxPlayers = maxPlayers
+    this.minPlayers = minPlayers;
+    this.maxPlayers = maxPlayers;
   }
 }
 ```
@@ -122,13 +122,22 @@ Next we need to write the subclass that extends the abstract class `RoomState` i
 First let's define a name for each slot in the board:
 
 ```ts
-export type XOSlotName = '0-0' | '0-1' | '0-2' | '1-0' | '1-1' | '1-2' | '2-0' | '2-1' | '2-2'
+export type XOSlotName =
+  | "0-0"
+  | "0-1"
+  | "0-2"
+  | "1-0"
+  | "1-1"
+  | "1-2"
+  | "2-0"
+  | "2-1"
+  | "2-2";
 ```
 
 Next we define the possible values a slot can have:
 
 ```ts
-type XOSlotState = undefined | null | 'X' | 'O'
+type XOSlotState = undefined | null | "X" | "O";
 ```
 
 After that we define the main properties of the sub-class, `XORoomState`:
@@ -136,43 +145,43 @@ After that we define the main properties of the sub-class, `XORoomState`:
 ```ts
 class XORoomState extends RoomState {
   protected boardState: {
-    currentTurn?: Player
+    currentTurn?: Player;
     slots: {
-      [key in XOSlotName]: XOSlotState
-    }
-  }
-  protected playerX?: string
-  protected playerO?: string
-  protected result?: 'X' | 'O' | 'DRAW'
+      [key in XOSlotName]: XOSlotState;
+    };
+  };
+  protected playerX?: string;
+  protected playerO?: string;
+  protected result?: "X" | "O" | "DRAW";
 
   private static winningSlots: Array<Array<XOSlotName>> = [
-    ['0-0', '0-1', '0-2'],
-    ['1-0', '1-1', '1-2'],
-    ['2-0', '2-1', '2-2'],
+    ["0-0", "0-1", "0-2"],
+    ["1-0", "1-1", "1-2"],
+    ["2-0", "2-1", "2-2"],
 
-    ['0-0', '1-0', '2-0'],
-    ['0-1', '1-1', '2-1'],
-    ['0-2', '1-2', '2-2'],
+    ["0-0", "1-0", "2-0"],
+    ["0-1", "1-1", "2-1"],
+    ["0-2", "1-2", "2-2"],
 
-    ['0-0', '1-1', '2-2'],
-    ['0-2', '1-1', '2-0'],
-  ]
+    ["0-0", "1-1", "2-2"],
+    ["0-2", "1-1", "2-0"],
+  ];
 
   constructor() {
-    super(2, 2)
+    super(2, 2);
     this.boardState = {
       slots: {
-        '0-0': null,
-        '0-1': null,
-        '0-2': null,
-        '1-0': null,
-        '1-1': null,
-        '1-2': null,
-        '2-0': null,
-        '2-1': null,
-        '2-2': null,
+        "0-0": null,
+        "0-1": null,
+        "0-2": null,
+        "1-0": null,
+        "1-1": null,
+        "1-2": null,
+        "2-0": null,
+        "2-1": null,
+        "2-2": null,
       },
-    }
+    };
   }
 }
 ```
@@ -282,21 +291,21 @@ Keep in mind that each operation would generally include 2 events. An event the 
 With that in mind let's start coding by initializing our socket.io server in `index.ts`file.
 
 ```ts
-import { createServer } from 'http'
-import { Server as SocketIOServer } from 'socket.io'
+import { createServer } from "http";
+import { Server as SocketIOServer } from "socket.io";
 
-const http = createServer()
+const http = createServer();
 const io = new SocketIOServer(http, {
   cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
   },
-})
+});
 
-const PORT = 3002
+const PORT = 3002;
 http.listen(PORT, () => {
-  console.log(`listening on *:${PORT}`)
-})
+  console.log(`listening on *:${PORT}`);
+});
 ```
 
 Since we're developing locally, we only need to allow `localhost:3000` to communicate with our server. This is where our client web app is going to live.
@@ -304,7 +313,7 @@ Since we're developing locally, we only need to allow `localhost:3000` to commun
 Next we create a namespace for our game.
 
 ```ts
-const xoNameSpace = io.of('/xo')
+const xoNameSpace = io.of("/xo");
 ```
 
 Creating a namespace isn't really needed in our case. It just makes the code for the game contained. This will allow us to potentially host more than one game in one socket.io server connection. Read [the docs](https://socket.io/docs/v4/namespaces/) to learn more about namespaces.
@@ -312,36 +321,36 @@ Creating a namespace isn't really needed in our case. It just makes the code for
 Now let's define the custom events that are going to be communicated to and from our server.
 
 ```ts
-export const PLAYER_CREATE_ROOM_EVENT = 'PLAYER_CREATE_ROOM_EVENT'
-export const ROOM_CREATED_EVENT = 'ROOM_CREATED_EVENT'
+export const PLAYER_CREATE_ROOM_EVENT = "PLAYER_CREATE_ROOM_EVENT";
+export const ROOM_CREATED_EVENT = "ROOM_CREATED_EVENT";
 
-export const PLAYER_JOIN_ROOM_EVENT = 'PLAYER_JOIN_ROOM_EVENT'
-export const PLAYER_JOINED_ROOM_EVENT = 'PLAYER_JOINED_ROOM_EVENT'
+export const PLAYER_JOIN_ROOM_EVENT = "PLAYER_JOIN_ROOM_EVENT";
+export const PLAYER_JOINED_ROOM_EVENT = "PLAYER_JOINED_ROOM_EVENT";
 
-export const PLAYER_LEFT_ROOM_EVENT = 'PLAYER_LEFT_ROOM_EVENT'
+export const PLAYER_LEFT_ROOM_EVENT = "PLAYER_LEFT_ROOM_EVENT";
 
-export const PLAYER_MOVED_EVENT = 'PLAYER_MOVED_EVENT'
-export const BOARD_CHANGED_EVENT = 'BOARD_CHANGED_EVENT'
+export const PLAYER_MOVED_EVENT = "PLAYER_MOVED_EVENT";
+export const BOARD_CHANGED_EVENT = "BOARD_CHANGED_EVENT";
 
-export const PLAYER_START_ROOM_EVENT = 'PLAYER_START_ROOM_EVENT'
-export const PLAYER_STARTED_ROOM_EVENT = 'PLAYER_STARTED_ROOM_EVENT'
+export const PLAYER_START_ROOM_EVENT = "PLAYER_START_ROOM_EVENT";
+export const PLAYER_STARTED_ROOM_EVENT = "PLAYER_STARTED_ROOM_EVENT";
 
-export const PLAYER_RESET_ROOM_EVENT = 'PLAYER_RESET_ROOM_EVENT'
-export const PLAYER_RESETED_ROOM_EVENT = 'PLAYER_RESETED_ROOM_EVENT'
+export const PLAYER_RESET_ROOM_EVENT = "PLAYER_RESET_ROOM_EVENT";
+export const PLAYER_RESETED_ROOM_EVENT = "PLAYER_RESETED_ROOM_EVENT";
 ```
 
 As you can see an event is just a string that's unique in our system. And as discussed earlier, most operations have 2 events. One the client emits, and one the server emits. This allows the frontend to react differently to each event. But for the sake of simplicity, we introduce an event that captures most room state changes. That will greatly simplify our code. So instead of having the list above, we can just work with the following:
 
 ```ts
-export const PLAYER_CREATE_ROOM_EVENT = 'PLAYER_CREATE_ROOM_EVENT'
-export const ROOM_CREATED_EVENT = 'ROOM_CREATED_EVENT'
+export const PLAYER_CREATE_ROOM_EVENT = "PLAYER_CREATE_ROOM_EVENT";
+export const ROOM_CREATED_EVENT = "ROOM_CREATED_EVENT";
 
-export const GAME_STATE_CHANGED = 'GAME_STATE_CHANGED'
+export const GAME_STATE_CHANGED = "GAME_STATE_CHANGED";
 
-export const PLAYER_JOIN_ROOM_EVENT = 'PLAYER_JOIN_ROOM_EVENT'
-export const PLAYER_MOVED_EVENT = 'PLAYER_MOVED_EVENT'
-export const PLAYER_START_ROOM_EVENT = 'PLAYER_START_ROOM_EVENT'
-export const PLAYER_RESET_ROOM_EVENT = 'PLAYER_RESET_ROOM_EVENT'
+export const PLAYER_JOIN_ROOM_EVENT = "PLAYER_JOIN_ROOM_EVENT";
+export const PLAYER_MOVED_EVENT = "PLAYER_MOVED_EVENT";
+export const PLAYER_START_ROOM_EVENT = "PLAYER_START_ROOM_EVENT";
+export const PLAYER_RESET_ROOM_EVENT = "PLAYER_RESET_ROOM_EVENT";
 ```
 
 Except for room creation, the server will emit the `GAME_STATE_CHANGED` event when any change occur to the state. That includes players joining, leaving, starting, moving, winning, or resetting the game. This will also simplify the frontend code. As now we only need to listen to a single event once the room is created.
@@ -380,9 +389,9 @@ It's worth noting that `socket.join(roomID)` is an upsert operation. It looks fo
 Since we need to keep track of rooms we need to make a new entry in our Map with the new room ID as key and a new `XORoomState` object as value:
 
 ```ts
-xoNameSpace.adapter.on('create-room', (room) => {
-  TheBossObject.xo.rooms.set(room, new XORoomState())
-})
+xoNameSpace.adapter.on("create-room", (room) => {
+  TheBossObject.xo.rooms.set(room, new XORoomState());
+});
 ```
 
 Keep in mind that here we're listening to the built-in adapter event `"create-room"` not one of our custom events.
@@ -402,11 +411,13 @@ xoNameSpace.on("connection", (socket) => {
 Then we listen for the built-in event `"join-room"`, take that `socketID`, add it as a player in the room state, and then emit a `GAME_STATE_CHANGED` event to the room signaling that a player has joined.
 
 ```ts
-xoNameSpace.adapter.on('join-room', (room, socketID) => {
-  TheBossObject.xo.rooms.get(room)?.addPlayer(new Player(socketID))
+xoNameSpace.adapter.on("join-room", (room, socketID) => {
+  TheBossObject.xo.rooms.get(room)?.addPlayer(new Player(socketID));
 
-  xoNameSpace.to(room).emit(GAME_STATE_CHANGED, TheBossObject.xo.rooms.get(room)?.serialize())
-})
+  xoNameSpace
+    .to(room)
+    .emit(GAME_STATE_CHANGED, TheBossObject.xo.rooms.get(room)?.serialize());
+});
 ```
 
 ### Start a match
@@ -434,16 +445,21 @@ xoNameSpace.on("connection", (socket) => {
 After starting the match, players take turns in marking the empty slots on the board. Same pattern applies. The client emits an event signaling that a player wants to make a move, the server handles that by calling a method in the state data structure `XORoomState.move`, and on success the server emits an event with the new state to everyone in the room.
 
 ```ts
-xoNameSpace.on('connection', (socket) => {
+xoNameSpace.on("connection", (socket) => {
   socket.on(PLAYER_MOVED_EVENT, ({ room, data: { slot } }) => {
-    const result = TheBossObject.xo.rooms.get(room)?.move(slot, socket.id)
+    const result = TheBossObject.xo.rooms.get(room)?.move(slot, socket.id);
     if (result) {
-      xoNameSpace.to(room).emit(GAME_STATE_CHANGED, TheBossObject.xo.rooms.get(room)?.serialize())
+      xoNameSpace
+        .to(room)
+        .emit(
+          GAME_STATE_CHANGED,
+          TheBossObject.xo.rooms.get(room)?.serialize(),
+        );
 
-      xoNameSpace.to(room).emit(BOARD_CHANGED_EVENT, { socketID: socket.id })
+      xoNameSpace.to(room).emit(BOARD_CHANGED_EVENT, { socketID: socket.id });
     }
-  })
-})
+  });
+});
 ```
 
 With that we're done with the server part of this project✅. I didn't go through every single line of code as I tried to be as concise as possible. But I would highly suggest you take a look at the [server github repo](https://github.com/BahaaZidan/x51-server/tree/master/src). It's only 3 files. Each file about 100 lines of code. But reading them will further enhance your understanding.
@@ -469,17 +485,17 @@ I won't get into how to setup routing in React as it's beyond the scope of this 
 To connect to a SocketIO server, we'll need to use the `socket.io-client` package to create a `Socket` client object. Since this client object is going to be needed across our component tree, let's start by creating a [React context](https://reactjs.org/docs/context.html):
 
 ```ts
-import React from 'react'
-import { Socket } from 'socket.io-client'
+import React from "react";
+import { Socket } from "socket.io-client";
 
 type KnownSockets = {
-  mainSocket: Socket
-  xoSocket: Socket
-}
+  mainSocket: Socket;
+  xoSocket: Socket;
+};
 
-const SocketContext = React.createContext<KnownSockets | null>(null)
+const SocketContext = React.createContext<KnownSockets | null>(null);
 
-export default SocketContext
+export default SocketContext;
 ```
 
 Remember the namespace we created earlier in the server ? We now have to connect to it separately.
@@ -536,9 +552,9 @@ Lastly we listen to `ROOM_CREATED_EVENT` event which is emitted by the server si
 ```ts
 useEffect(() => {
   xoSocket?.once(eventNames.ROOM_CREATED_EVENT, ({ room }) => {
-    history.push(`/g/xo/${room}`)
-  })
-}, [xoSocket, history])
+    history.push(`/g/xo/${room}`);
+  });
+}, [xoSocket, history]);
 ```
 
 ![new game](https://ant.gebna.gg/tt-9BaHlv.png)
@@ -552,13 +568,13 @@ Nothing fancy, but it successfully connects 2 players and let them play the game
 Once a user open this page we emit an event to join them to the game room:
 
 ```ts
-const params = useParams<any>()
+const params = useParams<any>();
 
 useEffect(() => {
-  socket?.emit(eventNames.PLAYER_JOIN_ROOM_EVENT, { room: params.roomID })
+  socket?.emit(eventNames.PLAYER_JOIN_ROOM_EVENT, { room: params.roomID });
 
-  return () => {}
-}, [socket, params.roomID])
+  return () => {};
+}, [socket, params.roomID]);
 ```
 
 The player also need to be able to start the game so we create a handler function and in it we emit another event:
@@ -567,8 +583,8 @@ The player also need to be able to start the game so we create a handler functio
 const handleStartClick = () => {
   socket?.emit(eventNames.PLAYER_START_ROOM_EVENT, {
     room: params.roomID,
-  })
-}
+  });
+};
 ```
 
 The last operation is when player make a move by clicking on an empty slot on the board:
@@ -578,27 +594,27 @@ const handleSlotClick = (slot: string) => () => {
   socket?.emit(eventNames.PLAYER_MOVED_EVENT, {
     room: params.roomID,
     data: { slot },
-  })
-}
+  });
+};
 ```
 
 Finally, we need to listen for game state changes from the server and reflect that in the UI:
 
 ```ts
-const [roomState, setRoomState] = useState<any>()
-const sockets = useSockets()
+const [roomState, setRoomState] = useState<any>();
+const sockets = useSockets();
 
-const socket = sockets?.xoSocket
+const socket = sockets?.xoSocket;
 
 useEffect(() => {
   socket?.on(eventNames.GAME_STATE_CHANGED, (data) => {
-    setRoomState(data)
-  })
+    setRoomState(data);
+  });
 
   return () => {
-    socket?.off(eventNames.GAME_STATE_CHANGED)
-  }
-}, [socket])
+    socket?.off(eventNames.GAME_STATE_CHANGED);
+  };
+}, [socket]);
 ```
 
 All that's left is the UI. Which in our case can be a few divs strung together to make the Tic-Tac-Toe board. First we define a single slot component:

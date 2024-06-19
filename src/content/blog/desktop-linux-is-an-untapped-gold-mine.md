@@ -1,29 +1,33 @@
 ---
 title: Desktop Linux is an Untapped Gold Mine
 description: The short comings of the current state of the Linux desktop experience. The potential that Linux have in becoming the true one OS to rule them all compared to Windows and Mac OS.
-pubDate: '2024-06-02'
-heroImage: '/hero-images/desktop-linux-is-an-untapped-gold-mine.webp'
+pubDate: "2024-06-02"
+heroImage: "/hero-images/desktop-linux-is-an-untapped-gold-mine.webp"
 ---
 
-The year is 2013. I had just bought a brand new laptop. It came with a whopping 4 GB of memory and 500 GB of mechanical storage. It didn't come with an OS pre-installed. So I swiftly installed my legally obtained version of Windows 8. The worst operating system I've ever had the misfortune of using. Combining an abhorrent UI with terrible stability, it prompted my younger self to look for an alternative. And I found **Linux**. 
+The year is 2013. I had just bought a brand new laptop. It came with a whopping 4 GB of memory and 500 GB of mechanical storage. It didn't come with an OS pre-installed. So I swiftly installed my legally obtained version of Windows 8. The worst operating system I've ever had the misfortune of using. Combining an abhorrent UI with terrible stability, it prompted my younger self to look for an alternative. And I found **Linux**.
 
 ## Which One ?
-The first obstacle you run into as a newcomer, is the ridiculous number of different operating systems that exist under the Linux umbrella. The Linux community loves to call them "distros" as a way to express that there are not many differences between them. And while that is true to some extent. A distro is in fact its' own operating system. 
+
+The first obstacle you run into as a newcomer, is the ridiculous number of different operating systems that exist under the Linux umbrella. The Linux community loves to call them "distros" as a way to express that there are not many differences between them. And while that is true to some extent. A distro is in fact its' own operating system.
 You got the main ones such as Debian, Ubuntu, Gentoo, Fedora, and Arch. And on top of these, literally thousands of "distros" are built and given different names. This results in many interested newcomers dismissing Linux before they even try the operating system. But not me. I was determined. I didn't want to go back to Windows 8. And so I took to the internet to seek guidance.
 
 Most internet forums suggested I use [Ubuntu](https://ubuntu.com/). The most widely used Linux distro. It had a friendly installer with a UI that looked different from what I was used to in Windows. So I installed it. Only to run into a few issues.
 
 ## Spotty Hardware Support
+
 <iframe height="400" src="https://www.youtube.com/embed/OF_5EKNX0Eg" title="NVIDIA Fuck You (HD)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 My laptop came with an Nvidia dedicated graphics chip and also had the Intel HD Graphics that came built into the CPU. That meant that the operating system had to figure out what chip to use for which task. On Windows, this was done thanks to the Nvidia drivers using a proprietary technology called [Optimus](https://www.nvidia.com/en-us/geforce/technologies/optimus/technology/). On Ubuntu, Optimus did not work. At least not on my laptop. Even after installing the proprietary Nvidia driver. Which meant I could either disable the more powerful Nvidia GPU or live with a graphically sluggish and stuttery experience. I chose the former since I wasn't doing anything that required powerful graphics at the time. Intel graphics were enough for me.
 
 ## Philosophy Over Function
+
 Another thing I ran into was the fact that Ubuntu doesn't ship with the media codecs required to play most of my media collection. Turns out Canonical (the company behind Ubuntu) is committed to only include "free" software with their OS. The word "free" here doesn't necessarily mean free of charge. It means open source. And many media codecs are actually proprietary hence the exclusion.
 
 This one really annoyed me. I mean. Canonical knows for a fact that everyone is going to install these codecs anyway. Why not include them to save the end user some trouble ? Is getting [RS](https://www.stallman.org/) brownie points more important than making a good operating system ?
 
 ## The Community™
+
 Shortly after settling in with Ubuntu. I started experiencing crashes. Unity the official desktop environment for Ubuntu at the time, was the source of most them. I was a youngster with nothing better to do and I was already deep enough in the rabbit hole at that point. So I decided to go all the way in. I tried installing Arch Linux.
 
 It was a paradigm shift. If Ubuntu is supposed to be the beginner friendly Linux distro, Arch is for those who know what they're doing. And even though I didn't know what I was doing at the time, I ventured in. And with the power of online tutorials. I was able to get a fully functional Arch Linux installation. Even the Nvidia Optimus thingy worked. Except for one issue with my drives. I honestly don't remember exactly what it was. Maybe it was something about automatic volume mounting not working. I can't remember. But what I can remember to this day (11 years later) is how mean the people on the Arch forums were to me when I asked for help. From people telling me to RTFM to people making fun of my grammar mistakes. Keep in mind that English is not my first language and my English was much worse back then. It felt like I went to a party I wasn't invited to.
@@ -31,23 +35,26 @@ It was a paradigm shift. If Ubuntu is supposed to be the beginner friendly Linux
 Don't get me wrong. I think telling a beginner to search before asking a question on a forum is fair. I also think linking them to a specific page in the manual/docs instead of spoon-feeding an answer is also fair. But these "intellectuals" never considered the fact that a beginner may not know "how" to search. A beginner doesn't know how a thing is put together so when something goes wrong they don't know where to look or what to look for.
 
 > Linux was my passion project, set to replace Mac OS and Windows. But Linux fanboys have ruined it's image.
-Most of them take pride in doing simple things in an over complicated manner and wonder why people won't switch.
-Even basic tasks like loading kernels or installing something is told in such a gatekeeping manner that scares new users into adapting it. The worse part is, they think they are intelligent because of few lines of code. But reality couldn't be farther from the truth.
-Most of them fail at elementary coding and copy it from somewhere else. They are most stupid of them all.
+> Most of them take pride in doing simple things in an over complicated manner and wonder why people won't switch.
+> Even basic tasks like loading kernels or installing something is told in such a gatekeeping manner that scares new users into adapting it. The worse part is, they think they are intelligent because of few lines of code. But reality couldn't be farther from the truth.
+> Most of them fail at elementary coding and copy it from somewhere else. They are most stupid of them all.
 
-*Linus Torvalds -- The Creator of Linux*
+_Linus Torvalds -- The Creator of Linux_
 
 ## Linux Mint
+
 After the not so welcoming experience I had with the Arch community. I started exploring different Linux distros. I even tried hackintoshing my laptop (but that's a story for another day). After a while I settled on a distro called [Linux Mint.](https://linuxmint.com/edition.php?id=311) I have no idea why people don't just recommend this to newcomers. It ticks all the boxes. It has a UI that resembles Windows. Which makes it a very easy option for those who wanted to switch from Windows like myself. It's built on top of Ubuntu. Which means you can always find fixes in case something goes wrong. But unlike it's parent, Linux Mint is extremely stable. Like really stable. More stable than any Windows or Mac OS version I daily drove.
 
 I really love Linux Mint. I actually loved it so much that I kept using it for years. And as I started getting into programming it was the perfect environment for me. Especially as a web developer. I get to develop my web servers on an environment closer to the data center I'll be deploying them on. All the tools I needed were natively supported. What more could I ask for ?
 
 ## Apps
+
 If all you need from a computer is a web browser, the conversation of an operating system is not relevant to you. Any operating system can run all of the major browsers perfectly fine. If you're a web developer like myself, Linux is perfect for you. But that's not the case for most people. Most people own a laptop or a desktop computer to open a set of very specific apps that are relevant to their job or hobby. Many of these "killer apps" are built to be OS specific. The Adobe suite, Microsoft Office suite, The Autodesk suite, and more simply do not work on Linux.
 
 But what about Linux-native alternatives ? There are amazing apps that work natively on Linux. Lightworks, Davinci Resolve, Blender, Open Office, and many more are actively used in many industries around the globe. But as a professional, you're probably not switching from whatever it is you and your team is using. Simply because it would be more expensive to do so than putting up with Microsoft's or Apple's anti-consumer behaviour. It's unfortunate but it is how the world works. For a large subset of people, Linux will only be viable when the apps they use become supported. But why don't developers like Adobe support Linux ?
 
 ## Software Distribution
+
 When a developer like Adobe wants to release a piece of software on Windows, they use the SDKs and tools provided by Microsoft in order to build their software in a manner the Windows operating system will understand. Same story for Apple's Mac OS. Both provide a somewhat straightforward path to software distribution. At least way more straightforward than what Linux has to offer.
 
 As a developer you need to decide which distro(s) you want your app to run on. Because each of the main distros have a different package format. Ubuntu, Fedora, and Arch are all different. So you either provide source files and let your users build it themselves on their machines, or pick a format like `.deb` or `.rpm` and distribute that.
@@ -59,8 +66,9 @@ Flatpak apps are sandboxed. Which means that users have to explicitly grant an a
 While there are technical differences between Snap and Flatpak, the gist is the same. Offer a sandboxed, isolated, and universal package format for Linux. Universal package formats are an overall win in my opinion. And make Linux feel a little bit more like one operating system. Still, they are now yet another choice that the developer needs to make when distributing their software on Linux. Couple that with the fact than Linux only amount for [less than 4%](https://gs.statcounter.com/os-market-share/desktop/worldwide) of all desktop users, and you start to see why developers like Adobe don't bother.
 
 ## The Final Frontier
+
 Fundamentally, Linux is a great operating system. Both Microsoft and Apple tried to compete with it in the data center space. But they lost. Leading Microsoft to relent and "befriend" Linux after years of trying to destroy it. They even offer Linux based products via Microsoft Azure now. Apple tapped out and [discontinued Mac OS Server](https://www.macrumors.com/2022/04/21/apple-discontinues-macos-server/) completely in 2022. In the mobile space, Google's Android accounts for over [70% market share](https://gs.statcounter.com/os-market-share/mobile). And in case you didn't know, **Android is based on Linux**. In gaming, Valve's [Steam Deck](https://store.steampowered.com/steamdeck) took the world by a storm. It's a great handheld console with the biggest back catalogue of video games ever. All thanks to Valve's partnership with [Code Weavers](https://www.codeweavers.com/) that resulted in [Proton](https://github.com/ValveSoftware/Proton). A compatibility layer that allowed the Linux-powered Steam Deck to run most Windows native games.
 
-In everywhere else but the desktop, **Linux won**. Desktop is the final frontier. And I do think Linux ***can win***. In fact, Google's [Chrome OS](https://www.google.com/chromebook/meet-chromebook/) has been gradually gaining market share in the low to mid budget laptop market. Chrome OS is Linux based. Linus Torvalds, the creator of Linux [said](https://www.youtube.com/watch?v=e8oeN9AF4G8) that Chromebooks might be the way Linux finally wins on Desktop. I agree with him. But I don't want the future of the Linux desktop to be some locked down spyware-ridden bastardized version of Linux like Chrome OS.
+In everywhere else but the desktop, **Linux won**. Desktop is the final frontier. And I do think Linux **_can win_**. In fact, Google's [Chrome OS](https://www.google.com/chromebook/meet-chromebook/) has been gradually gaining market share in the low to mid budget laptop market. Chrome OS is Linux based. Linus Torvalds, the creator of Linux [said](https://www.youtube.com/watch?v=e8oeN9AF4G8) that Chromebooks might be the way Linux finally wins on Desktop. I agree with him. But I don't want the future of the Linux desktop to be some locked down spyware-ridden bastardized version of Linux like Chrome OS.
 
-We can do better. And we can do that because *Linux* is open source. Unlike Windows or most of Mac OS, you and I can contribute to making it better. It's not an exclusive club for big tech. And we don't have to succeed the first time around. Remember, Valve failed miserably when they first attempted making a [Linux-based gaming machine](https://en.wikipedia.org/wiki/Steam_Machine_(computer)). They took time and corrected their path and made the Steam Deck. And they won. They made money off of it too. Android was not a success at first. But then it took over the world and the play store makes Google insane amounts of money nowadays. Desktop Linux is an untapped gold mine! All a company needs to do is provide a homogenous/coherent user experience, smooth the rough edges, and not be as scummy as Google, Apple, or Microsoft and they will win.
+We can do better. And we can do that because _Linux_ is open source. Unlike Windows or most of Mac OS, you and I can contribute to making it better. It's not an exclusive club for big tech. And we don't have to succeed the first time around. Remember, Valve failed miserably when they first attempted making a [Linux-based gaming machine](<https://en.wikipedia.org/wiki/Steam_Machine_(computer)>). They took time and corrected their path and made the Steam Deck. And they won. They made money off of it too. Android was not a success at first. But then it took over the world and the play store makes Google insane amounts of money nowadays. Desktop Linux is an untapped gold mine! All a company needs to do is provide a homogenous/coherent user experience, smooth the rough edges, and not be as scummy as Google, Apple, or Microsoft and they will win.

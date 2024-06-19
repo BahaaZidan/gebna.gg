@@ -1,8 +1,8 @@
 ---
 title: How to Deploy Apollo GraphQL API on Vercel Serverless Functions
 description: Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it
-pubDate: '2022-05-21'
-heroImage: '/hero-images/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions.jpg'
+pubDate: "2022-05-21"
+heroImage: "/hero-images/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions.jpg"
 ---
 
 Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it:
@@ -48,17 +48,17 @@ Inside the new `api` folder create a file called `graphql.ts`. Both JavaScript a
 Inside `graphql.ts` paste the following code:
 
 ```ts
-import { ApolloServer } from 'apollo-server-micro'
-import { send } from 'micro'
-import Cors from 'micro-cors'
-import { typeDefs, resolvers } from '../schema'
+import { ApolloServer } from "apollo-server-micro";
+import { send } from "micro";
+import Cors from "micro-cors";
+import { typeDefs, resolvers } from "../schema";
 
-const cors = Cors()
+const cors = Cors();
 
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-})
+});
 ```
 
 Before we try to run it, let's unpack this a little bit. You'll notice that we're using `apollo-server-micro` instead of the typical `apollo-server` package. [micro](https://github.com/vercel/micro) is a very tiny package created by Vercel. It is designed and oriented for single purpose modules (function) in contrast to something like [express.js](http://expressjs.com/) which is designed for classical always-running web servers. The typical `apollo-server` package uses express.js under the hood. So it won't work in a serverless environment.
@@ -67,12 +67,12 @@ Now onto our default export. Any file inside the `api` directory must have a fun
 
 ```ts
 export default apolloServer.start().then(() => {
-  const handler = apolloServer.createHandler({ path: '/api/graphql' })
+  const handler = apolloServer.createHandler({ path: "/api/graphql" });
 
   return cors((req, res) => {
-    return req.method === 'OPTIONS' ? send(res, 200, 'ok') : handler(req, res)
-  })
-})
+    return req.method === "OPTIONS" ? send(res, 200, "ok") : handler(req, res);
+  });
+});
 ```
 
 All we need is to create an instance of ApolloServer from `apollo-server-micro`, start the server, and then create a handler. **Pay attention** to the `path` option in the `createHandler` method. The `path` needs to match the actual path of your serverless function. In our case it's `/api/graphql`. After creating the handler we'll return our handler function wrapped with `cors`. micro doesn't ship with a built-in `cors` module. So we have to use `micro-cors` for that. Lastly, we're checking for the method type and returning a constant _200 ok_ if it's `OPTIONS` to handle [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) otherwise, we let our apollo server handle the request like normal.

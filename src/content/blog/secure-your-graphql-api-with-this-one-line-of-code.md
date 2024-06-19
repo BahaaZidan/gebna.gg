@@ -1,8 +1,8 @@
 ---
 title: Secure Your GraphQL API With This One Line of Code
 description: One the greatest things about having a GraphQL API is the flexibility it gives your users to query the types you expose. A user can choose to query one field in one type or they can choose to query every type you expose. That's great and all but it opens the door for a very dangerous denial-of-service attack.
-pubDate: '2022-09-18'
-heroImage: '/hero-images/secure-your-graphql-api-with-this-one-line-of-code.jpg'
+pubDate: "2022-09-18"
+heroImage: "/hero-images/secure-your-graphql-api-with-this-one-line-of-code.jpg"
 ---
 
 One the greatest things about having a GraphQL API is the flexibility it gives your users to query the types you expose. A user can choose to query one field in one type or they can choose to query every type you expose. That's great and all but it opens the door for a very dangerous denial-of-service attack.
@@ -57,7 +57,7 @@ npm install graphql-depth-limit
 After that we just need to write one line of code to our graphql server configuration:
 
 ```js
-validationRules: [depthLimit(10)]
+validationRules: [depthLimit(10)];
 ```
 
 That will result in the following apollo-server config:
@@ -67,7 +67,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   validationRules: [depthLimit(10)],
-})
+});
 ```
 
 Here I'm limiting the depth to 10. You can tweak that to your liking.

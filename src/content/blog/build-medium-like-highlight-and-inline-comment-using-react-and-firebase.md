@@ -1,8 +1,8 @@
 ---
 title: Build Medium like highlight and inline comment using React and Firebase
 description: I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
-pubDate: '2022-03-17'
-heroImage: '/hero-images/build-medium-like-highlight-and-inline-comment-using-react-and-firebase.jpg'
+pubDate: "2022-03-17"
+heroImage: "/hero-images/build-medium-like-highlight-and-inline-comment-using-react-and-firebase.jpg"
 ---
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
@@ -52,33 +52,37 @@ Given the scale and the time I had to finish this project, I chose not to make a
 
 ```ts
 export async function getPosts() {
-  const postsCollection = collection(db, 'posts')
-  const postsSnapshot = await getDocs(postsCollection)
+  const postsCollection = collection(db, "posts");
+  const postsSnapshot = await getDocs(postsCollection);
   const posts = postsSnapshot.docs.map((doc) => {
-    const data = doc.data()
+    const data = doc.data();
     return {
       title: data.title,
       slug: data.slug,
       date: data.date.toDate().toDateString(),
-    }
-  })
+    };
+  });
 
-  return posts
+  return posts;
 }
 
-export async function createPost(post: { slug: string; title: string; content: string }) {
-  const postDocumentRef = doc(db, `posts/${post.slug}`)
+export async function createPost(post: {
+  slug: string;
+  title: string;
+  content: string;
+}) {
+  const postDocumentRef = doc(db, `posts/${post.slug}`);
   await setDoc(postDocumentRef, {
     slug: post.slug,
     title: post.title,
     date: Timestamp.fromDate(new Date()),
-  })
+  });
 
-  const versionsCollectionRef = collection(db, `posts/${post.slug}/versions`)
+  const versionsCollectionRef = collection(db, `posts/${post.slug}/versions`);
   await addDoc(versionsCollectionRef, {
     content: post.content,
     date: Timestamp.fromDate(new Date()),
-  })
+  });
 }
 ```
 
@@ -97,8 +101,8 @@ To support inline-commenting we need to introduce two things: [the `Range` objec
 When the user highlights part of the text of the post. We can get an object that contains information about that selection:
 
 ```ts
-const selection = window.getSelection()
-const range = selection.getRangeAt(0)
+const selection = window.getSelection();
+const range = selection.getRangeAt(0);
 ```
 
 The `Range` object contains information about the text selected, the html parent node of that text, and the start and end offsets of the selected text within it's text node. We'll store the start and end offsets in FireStore to be able to retrieve the highlight in the future. But how can we store the html node of that selection ? We can't. That's where XPath becomes useful. XPath stands for XML Path Language. It uses a non-XML syntax to provide a flexible way of addressing (pointing to) different parts of an XML document. And since HTML is XML, we can store an XPath expression in the database instead. That would make the quote data sample shown before sensible:
@@ -119,27 +123,27 @@ Since we have the XPath and Range information. We can just wrap a quote in a `<m
 
 ```ts
 const handleQuoteClick = (quote) => {
-  unwrap(currentMarkElement)
+  unwrap(currentMarkElement);
   try {
     const range = toRange(
       quote.startXpath,
       quote.startOffset,
       quote.endXpath,
       quote.endOffset,
-      document
-    )
+      document,
+    );
 
-    const markElement = document.createElement('mark')
-    markElement.style.backgroundColor = 'rgba(52, 211, 153, 1)'
+    const markElement = document.createElement("mark");
+    markElement.style.backgroundColor = "rgba(52, 211, 153, 1)";
 
-    range.surroundContents(markElement)
-    markElement.scrollIntoView()
+    range.surroundContents(markElement);
+    markElement.scrollIntoView();
 
-    setCurrentMarkElement(markElement)
+    setCurrentMarkElement(markElement);
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
-}
+};
 ```
 
 Because we're modifying the DOM directly the XPaths in the other comments won't work if the user clicks on other comments. That's why we keep track of the created mark element. And delete it every time the user clicks. That would limit us to only displaying one highlight at a time. But for the sake of prototyping, it works 🎉🎉🎉

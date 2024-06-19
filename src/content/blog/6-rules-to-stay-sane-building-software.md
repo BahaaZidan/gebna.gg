@@ -1,8 +1,8 @@
 ---
 title: 6 Rules to stay sane building software
 description: For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
-pubDate: '2020-04-03'
-heroImage: '/hero-images/6-rules-to-stay-sane-building-software.jpg'
+pubDate: "2020-04-03"
+heroImage: "/hero-images/6-rules-to-stay-sane-building-software.jpg"
 ---
 
 For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.

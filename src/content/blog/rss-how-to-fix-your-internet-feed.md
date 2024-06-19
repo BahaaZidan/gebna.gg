@@ -1,14 +1,16 @@
 ---
 title: "RSS: how to fix your internet feed"
 description: RSS can help you create your own internet feed instead of depending on social media
-pubDate: '2024-05-03'
-heroImage: '/hero-images/rss-how-to-fix-your-internet-feed.jpg'
+pubDate: "2024-05-03"
+heroImage: "/hero-images/rss-how-to-fix-your-internet-feed.jpg"
 ---
+
 I know this might not be a popular opinion nowadays. But I love the internet! I grew up when it was just forums, blogs, and some chat rooms. It was simple. It was raw. No one controlled it.
 
 People communicated mainly through email. Which is an open protocol that anyone can use. People shared content through blogs and forums which they often hosted on their own servers. There was no algorithms showing you kids dancing in the most cringy way instead of the content you have followed. It was all possibility, no noise.
 
 ### Noise
+
 I don't know about you, but I don't see the point of something like Twitter. It's not a good news source. It's not a good learning resource. It's a terrible place for discourse. I think the case is even stronger against something like Instagram or TikTok. While you may get lucky with Twitter and run into something remotely useful, Instagram and TikTok's algorithms will always serve you brain rot.
 
 We can't fix what's fundamentally broken. Not even when we can turn the algorithm off with something like the "following" tab on twitter.
@@ -16,16 +18,18 @@ We don't need to read everyone's opinion on every issue everywhere in the world.
 And the only way forward is to take back control.
 
 ### RSS
+
 The first version of RSS, was created by Dan Libby and Ramanathan V. Guha at Netscape in 1999. It's an XML file that contains all (or some) of the content of a website. The content can be text, images, audio, or video. The website owner is free to decide whether to include full content in the RSS or give you a summary and link you to their website.
 
 It's a dead simple solution to our problem. All you need to do is get yourself a nice RSS reader. Add as many RSS feeds to it as you want. And voila! You got your own feed. No algorithm. No dancing monkeys. No cringy inspirational podcast clips. No noise.
 
 ### How to RSS ?
+
 There are countless RSS readers out there. Any operating system you use will probably have many options. I would suggest you not to worry too much about which one to pick. They're all basically the same thing. Some may also offer syncing across different devices if that's something you care about.
 
 I mainly use Mac and iOS so I picked [NetNewsWire](https://netnewswire.com/). It is open source, looks good, and can sync across my laptop and my phone through iCloud.
 
-Here's how  my RSS reader looks:
+Here's how my RSS reader looks:
 ![RSS reader screenshot](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.24.17%E2%80%AFPM.webp)
 
 For demonstration, I added three feeds. [My rss feed](https://gebna.gg/rss.xml) included. You can see the reader combining all of the feeds together. It can keep track of what I read. It has "Reader" mode, which basically scraps the website for the entire article content and shows it to me in reader in case the website only puts summary in their feed. I can star articles as a way of bookmarking them. I can do a lot. I'm in control here. I can add 10, 100, or thousands of feeds if I wanted to. And I can do so from across the internet. I'm not tied to one platform.
@@ -33,13 +37,14 @@ For demonstration, I added three feeds. [My rss feed](https://gebna.gg/rss.xml) 
 Many websites have a link to their RSS feed either in the header or the footer so it's easy to find. Some websites are a little more discrete.
 
 Did you know that Youtube has an RSS feed for every channel ?
-Let's see how we can add the [Fireship channel](https://www.youtube.com/@Fireship) to our reader. 
+Let's see how we can add the [Fireship channel](https://www.youtube.com/@Fireship) to our reader.
 
 On the channel page, click the about button.
 A dialog will open. At the bottom of that dialog, you'll find a share channel button. Click it, then click the "Copy channel ID" option.
 ![copy channel id](https://ant.gebna.gg/Screenshot%202024-05-03%20at%206.46.12%E2%80%AFPM.webp)
 
 Now all you need to do is paste that id at the end of this link:
+
 <pre>https://www.youtube.com/feeds/videos.xml?channel_id=</pre>
 <pre>https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA</pre>
 
@@ -52,6 +57,7 @@ And voila! Every time a video is uploaded you'll get notified by your reader ins
 Youtube is an exception. In my experience, I've always found the RSS feed of any website in the header, footer, or a simple google search.
 
 ### Conclusion
+
 While it may take you some time to build your own feed. It is a small price to pay on the path of your online freedom.
-The internet was always meant to be an open and decentralized place for sharing information. RSS allows us to realize that vision. 
+The internet was always meant to be an open and decentralized place for sharing information. RSS allows us to realize that vision.
 Reclaim your time on the internet. Start using RSS and have fun ✌️

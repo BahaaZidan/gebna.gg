@@ -19,7 +19,7 @@ const posts = (await getCollection("blog")).sort(
     <Header />
     <main>
       <div class="flex justify-center">
-        <div class="flex flex-col p-4 max-w-[65ch]">
+        <div class="flex max-w-[65ch] flex-col p-4">
           {
             posts.map((post, index) => (
               <>
