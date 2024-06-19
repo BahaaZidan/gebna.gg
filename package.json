@@ -1,43 +1,28 @@
 {
-	"name": "gebna.gg",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-static": "^3.0.1",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"@tailwindcss/typography": "^0.5.12",
-		"@types/eslint": "^8.56.0",
-		"@typescript-eslint/eslint-plugin": "^7.0.0",
-		"@typescript-eslint/parser": "^7.0.0",
-		"autoprefixer": "^10.4.19",
-		"daisyui": "^4.10.2",
-		"eslint": "^8.56.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.35.1",
-		"mdsvex": "^0.11.2",
-		"postcss": "^8.4.38",
-		"prettier": "^3.1.1",
-		"prettier-plugin-svelte": "^3.2.4",
-		"svelte": "^5.0.0-next.153",
-		"svelte-check": "^3.6.0",
-		"tailwindcss": "^3.4.3",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
-		"vite": "^5.0.3"
-	},
-	"type": "module",
-	"dependencies": {
-		"feed": "^4.2.2",
-		"slugify": "^1.6.6"
-	}
+  "name": "gebna-gg",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/mdx": "^3.1.1",
+    "@astrojs/rss": "^4.0.6",
+    "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.10.3",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "daisyui": "^4.12.2",
+    "prettier": "^3.3.2",
+    "prettier-plugin-astro": "^0.14.0"
+  }
 }

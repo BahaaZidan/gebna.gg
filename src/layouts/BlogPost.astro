@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <article class="prose prose-lg p-4 mx-auto">
+        <h1>
+          {title}
+        </h1>
+        <h4>Written by <a href="/whoami">Bahaa Zidan</a></h4>
+        <h4><FormattedDate date={pubDate} /></h4>
+        <div class="divider"></div>
+        <slot />
+      </article>
+    </main>
+    <div class="hero">
+      <div class="hero-content text-center">
+        <div class="max-w-md flex flex-col gap-2">
+          <h1 class="text-2xl font-bold">Thank you for reading!</h1>
+          <ul>
+            <li>
+              For any questions or comments, feel free to <a
+                href="/whoami"
+                class="link">contact me</a
+              >
+            </li>
+            <li>
+              Add <a href="/rss.xml" class="link">my blog's rss</a>
+              to your feed
+            </li>
+            <li><a href="/support" class="link">Buy me a coffee</a></li>
+          </ul>
+          <p>🍉</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

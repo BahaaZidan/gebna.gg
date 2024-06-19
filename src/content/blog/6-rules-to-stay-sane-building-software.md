@@ -1,0 +1,50 @@
+---
+title: 6 Rules to stay sane building software
+description: For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
+pubDate: '2020-04-03'
+heroImage: '/hero-images/6-rules-to-stay-sane-building-software.jpg'
+---
+
+For most people this article will sound very basic or obvious. That's because it is. These rules are not new revelations. They only serve as a memento to me and to my fellow engineers who wish to stay sane in this mad line of work.
+
+## Don't compromise code quality
+
+Someone might tell you: "do the hacky solution now and refactor it later". Spoiler alert! 🚨 you won't have the time for that refactor. Because in most companies, work never ends. After you half-cook this task, there will be another and another.
+
+One hacky solution after another and your code base will turn into _a big pile of ambiguity_ that is a nightmare to maintain or add features to.
+
+So next time, Know that no matter how much time you save today by compromising your code quality, you will definitely waste AT LEAST double that amount in the future and it's not going to be pretty.
+
+## It always bites
+
+Imagine you received specs for a new feature. You start by brainstorming how will you go about implementing it. You end up with two approaches, One is a robust approach that covers all the edge cases and is extensible but will take you 4 days to implement, the other is a decent approach but is not as extensible or robust as the first one. The catch is that the second approach would only take you 2 days. Which one will you choose ?
+
+Ideally everyone would go for the first one. But in practice, a lot of engineers would be swayed to choose the less robust/extensible solution to save time.
+
+The sad truth is, you'll usually spend the time you saved hot-fixing the less robust solution and in the worst case, you might even have to refactor it down the line to adapt to changes because it's less extensible.
+
+## Convention is not a luxury. It's a necessity
+
+If your project is of enough size/scale, you should definitely take the time to setup a decent set of conventions that cover every aspect of your project. From naming pull requests and Jira tickets to writing code. Convention saves everyone time and frustration by making everything predictable and standard.
+
+For example, if developers don't know exactly the folder structure or the architecture or even how to name CSS classes, one of two things will happen. They'll either ask you every time they wanna know one of those things which will waste everyone's time. Or they'll end up doing their own thing which might end up causing a disaster.
+
+## Invest in good developer experience. Please !
+
+A wise man once said: "The difference between good programmers and mediocre ones is the tooling they build for themselves". If your development environment is bad to the point of hindering your progress and wasting your time, STOP ✋ anything you're doing and work on improving it. At the very least get it to the point where it's not getting in the way. Even better, make it so that it accelerates your development.
+
+Investing in good DX is one of the smartest decisions any company can make. It saves everyone a lot of time and frustration.
+
+## Get better at the basics
+
+It doesn't matter what you do in the IT industry. Frontend devs need to be good problem solvers as much as backend devs or any other dev. It might seem unnecessary or pretentious for big companies like Amazon or Google to focus mainly on problem solving and system design in their interviews. But they do that for a reason. If you're good at the basics you're probably smart or at least you have learned good solutions to many standard problems and you can make an educated decision. If you're good at the basics, you'll get things done ✅ .
+
+Take an hour everyday to solve a couple of problems on something like LeetCode. Read a good book on design patterns. Even take a linux course (Hack the kernel 💪). Trust me no matter what field you're in, mastering the basics will make you a better engineer.
+
+## Broaden your horizons
+
+This one I really love 💕. A backend dev who knows something or two about frontend development is great. But a backend dev who learns data science (or any unrelated field) is wasting his/her time right ?. Not necessarily. You see, when people spend too much time in one field, doing the same thing, in the same way, They grow stagnant. Learning about different fields protects you from that. It also boosts your creativity considerably.
+
+A lot of neat solutions to very complex problems in one field came from or were at least inspired by a completely different field. So don't limit your possibilities to one field.
+
+This is my first article here. I really hope it was useful. Please share your opinions and if you have another rule of your own, please share that as well.

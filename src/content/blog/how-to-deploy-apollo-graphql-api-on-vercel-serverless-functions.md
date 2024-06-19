@@ -1,0 +1,92 @@
+---
+title: How to Deploy Apollo GraphQL API on Vercel Serverless Functions
+description: Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it
+pubDate: '2022-05-21'
+heroImage: '/hero-images/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions.jpg'
+---
+
+Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it:
+
+## Create a git repo and connect it to your Vercel project
+
+The most frictionless way of deploying your serverless function on Vercel is going to be through connecting a git repo to a Vercel project. That way whenever you push a commit to your main branch, a new deployment will be triggered. I won't go through the details of how to do that. But moving forward I'll assume that you have a Vercel project that is connected a git repo that you cloned in your local machine.
+
+## Init node project and install dependencies
+
+[Vercel supports many versions](https://vercel.com/docs/runtimes#official-runtimes/node-js/node-js-version) of the NodeJS runtime. I'll be using version 16 here. But you can still move forward if you're using version 14+.
+
+In the root directory of your project run:
+
+```shell
+npm init -y
+```
+
+Then install the required dependencies:
+
+```shell
+npm install apollo-server-micro apollo-server-core graphql micro micro-cors
+```
+
+I'll be using TypeScript. So I need to install some types:
+
+```shell
+npm install -D typescript @types/micro @types/micro-cors
+```
+
+If you want to be able to run the project locally, you can use [Vercel CLI](https://vercel.com/docs/cli):
+
+```shell
+npm install -D vercel
+```
+
+## Creating the API
+
+In the root of your project, create a new directory called `api`. **This is significant**. The directory must be named `api` as Vercel will look for that folder when it's trying to deploy your functions.
+
+Inside the new `api` folder create a file called `graphql.ts`. Both JavaScript and TypeScript are supported by default. So you won't have to include any build steps. Vercel will do that for you.
+
+Inside `graphql.ts` paste the following code:
+
+```ts
+import { ApolloServer } from 'apollo-server-micro'
+import { send } from 'micro'
+import Cors from 'micro-cors'
+import { typeDefs, resolvers } from '../schema'
+
+const cors = Cors()
+
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+})
+```
+
+Before we try to run it, let's unpack this a little bit. You'll notice that we're using `apollo-server-micro` instead of the typical `apollo-server` package. [micro](https://github.com/vercel/micro) is a very tiny package created by Vercel. It is designed and oriented for single purpose modules (function) in contrast to something like [express.js](http://expressjs.com/) which is designed for classical always-running web servers. The typical `apollo-server` package uses express.js under the hood. So it won't work in a serverless environment.
+
+Now onto our default export. Any file inside the `api` directory must have a function as a default export. That function is an `async` function that takes a [request and response objects](https://vercel.com/docs/runtimes#official-runtimes/node-js/node-js-request-and-response-objects) as parameters and it's responsible for handling our response. As we're going to be using ApolloServer to handle the request and response. We don't need to worry about the particularities of this handler function.
+
+```ts
+export default apolloServer.start().then(() => {
+  const handler = apolloServer.createHandler({ path: '/api/graphql' })
+
+  return cors((req, res) => {
+    return req.method === 'OPTIONS' ? send(res, 200, 'ok') : handler(req, res)
+  })
+})
+```
+
+All we need is to create an instance of ApolloServer from `apollo-server-micro`, start the server, and then create a handler. **Pay attention** to the `path` option in the `createHandler` method. The `path` needs to match the actual path of your serverless function. In our case it's `/api/graphql`. After creating the handler we'll return our handler function wrapped with `cors`. micro doesn't ship with a built-in `cors` module. So we have to use `micro-cors` for that. Lastly, we're checking for the method type and returning a constant _200 ok_ if it's `OPTIONS` to handle [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) otherwise, we let our apollo server handle the request like normal.
+
+![That's all folks!](https://ant.gebna.gg/that's_all_folks.gif)
+
+## That's it
+
+If you want to run your API locally just run:
+
+```shell
+npx vercel dev
+```
+
+The Vercel CLI will run it locally with [HMR](https://webpack.js.org/concepts/hot-module-replacement/) and everything. By default, you'll find your API on http://localhost:3000/api/graphql
+
+And to deploy the API all you need to do is push these changes to the main branch of your repo. That will work if you've already created a Vercel project and connected your git repo to it.

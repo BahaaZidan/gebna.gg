@@ -1,0 +1,261 @@
+---
+title: A Guide on GraphQL Authorization
+description: In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
+pubDate: '2022-09-16'
+heroImage: '/hero-images/a-guide-on-graphql-authorization.jpg'
+---
+
+The GraphQL spec is very open-ended. It leaves many concerns to be implemented by programmers as they see fit. Among the concerns that are not strictly outlined in the spec are Authentication and Authorization. In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
+
+I'll assume that the reader already have a basic understanding of backend development in general and have built at least basic GraphQL APIs before. If you haven't, please take a quick look at the [official graphql tutorial](https://graphql.org/learn/).
+
+## Authentication
+
+Before we get into authorization, let's have a super basic authentication setup in our GraphQL server. We won't get into the login/signup flows. But we should at the very least have a way to identify who exactly is using our GraphQL API.
+
+```js
+const server = new ApolloServer({
+  schema,
+  // ...
+  context: ({ req }) => {
+    return {
+      authenticatedUser: getAuthenticatedUser(req),
+      // ...
+    }
+  },
+  plugins: [
+    //...
+  ],
+})
+```
+
+Here we're using apollo-server. The same can be implemented using any other spec-compliant graphql server. Implementing `getAuthenticatedUser` function is beyond the scope of this article. But no matter how it's implemented. It should return a Promise of a user object. That way, queries won't have to be blocked on authenticated user unless it is necessary.
+
+## Possible Approaches
+
+Now when it comes to authorization, there are many approaches out there. Most of them can be boiled down to these 3:
+
+### Imperative Approach
+
+The simplest way to start implementing authorization is to have your authorization checks write there in the resolver code. Let's run with an example of a graphql mutation called `editArticle`.
+
+```js
+export const postResolvers = {
+  Query: {
+    // ...
+  },
+  Mutation: {
+    editArticle: async (_parent, args, context) => {
+      const authenticatedUser = await context.authenticatedUser
+      // Check if a user is logged in
+      if (!authenticatedUser) throw new Error('User must be authenticated!')
+
+      // Check if a user is authorized to perform this action
+      // i.e. check if the user is the author of the article
+      const post = await context.repos.post.findOne(args.post.id)
+      if (authenticatedUser.id !== post.author.id) {
+        throw new Error('User must be the author of the post!')
+      }
+
+      // Otherwise we proceed with the main resolver code.
+      // Note: `context.repo` is just an abstraction layer that maps to a data source.
+      return context.repos.post.editAritcle(args)
+    },
+  },
+}
+```
+
+This approach is fine for toy projects. But it becomes a hell to maintain very quickly if you're building something serious. Imagine you want to add more auth checks. Maybe implement banning features. Imagine a change of auth policy is required to be implemented system-wide, you'd have to go and read the resolver code for every single query and mutation you have in your API. It doesn't scale with the size and/or complexity of your application.
+
+### Middleware
+
+A much better approach is using middlewares. Continuing with our `editArticle` example, let's see how can this approach be better. I'm gonna be using [graphql-shield](https://github.com/maticzav/graphql-shield) for these examples. But the same can be achieved using any middleware library.
+
+We first start by defining our rules. These are functions that return a boolean. If true, execution will continue.
+
+```js
+const isAuthenticated = rule({ cache: 'contextual' })(async (_parent, _args, context) => {
+  const authenticatedUser = await context.authenticatedUser
+  return authenticatedUser !== null
+})
+
+const isArticleAuthor = rule({ cache: 'contextual' })(async (_parent, args, context) => {
+  const authenticatedUser = await context.authenticatedUser
+  const post = await context.repos.post.findOne(args.post.id)
+  return authenticatedUser.id === post.author.id
+})
+```
+
+Then we create the permissions map.
+
+```js
+const permissions = shield({
+  Query: {
+    // ...
+  },
+  Mutation: {
+    editArticle: and(isAuthenticated, isArticleAuthor),
+  },
+})
+```
+
+Then we use `applyMiddleware` from the [graphql-middleware](https://github.com/maticzav/graphql-middleware) package to apply these rules to our schema.
+
+```js
+const schema = applyMiddleware(makeSchema(typeDefs, resolvers), permissions)
+```
+
+And since we've externalized all our auth checks into their own functions and middlewares, we can delete all these imperative checks from our resolver code.
+
+```js
+export const resolvers = {
+  Query: {
+    // ...
+  },
+  Mutation: {
+    editArticle: async (_parent, args, context) => {
+      return context.repos.post.editAritcle(args)
+    },
+  },
+}
+```
+
+Now we have a clean resolver code that acts as a routing layer that maps our operation to a data source. This approach is already a massive improvement over the imperative approach. But while decoupling authorization code from the resolver implementation led a much leaner code and allowed for reusing auth rules, it also introduced a major flaw. Now we're developing our authorization in a vacuum and then attaching it to our api implementation. We're now treating authorization as if it's a concern separate from our API and that can lead to poor readability down the line. That's where our next approach comes to the rescue.
+
+### The Auth Directive
+
+[Directives](https://graphql.org/learn/queries/#directives) are a great tool to dynamically change the behaviour or even shape of your schema. Let's see how we can use them to create a powerful authorization framework while still being very simple to implement.
+
+Continuing with our `editArticle` mutation example, assume that this is the schema we have:
+
+```graphql
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+extend type Mutation {
+  editArticle(title: String!, postId: ID!, content: String!): Post
+}
+```
+
+As of now, this schema only defines the types our GraphQL API exposes, our implementation is in the resolvers, and our authorization is defined using middlewares somewhere completely separate in code. Using Directives we can define our authorization rules right there in the schema itself. And instead of middlewares, we're going to make a declarative authorization framework using directives.
+
+To create a directive we need to define its' types in our schema:
+First we define an enum called `Scope` this enum is going to hold all the possible scopes that we're going to check against. Here we define one scope called `write_article` that represents having write access to an article.
+
+```graphql
+enum Scope {
+  write_article
+  # ...
+}
+```
+
+Then we define our directive. Its' name, arguments, and what kind of objects can this directive be applied to. For now this directive can be applied to objects and field definitions in our graphql schema. For more information about the directive syntax, consult the [graphql-tools documentation](https://www.graphql-tools.com/docs/schema-directives).
+
+```graphql
+directive @requireAuth(scopes: [Scope!]) on OBJECT | FIELD_DEFINITION
+```
+
+Now let's provide an implementation of this directive. The current directives API provided by graphql-tools is very simple to understand but a bit gnarly to implement :D. All we're actually doing is we're making a transformation function that takes in an [executable schema](https://www.graphql-tools.com/docs/generate-schema) and returns an executable schema that is slightly modified.
+
+```js
+import { mapSchema, MapperKind, getDirective } from '@graphql-tools/utils'
+import { defaultFieldResolver } from 'graphql'
+
+export const requireAuthDirectiveTransformer = (schema) => {
+  const directiveName = 'requireAuth'
+  return mapSchema(schema, {
+    [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+      const directive = getDirective(schema, fieldConfig, directiveName)?.[0]
+
+      if (!directive) return
+
+      const { resolve = defaultFieldResolver } = fieldConfig
+      fieldConfig.resolve = async function (
+        source,
+        // this is the query/mutation arguments.
+        args: any,
+        context: Context,
+        info
+      ) {
+        // AUTH CHECKS WILL GO HERE
+        const result = await resolve(source, args, context, info)
+        return result
+      }
+      return fieldConfig
+    },
+  })
+}
+```
+
+It may look like much, but all this code does is checking whether or not our directive has been applied to a certain field. And if so, we're going to redefine the resolver of that field to run our authorization checks before we run the original field resolver.
+
+Now let's add those checks:
+
+```js
+export const requireAuthDirectiveTransformer = (schema) => {
+  const directiveName = 'requireAuth'
+  return mapSchema(schema, {
+    [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+      const directive = getDirective(schema, fieldConfig, directiveName)?.[0]
+
+      if (!directive) return
+
+      const { resolve = defaultFieldResolver } = fieldConfig
+      fieldConfig.resolve = async function (
+        source,
+        // this is the query/mutation arguments.
+        args: any,
+        context: Context,
+        info
+      ) {
+        const authenticatedUser = await context.authenticatedUser
+        if (!authenticatedUser) {
+          throw new AuthenticationError('You must be authenticated!')
+        }
+
+        if (directive.scopes?.includes('write_article')) {
+          const postId = args.post.id
+          if (!postId) throw new UserInputError('Missing input: [post.id]')
+
+          const post = await context.repos.post.findOne(postId)
+          if (authenticatedUser.id !== post.author.id) {
+            throw new UserInputError('User must be the author of the article!')
+          }
+        }
+        // MORE SCOPES CAN GO HERE
+
+        const result = await resolve(source, args, context, info)
+
+        return result
+      }
+      return fieldConfig
+    },
+  })
+}
+```
+
+All that's left is to run the transformer function on our schema before we export it:
+
+```js
+const schema = requireAuthDirectiveTransformer(makeExecutableSchema(typeDefs, resolvers))
+```
+
+Finally we can use the `requireAuth` directive anywhere in our schema.
+
+```graphql
+extend type Mutation {
+  editArticle(title: String!, postId: ID!, content: String!): Post
+    @requireAuth(scopes: [write_post])
+}
+```
+
+We can extend the directive by defining more scopes. We can also have one query depend on multiple scopes at once by having the `requireAuth` directive take an array of scopes as an argument.
+
+So we get the same composability we had using middlewares. But now we define our authorizations declaratively within our schema without having to worry about implementation or order of execution. Everything we need declared in one place: the schema.
+
+## Conclusion
+
+Any of these approaches can work. It all depends on the size and complexity of your project. If you're building a toy project then having imperative auth checks right there in your resolvers might not be so bad. If you're building something serious, I invite you to consider either the middleware or the directive approach. Personally, I tend to prefer the auth directive as it allows me to include all API concerns in the schema. I think of it the same way I think of css-in-js and JSX allowing frontend devs to include everything a component needs in one place. In future articles, I'll show you how I use directives to handle data validation as well.
