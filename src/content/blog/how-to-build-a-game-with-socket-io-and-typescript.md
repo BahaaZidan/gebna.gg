@@ -15,7 +15,7 @@ A simple game. But the moment we start thinking about representing/storing the g
 
 ## Breaking things down
 
-I'm going to split the game into two projects: a server and a client. As you may have guessed, most of the magic will happen on the server. And so most of the focus of this article is going to be on the server and I'll create a very minimal client that just proves that every thing works together. Keep in mind that I won't be going through every single line of code in an attempt to be as concise as possible. You're encouraged to read through the github repos for this project: [server](https://github.com/BahaaZidan/x51-server) + [client](https://github.com/BahaaZidan/x51-web-client).
+I'm going to split the game into two projects: a server and a client. As you may have guessed, most of the magic will happen on the server. And so most of the focus of this article is going to be on the server and I'll create a very minimal client that just proves that every thing works together. Keep in mind that I won't be going through every single line of code in an attempt to be as concise as possible.
 
 ## Initial server setup
 
@@ -114,8 +114,6 @@ abstract isFinished(): boolean;
 abstract reset(): boolean;
 abstract move(...args: any): boolean;
 ```
-
-Here's the link for the complete [`RoomState.ts`](https://github.com/BahaaZidan/x51-server/blob/master/src/RoomState.ts) file.
 
 Next we need to write the subclass that extends the abstract class `RoomState` in a way that reflects the specific rules of the Tic-Tac-Toe game. Let's call it: `XORoomState`.
 
@@ -269,8 +267,6 @@ isFinished() {
 ```
 
 It might look a bit gnarly. But it's actually quite simple. To decide whether or not the match is finished, we first make sure the match has started. Then, we check the board against our predefined winning slots. If the board contains any combination of winning slots, we check if that combination belongs to one player. If that's true we declare the game a win for that player. If not we check if the board doesn't have any empty slots. We use [lodash](https://lodash.com/docs/4.17.15#compact)'s `compact` method which filters an array of all falsy values. If that's true we declare the game a draw.
-
-Here's the full [`XORoomState.ts`](https://github.com/BahaaZidan/x51-server/blob/master/src/XORoomState.ts) file.
 
 ![computer guy finally done](/content/computer_guy_finally_done.gif)
 
@@ -462,7 +458,7 @@ xoNameSpace.on("connection", (socket) => {
 });
 ```
 
-With that we're done with the server part of this project✅. I didn't go through every single line of code as I tried to be as concise as possible. But I would highly suggest you take a look at the [server github repo](https://github.com/BahaaZidan/x51-server/tree/master/src). It's only 3 files. Each file about 100 lines of code. But reading them will further enhance your understanding.
+With that we're done with the server part of this project✅.
 
 ## The client
 
@@ -500,7 +496,7 @@ export default SocketContext;
 
 Remember the namespace we created earlier in the server ? We now have to connect to it separately.
 
-Let's include our context provider in [`index.tsx`](https://github.com/BahaaZidan/x51-web-client/blob/master/src/index.tsx). We'll need to connect to our server using the `io` function from SocketIO client:
+Let's include our context provider in `index.tsx`. We'll need to connect to our server using the `io` function from SocketIO client:
 
 ```ts
 import { io } from 'socket.io-client'
@@ -519,7 +515,7 @@ ReactDOM.render(
 )
 ```
 
-Next, let's create a home page ([Home.tsx](https://github.com/BahaaZidan/x51-web-client/blob/master/src/pages/Home/Home.tsx)) where the users can create a new room. First we need a button:
+Next, let's create a home page `Home.tsx` where the users can create a new room. First we need a button:
 
 ```jsx
 <td>
@@ -559,7 +555,7 @@ useEffect(() => {
 
 ![new game](/content/tt-9BaHlv.png)
 
-Now let's build our [`XO.tsx`](https://github.com/BahaaZidan/x51-web-client/blob/master/src/pages/XO/XO.tsx) component where the game will take place. By the end it should look like this:
+Now let's build our `XO.tsx` component where the game will take place. By the end it should look like this:
 
 ![tic tac toe board](/content/35GW9U0yk.png)
 
