@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<div
+  class="inline-flex items-center gap-3 rounded-full bg-white/5 py-4 pl-6 pr-4"
+>
+  <p class="text-sm text-white">Share article</p><a
+    href={`https://twitter.com/intent/tweet?text=${title}&url=${canonicalURL}`}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:text-black"
+    ><svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      class="h-5 w-5 fill-current"
+      ><path
+        d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z"
+      ></path></svg
+    ><span class="sr-only">Twitter / X</span></a
+  >
+  <a
+    href={`https://news.ycombinator.com/submitlink?u=${canonicalURL}&t=${title}`}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:text-black"
+    ><svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="none"
+      class="h-5 w-5"
+      data-darkreader-inline-stroke=""
+      style="--darkreader-inline-stroke: none;"
+      ><path
+        fill="currentColor"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 0H16V16H0V0ZM4.69024 3.8925L7.46363 9.0659V12.4258H8.53025V9.11913L11.3036 3.8925H10.1302L8.53025 7.14582C8.42355 7.30582 8.31694 7.46582 8.26363 7.62582C8.23286 7.74859 8.1845 7.83601 8.13883 7.91862C8.10515 7.97957 8.07286 8.0379 8.05024 8.10582C8.02355 8.07913 8.01017 8.03913 7.99686 7.99906C7.98355 7.95913 7.97024 7.91913 7.94355 7.89244C7.91686 7.83913 7.90348 7.79906 7.89017 7.75899C7.87686 7.71906 7.86355 7.67906 7.83694 7.62582V7.57251L7.78355 7.51913C7.76319 7.47841 7.75061 7.44546 7.73984 7.41731C7.72246 7.37171 7.70988 7.33877 7.67694 7.30582C7.62355 7.25251 7.57024 7.19913 7.57024 7.14582L5.97024 3.8925H4.69024Z"
+        data-darkreader-inline-fill=""
+        style="--darkreader-inline-fill: currentColor;"></path></svg
+    ><span class="sr-only">Hacker News</span></a
+  >
+  <!-- <a
+    href={`mailto:?subject=${title}&body=Hey!%20%0A%0ACheck%20out%20this%20article%20on%20the%%20Blog%3A%20${canonicalURL}`}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:text-black"
+    ><svg
+      viewBox="0 0 16 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 fill-current"
+      ><path
+        d="M0.00300002 1.884L8 5.882L15.997 1.884C15.9674 1.37444 15.7441 0.895488 15.3728 0.545227C15.0016 0.194965 14.5104 -9.35847e-05 14 3.36834e-08H2C1.48958 -9.35847e-05 0.998447 0.194965 0.627178 0.545227C0.255908 0.895488 0.0326041 1.37444 0.00300002 1.884Z"
+      ></path><path
+        d="M16 4.118L8 8.118L0 4.118V10C0 10.5304 0.210714 11.0391 0.585786 11.4142C0.960859 11.7893 1.46957 12 2 12H14C14.5304 12 15.0391 11.7893 15.4142 11.4142C15.7893 11.0391 16 10.5304 16 10V4.118Z"
+      ></path></svg
+    ><span class="sr-only">Email</span></a
+  > -->
+  <a
+    href={`https://www.linkedin.com/shareArticle?mini=true&url=${canonicalURL}`}
+    target="_blank"
+    rel="noreferrer noopener"
+    class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:text-black"
+    ><svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      class="h-5 w-5 fill-current"
+      ><path
+        d="M18.3362 18.339H15.6707V14.1622C15.6707 13.1662 15.6505 11.8845 14.2817 11.8845C12.892 11.8845 12.6797 12.9683 12.6797 14.0887V18.339H10.0142V9.75H12.5747V10.9207H12.6092C12.967 10.2457 13.837 9.53325 15.1367 9.53325C17.8375 9.53325 18.337 11.3108 18.337 13.6245V18.339H18.3362ZM7.00373 8.57475C6.14573 8.57475 5.45648 7.88025 5.45648 7.026C5.45648 6.1725 6.14648 5.47875 7.00373 5.47875C7.85873 5.47875 8.55173 6.1725 8.55173 7.026C8.55173 7.88025 7.85798 8.57475 7.00373 8.57475ZM8.34023 18.339H5.66723V9.75H8.34023V18.339ZM19.6697 3H4.32923C3.59498 3 3.00098 3.5805 3.00098 4.29675V19.7033C3.00098 20.4202 3.59498 21 4.32923 21H19.6675C20.401 21 21.001 20.4202 21.001 19.7033V4.29675C21.001 3.5805 20.401 3 19.6675 3H19.6697Z"
+      ></path></svg
+    ><span class="sr-only">LinkedIn</span></a
+  >
+  <!-- <button
+    type="button"
+    class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:text-black"
+    ><svg
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 stroke-current"
+      ><path
+        d="M9.99188 6.24035C10.3661 6.4191 10.7167 6.66343 11.0267 6.97335C12.4911 8.43782 12.4911 10.8122 11.0267 12.2766L7.27665 16.0267C5.81218 17.4911 3.43782 17.4911 1.97335 16.0267C0.508883 14.5622 0.508883 12.1878 1.97335 10.7234L3.43749 9.25921M14.5625 8.74079L16.0267 7.27665C17.4911 5.81218 17.4911 3.43782 16.0267 1.97335C14.5622 0.508883 12.1878 0.508883 10.7234 1.97335L6.97335 5.72335C5.50888 7.18782 5.50888 9.56219 6.97335 11.0267C7.28327 11.3366 7.63394 11.5809 8.00812 11.7597"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path></svg
+    ><span class="sr-only">Copy link</span></button
+  > -->
+</div>
