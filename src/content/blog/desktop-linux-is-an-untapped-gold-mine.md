@@ -63,7 +63,7 @@ To fix this fragmentation of package formats, two new formats have been introduc
 
 Flatpak apps are sandboxed. Which means that users have to explicitly grant an app permission to use camera, network, or whatever. Flatpak also ensures that all the dependencies an app needs is packaged with it. This means you eliminate the risk of conflict or collision. If two apps require a different version of a certain dependency, both versions can exist simultaneously with no problems.
 
-While there are technical differences between Snap and Flatpak, the gist is the same. Offer a sandboxed, isolated, and universal package format for Linux. Universal package formats are an overall win in my opinion. And make Linux feel a little bit more like one operating system. Still, they are now yet another choice that the developer needs to make when distributing their software on Linux. Couple that with the fact than Linux only amount for [less than 4%](https://gs.statcounter.com/os-market-share/desktop/worldwide) of all desktop users, and you start to see why developers like Adobe don't bother.
+While there are technical differences between Snap and Flatpak, the gist is the same. Offer a sandboxed, isolated, and universal package format for Linux. Universal package formats are an overall win in my opinion. And make Linux feel a little bit more like one operating system. Still, they are now yet another choice that the developer needs to make when distributing their software on Linux. Couple that with the fact that Linux only amount for [less than 4%](https://gs.statcounter.com/os-market-share/desktop/worldwide) of all desktop users, and you start to see why developers like Adobe don't bother.
 
 ## The Final Frontier
 
