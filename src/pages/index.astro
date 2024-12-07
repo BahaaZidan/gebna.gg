@@ -29,9 +29,8 @@ const posts = (await getCollection("blog")).sort(
                     <FormattedDate date={post.data.pubDate} />
                   </div>
                 </a>
-                <>
-                  {index !== posts.length - 1 ? <div class="divider" /> : null}
-                </>
+
+                {index !== posts.length - 1 ? <div class="divider" /> : null}
               </>
             ))
           }
