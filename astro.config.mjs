@@ -8,4 +8,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: "https://gebna.gg",
   integrations: [mdx(), sitemap(), tailwind()],
+  experimental: {
+    svg: true,
+  },
 });
