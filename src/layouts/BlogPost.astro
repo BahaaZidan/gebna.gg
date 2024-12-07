@@ -29,7 +29,7 @@ const { title, description, pubDate } = Astro.props;
       </article>
     </main>
 
-    <footer class="mb-3 flex w-full flex-col items-center gap-1">
+    <footer class="mb-3 flex w-full flex-col items-center gap-1 px-1">
       <ShareMenu title={title} />
       <h1 class="text-2xl font-bold">Thank you for reading!</h1>
       <div>
@@ -50,9 +50,9 @@ const { title, description, pubDate } = Astro.props;
 
     <script>
       let copyButtonLabel = "Copy";
-      let codeBlocks = Array.from(document.querySelectorAll("pre"));
+      let pre_blocks = Array.from(document.querySelectorAll("pre"));
 
-      for (let codeBlock of codeBlocks) {
+      for (let pre of pre_blocks) {
         let wrapper = document.createElement("div");
         wrapper.style.position = "relative";
 
@@ -60,14 +60,14 @@ const { title, description, pubDate } = Astro.props;
         copyButton.className = "btn btn-secondary absolute right-0 top-0";
         copyButton.innerHTML = copyButtonLabel;
 
-        codeBlock.setAttribute("tabindex", "0");
-        codeBlock.appendChild(copyButton);
+        pre.setAttribute("tabindex", "0");
+        pre.appendChild(copyButton);
         // wrap codebock with relative parent element
-        codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
-        wrapper.appendChild(codeBlock);
+        pre.parentNode?.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
 
         copyButton.addEventListener("click", async () => {
-          await copyCode(codeBlock, copyButton);
+          await copyCode(pre, copyButton);
         });
       }
 
@@ -76,7 +76,7 @@ const { title, description, pubDate } = Astro.props;
         button: HTMLButtonElement,
       ) {
         let code = block.querySelector("code");
-        let text = code?.innerText;
+        let text = code?.innerText || block.firstChild?.nodeValue;
         if (!text) return;
 
         await navigator.clipboard.writeText(text);
