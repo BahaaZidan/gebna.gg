@@ -1,6 +1,6 @@
 ---
-import Search from "astro-pagefind/components/Search";
 import SearchIcon from "./svg/mdi--search.svg";
+import SearchBar from "./SearchBar.svelte";
 ---
 
 <header>
@@ -23,13 +23,10 @@ import SearchIcon from "./svg/mdi--search.svg";
         <ul
           class="menu min-h-full w-80 gap-2 bg-base-200 p-4 text-base-content"
         >
-          <div class="reset-tw">
-            <Search
-              id="search"
-              className="pagefind-ui"
-              uiOptions={{ showImages: false }}
-            />
+          <div class="revert-all">
+            <SearchBar client:only />
           </div>
+          <div class="divider"></div>
           <a class="link-hover text-lg" href="/whoami">contact me</a>
           <a class="link-hover text-lg" href="/rss.xml">rss</a>
         </ul>
@@ -37,10 +34,3 @@ import SearchIcon from "./svg/mdi--search.svg";
     </div>
   </div>
 </header>
-
-<style is:global>
-  .reset-tw,
-  .reset-tw * {
-    all: revert !important;
-  }
-</style>
