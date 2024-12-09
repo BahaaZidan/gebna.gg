@@ -23,6 +23,9 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.3
     version: 5.1.3(astro@5.0.3)(tailwindcss@3.4.16)
+  '@rehype-pretty/transformers':
+    specifier: ^0.13.2
+    version: 0.13.2
   '@tailwindcss/typography':
     specifier: ^0.5.13
     version: 0.5.15(tailwindcss@3.4.16)
@@ -50,6 +53,9 @@ dependencies:
   rehype-autolink-headings:
     specifier: ^7.1.0
     version: 7.1.0
+  rehype-pretty-code:
+    specifier: ^0.14.0
+    version: 0.14.0(shiki@1.24.0)
   rehype-slug:
     specifier: ^6.0.0
     version: 6.0.0
@@ -1101,6 +1107,11 @@ packages:
 
   /@polka/url@1.0.0-next.28:
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
+    dev: false
+
+  /@rehype-pretty/transformers@0.13.2:
+    resolution: {integrity: sha512-p2ciQSwqy5Ip8aNUa9q6rdS/hJZXrxHYYfDVOHvKOsBu3t9HDmQ65YX6r9Qbl19vi160OAxmGF7MIoCRDJrRhg==}
+    engines: {node: '>=18'}
     dev: false
 
   /@rollup/pluginutils@5.1.3:
@@ -3501,6 +3512,10 @@ packages:
       vfile: 6.0.3
     dev: false
 
+  /parse-numeric-range@1.3.0:
+    resolution: {integrity: sha512-twN+njEipszzlMJd4ONUYgSfZPDxgHhT9Ahed5uTigpQn90FggW4SA/AIPq/6a149fTbE9qBEcSwE3FAEp6wQQ==}
+    dev: false
+
   /parse5@7.2.1:
     resolution: {integrity: sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==}
     dependencies:
@@ -3866,6 +3881,21 @@ packages:
       '@types/hast': 3.0.4
       hast-util-from-html: 2.0.3
       unified: 11.0.5
+    dev: false
+
+  /rehype-pretty-code@0.14.0(shiki@1.24.0):
+    resolution: {integrity: sha512-hBeKF/Wkkf3zyUS8lal9RCUuhypDWLQc+h9UrP9Pav25FUm/AQAVh4m5gdvJxh4Oz+U+xKvdsV01p1LdvsZTiQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      shiki: ^1.3.0
+    dependencies:
+      '@types/hast': 3.0.4
+      hast-util-to-string: 3.0.1
+      parse-numeric-range: 1.3.0
+      rehype-parse: 9.0.1
+      shiki: 1.24.0
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
     dev: false
 
   /rehype-raw@7.0.0:

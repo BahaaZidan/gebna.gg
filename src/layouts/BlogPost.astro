@@ -47,50 +47,5 @@ const { title, description, pubDate } = Astro.props;
       <div><a href="/support" class="link">Buy me a coffee</a></div>
       <p>🍉</p>
     </footer>
-
-    <script>
-      let defaultCopyButtonContent =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M18.327 7.286h-8.044a1.93 1.93 0 0 0-1.925 1.938v10.088c0 1.07.862 1.938 1.925 1.938h8.044a1.93 1.93 0 0 0 1.925-1.938V9.224c0-1.07-.862-1.938-1.925-1.938"/><path d="M15.642 7.286V4.688c0-.514-.203-1.007-.564-1.37a1.92 1.92 0 0 0-1.361-.568H5.673c-.51 0-1 .204-1.36.568a1.95 1.95 0 0 0-.565 1.37v10.088c0 .514.203 1.007.564 1.37s.85.568 1.361.568h2.685"/></g></svg>';
-      let pre_blocks = Array.from(document.querySelectorAll("pre"));
-
-      for (let pre of pre_blocks) {
-        let wrapper = document.createElement("div");
-        wrapper.style.position = "relative";
-
-        let copyButton = document.createElement("button");
-        copyButton.className =
-          "btn btn-secondary btn-sm absolute right-0 top-0";
-        copyButton.innerHTML = defaultCopyButtonContent;
-
-        pre.setAttribute("tabindex", "0");
-        pre.appendChild(copyButton);
-        // wrap codebock with relative parent element
-        pre.parentNode?.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
-
-        copyButton.addEventListener("click", async () => {
-          await copyCode(pre, copyButton);
-        });
-      }
-
-      async function copyCode(
-        block: HTMLPreElement,
-        button: HTMLButtonElement,
-      ) {
-        let code = block.querySelector("code");
-        let text = code?.innerText || block.firstChild?.nodeValue;
-        if (!text) return;
-
-        await navigator.clipboard.writeText(text);
-
-        // visual feedback that task is completed
-        button.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.355 6.54h-1.94V4.69a2.69 2.69 0 0 0-1.646-2.484A2.7 2.7 0 0 0 13.745 2h-8.05a2.68 2.68 0 0 0-2.67 2.69v10.09a2.68 2.68 0 0 0 2.67 2.69h1.94v1.85a2.68 2.68 0 0 0 2.67 2.68h8a2.68 2.68 0 0 0 2.67-2.68V9.23a2.69 2.69 0 0 0-2.62-2.69M7.635 9.23v6.74h-1.94a1.18 1.18 0 0 1-1.17-1.19V4.69a1.18 1.18 0 0 1 1.17-1.19h8.05a1.18 1.18 0 0 1 1.17 1.19v1.85h-4.61a2.69 2.69 0 0 0-2.67 2.69"/></svg>';
-
-        setTimeout(() => {
-          button.innerHTML = defaultCopyButtonContent;
-        }, 1000);
-      }
-    </script>
   </body>
 </html>

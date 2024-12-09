@@ -8,6 +8,8 @@ import pagefind from "astro-pagefind";
 
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
 
 export default defineConfig({
   site: "https://gebna.gg",
@@ -19,6 +21,7 @@ export default defineConfig({
     svg: true,
   },
   markdown: {
+    syntaxHighlight: false,
     rehypePlugins: [
       rehypeSlug,
       [
@@ -26,6 +29,18 @@ export default defineConfig({
         {
           behavior: "wrap",
           properties: { className: ["link-hover"] },
+        },
+      ],
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          transformers: [
+            transformerCopyButton({
+              visibility: "hover",
+              feedbackDuration: 3_000,
+            }),
+          ],
         },
       ],
     ],
