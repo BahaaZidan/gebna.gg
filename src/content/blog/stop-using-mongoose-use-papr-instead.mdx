@@ -1,0 +1,138 @@
+---
+title: Stop Using Mongoose! Use Papr Instead
+description: A comprehensive comparison between different ORMs / ODMs that support MongoDB
+pubDate: "2022-06-29"
+heroImage: "/hero-images/stop-using-mongoose-use-papr-instead.jpg"
+---
+
+Today I'm going to compare different ORMs / ODMs in terms of MongoDB support. Here's a list of the packages we're going to compare:
+
+- [Mongoose](https://Mongoosejs.com/)
+- [TypeORM](https://TypeORM.io/MongoDB)
+- [MikroORM](https://MikroORM.io/docs/usage-with-mongo)
+- [Prisma](https://www.Prisma.io/docs/orm/overview/databases/MongoDB)
+- [Papr](https://plexinc.github.io/papr/#/)
+
+The comparison is going to consider the following aspects of each package:
+
+- Performance
+- Typesafety
+- Limitations
+- Maturity
+- Documentation
+
+## Performance
+
+When it comes to performance most available material focus on how fast a tool is in a certain benchmark. And while that can be important, it is usually more important that we look into the ways a certain tool give you in case of a performance bottleneck. Does the tool provide you with APIs to debug ? Does it provide you with an escape hatch in case its API couldn't fulfill your use case ? Or does it just leave you in front of a tall concrete wall without a solution ?
+
+### Mongoose / TypeORM / MikroORM
+
+- All of these had similar performance profiles.
+- Allow you to debug and see what call they're making to the database.
+- Allow you to talk to the database driver directly.
+
+## Prisma
+
+It saddens me to say that Prisma was the worst offender when it comes to performance. Their rust query engine seems to be very lacking with MongoDB. For example, when I was trying to fetch a single user using the username, the query took about 5 seconds!!! compared to ~150 ms with all other ORMs. Because for some reason (probably because of their [built-in data-loader](https://www.Prisma.io/docs/guides/performance-and-optimization/query-optimization-performance)), the query engine translated one `Prisma.findUnique` call to a `MongoDB.aggregate` call instead of a `MongoDB.findOne` call. That was compounded by the fact that Prisma doesn't support [MongoDB collation](https://www.MongoDB.com/docs/manual/reference/collation/) natively which was needed for that particular query.
+
+And while Prisma allow you to see what calls it's making and also allow you to hit the database driver directly, if the query engine can't figure out how to map a simple `findOne` call, I imagine we're gonna be hitting that driver a lot if we go with Prisma.
+
+## Papr
+
+Enters [Papr](https://plexinc.github.io/papr/#/). A paper-thin layer (sorry) on top of the MongoDB driver. It offloads the schema validation to MongoDB itself using native [json schema validation](https://www.MongoDB.com/docs/manual/core/schema-validation/#json-schema) instead of doing it in the application layer like Mongoose. It's by far the closest performer to directly hitting the MongoDB driver.
+
+## Typesafety
+
+### Mongoose
+
+There are 2 ways to add typesafety to Mongoose. The first is by writing an interface alongside your schema. [Here's how](https://Mongoosejs.com/docs/typescript.html). The second way is by using [Typegoose](https://typegoose.github.io/typegoose/). Which is a package made to create the Mongoose schema and models using classes and decorators.
+
+While Typegoose is more DRY because you write the types once. Both result in the same level of typesafety. Which is full of holes. For example, when you run `User.create({name: 6})` it should fail because `name` is a string. It actually passes because for some reason Mongoose wraps every type you write in the interface/class with `any` 🙂.
+
+### TypeORM / MikroORM
+
+Both ORMs provide a somewhat familiar way of representing our models. They're both heavy on the OOP way of doing things. Where every model is presented as a class and the database jargon is then added by using a typescript decorator on each field. This approach is battle tested in other ecosystems, such as [Hibernate](https://hibernate.org/orm/), [Doctrine](https://www.doctrine-project.org/) and [Entity Framework](https://docs.microsoft.com/en-us/aspnet/entity-framework).
+
+For typesafety, they both rely on [reflection](https://mikro-orm.io/docs/installation#entity-discovery-in-typescript). Which means that our dev environment would need to constantly run the typescript compiler. I tried it with Vercel CLI hot reloading typescript environment and it was somewhat buggy.
+
+MikroORM provides `ts-morph` as an alternative to `reflect-metadata`. But will need types to be shipped in the final bundle. Which is basically code generation with extra steps. Read [Metadata Providers](https://mikro-orm.io/docs/metadata-providers#tsmorphmetadataprovider) for more information.
+
+And after going through all that hassle. The type-system of both of the ORMs isn't foolproof. You'll still be able to do things you shouldn't be allowed to do and the compiler won't complain.
+
+### Prisma
+
+[Prisma](https://www.prisma.io/) is 100% typesafe. And thanks to [their introspection](https://www.prisma.io/docs/orm/prisma-schema/introspection), you don't even have to write the schema yourself. You execute a terminal command and Prisma will take a sample data from your database and analyze and write the schema for you. At least that's the idea.
+
+With MongoDB, Prisma is not able to introspect relations/references. Which means you'll have to go through your generated schema file and add relations one by one manually. It can't infer default values either. And it has a hard time dealing with the type `ObjectId`. Especially in arrays.
+
+Schemas are written in Prisma's own SDL. Which is very simple. But it adds to the complexity of the codebase. It's worth noting that our schema file was more than 3000 lines of code. Prisma [doesn't support](https://github.com/prisma/prisma/issues/2377) splitting or importing. All the community solutions for splitting are clunky at best.
+
+After the schema is done, we generate a Prisma client. The client is a fully type-safe way to access the database. It is safe to say that Prisma has the best type-safety of all the previous solutions. Papr is the only one that came close.
+
+### Papr
+
+Enter Papr. The alpha giga chad of MongoDB ODMs. It's the only one of all of the above that is truly DRY. You only write the schema once. And it's fully typesafe. The only time where the type system might yield unexpected results is when using the aggregation pipeline. [Read this issue](https://github.com/plexinc/papr/issues/166). It also doesn't rely on reflection. So you can use any dev env you desire. It is truly the embodiment of the phrase "simple is powerful".
+
+## Limitations
+
+### Typeorm / MikroORM
+
+- No support for projection.
+
+### Prisma
+
+- You're forced to choose between DX and performance.
+- Doesn't support collation in MongoDB
+- No announced plan to add MongoDB support for prisma migrate
+- No native `ObjectId` support
+- No modular schema support.
+
+### Papr
+
+- No support for `populate`.
+
+## Maturity + The Open Source Graveyard
+
+In my opinion, whether a certain tool is ready for production or not depends on the following factors:
+
+- How big is the community around it ?
+- How long has it been around ? That is to say: how much time did they have to fix bugs and stabilize their API ?
+- Who's maintaining it ? Is it a company ? a group ? or an individual ? That is because often the tools that die are the tools that are maintained by individuals.
+
+### Mongoose:
+
+- Mongoose is the gold standard of accessing MongoDB in node. The community around is massive.
+- It has been around since 2010 so they've had plenty of time to fix bugs and stabilize their API.
+- The same guys that worked on [Temporal](https://temporal.io/) are behind Mongoose.
+
+### TypeORM:
+
+- It has a good community around it. But the MongoDB support is still new and limited.
+- Also one might argue that the future of the package is [hazy](https://github.com/typeorm/typeorm/issues/3267). There is no company behind it. Only a group of developers.
+
+### MikroORM:
+
+It's only maintained by a single developer. But the community around it is very impressive. It's much smaller than Prisma or TypeORM though.
+
+### Prisma:
+
+- The community around Prisma is huge. It has ~22k stars on github and with typescript growing to be the way developers choose to write javascript, Prisma's type-safety will attract more and more developers.
+- Prisma 2 has only been around for 2 years which is not long but decent. However, the MongoDB connector has only been around for about a month. See [version 3.12 release](https://github.com/prisma/prisma/releases/tag/3.12.0). Which means it's not unlikely you'd find a bug or get a breaking update while using it. Which I did. Twice 🙂
+- A company is behind Prisma.
+
+### Papr:
+
+- As Papr only has one year of age. It is still hasn't garnered a big following.
+- However, there's a company behind it ([PLEX](https://www.plex.tv/)). Which gives a decent confidence boost in its future.
+- It doesn't add any restrictions on or abstractions to how we access MongoDB. It only provides type-safety. Which is not much to maintain when you compare it to what other ORMs are promising. Papr doesn't even define itself as an ORM/ODM.
+
+## Documentation
+
+Most of the documentation I came across doing this research is generally good and usable. The only docs that left something to be desired is MikroORM. It felt like pages were taped together and there were a lot of adhoc paragraphs. It's not ideal.
+
+## Conclusions
+
+- Mongoose falls on its face when it comes to typesafety
+- TypeORM, MikroORM, and Prisma provide subpar MongoDB support
+- Prisma's performance is unbelievably bad
+- [Papr](https://plexinc.github.io/papr/#/) is the way to go. It's performant, typesafe, and a delight to use.
