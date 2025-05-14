@@ -1,0 +1,83 @@
+---
+title: The SEO Checklist
+description: Walking you through what you need for your static website to be SEO friendly
+pubDate: "2025-05-14"
+heroImage: "/hero-images/seo-checklist.jpg"
+---
+
+Search engines like Google, Ecosia, or Brave use bots to crawl the internet looking for new pages to index or old pages to update. These bots or web crawlers do three things:
+
+- First, they discover your website. The main way that happens is if your website is linked in another website that's already indexed. We call these backlinks. Some search engines also allow you to manually request the indexing of your site. [Google's search console](https://developers.google.com/search/docs/monitor-debug/search-console-start) is an example.
+- Second, they crawl every discoverable page on your site. A discoverable page is either a page that's linked in the page the crawler already discovered or a page that's mentioned in your website's `sitemap.xml`. We'll get to how make these sitemaps [later](#sitemap).
+- Third, they index the content of every page. If your website relies on client side rendering, i.e. the HTML file in the response the crawler recieved is initally empty, the crawler might not be able to index the page content. Some crawlers might be able to index the page, but it might still affect your ranking. There are techniques to get around this such as pre-rendering. But they're beyond the scope of this guide. It's always recommended to use server side rendering to avoid all the hassle.
+
+## Inside your `<head>` tags
+
+Here's the content for the head tag of this page:
+
+```astro
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Fav Icon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<!-- A shoutout to the static generator I'm using. Astro -->
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+```
+
+## Sitemap
+
+To ensure web crawlers index every page on your website regardless of the navigation structure, we need to have a `sitemap.xml` file. This file lists every page on your site describing each one. You can [read here](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap#xml) to learn about the structure of the xml file if you want to make it yourself. In practice, your website generator or web dev framework is going to have a way to generate a `sitemap.xml` file for you.
+I used [Astro](https://astro.build/) to build this blog and there's a first party package called [@astrojs/
+sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/).
+
+_Note that the file doesn't need to be called `sitemap.xml`._
+
+Once you've generated a sitemap file, you need a `robots.txt` file at the root of your website. This file does 2 things:
+
+- Signal to search engines whether or not you want your site to be indexed.
+- Point crawlers to the location of your sitemap file.
+
+Example robots.txt content:
+
+```txt
+User-agent: *
+Allow: /
+
+Sitemap: https://gebna.gg/sitemap-index.xml
+```
+
+This is allowing all user agents to crawl every page.
+
+## Important Tools
+
+Once you've got the basics figured out. You need to pay attention to 2 tools:
+
+- Chrome's Lighthouse. It gives you a simple report on different "health" metrics of your website. SEO is one of those metrics.
+- Google's Search Console. Gives deeper metrics and reporting on the indexing of your website. It also analyizes the ranking and performance on the page level.
+
+## The work is never done
+
+Beyond the checklist, lies a never ending journey of creating an infrastructure that is fast and reliable, staying on top of your metrics, and most importantly creating content that is good enough to be shared and linked across the web.
