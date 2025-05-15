@@ -4,13 +4,14 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import ShareMenu from "../components/ShareMenu.astro";
+import Html from "./Html.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<Html>
   <head>
     <BaseHead title={title} description={description} image={heroImage} />
   </head>
@@ -48,4 +49,4 @@ const { title, description, pubDate, heroImage } = Astro.props;
       <p>🍉</p>
     </footer>
   </body>
-</html>
+</Html>

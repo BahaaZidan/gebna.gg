@@ -1,3 +1,9 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: business;
+}
+
 :root {
   color-scheme: dark;
 }

@@ -4,6 +4,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import FormattedDate from "../components/FormattedDate.astro";
+import Html from "../layouts/Html.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -11,7 +12,7 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <!doctype html>
-<html lang="en">
+<Html>
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
@@ -38,4 +39,4 @@ const posts = (await getCollection("blog")).sort(
       </div>
     </main>
   </body>
-</html>
+</Html>

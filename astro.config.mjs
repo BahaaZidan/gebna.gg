@@ -4,21 +4,22 @@ import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 
 import pagefind from "astro-pagefind";
-
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineConfig({
   site: "https://gebna.gg",
+
   build: {
     format: "file",
   },
+
   integrations: [mdx(), sitemap(), pagefind(), svelte()],
-  experimental: {
-    svg: true,
-  },
+
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [
@@ -43,5 +44,9 @@ export default defineConfig({
         },
       ],
     ],
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

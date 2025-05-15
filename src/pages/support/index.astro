@@ -2,6 +2,7 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION } from "../../consts";
+import Html from "../../layouts/Html.astro";
 
 const coins = [
   {
@@ -24,7 +25,7 @@ const coins = [
 ---
 
 <!doctype html>
-<html lang="en">
+<Html>
   <head>
     <BaseHead title="Support" description={SITE_DESCRIPTION} />
   </head>
@@ -35,7 +36,9 @@ const coins = [
         id="kofiframe"
         src="https://ko-fi.com/gebna/?hidefeed=true&widget=true&embed=true&preview=true"
         class="mx-auto h-[665px] w-full sm:w-[25rem]"
-        title="gebna"></iframe>
+        title="gebna"
+      >
+      </iframe>
       <h2 class="text-2xl font-bold">Crypto addresses</h2>
       <ul class="flex flex-col gap-3">
         {
@@ -54,4 +57,4 @@ const coins = [
       </ul>
     </main>
   </body>
-</html>
+</Html>
