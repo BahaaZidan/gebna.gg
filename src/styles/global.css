@@ -131,7 +131,7 @@ figcaption + pre {
 }
 
 figure {
-  @apply mb-6 mt-1;
+  @apply mt-1 mb-6;
 }
 pre,
 code,

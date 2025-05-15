@@ -32,7 +32,7 @@
   <input
     type="text"
     placeholder="search"
-    class="input input-bordered"
+    class="input input-bordered input-lg"
     bind:value={searchValue}
   />
 

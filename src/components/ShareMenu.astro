@@ -13,9 +13,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <div
-  class="inline-flex items-center gap-3 rounded-full bg-white/5 py-4 pl-6 pr-4"
+  class="inline-flex items-center gap-3 rounded-full bg-white/5 py-4 pr-4 pl-6"
 >
-  <p class="text-sm text-white">Share article</p><a
+  <div class="text-sm text-white">Share article</div>
+  <a
     href={`https://twitter.com/intent/tweet?text=${title} by @GebnaTorky&url=${canonicalURL}`}
     target="_blank"
     rel="noreferrer noopener"
