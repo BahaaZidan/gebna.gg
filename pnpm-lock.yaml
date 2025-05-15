@@ -57,7 +57,7 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       rehype-pretty-code:
-        specifier: ^0.14.0
+        specifier: ^0.14.1
         version: 0.14.1(shiki@3.4.1)
       rehype-slug:
         specifier: ^6.0.0

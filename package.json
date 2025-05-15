@@ -26,7 +26,7 @@
     "prettier-plugin-svelte": "^3.4.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "rehype-autolink-headings": "^7.1.0",
-    "rehype-pretty-code": "^0.14.0",
+    "rehype-pretty-code": "^0.14.1",
     "rehype-slug": "^6.0.0",
     "svelte": "^5.30.1",
     "tailwindcss": "^4.1.6",
