@@ -37,14 +37,14 @@
   />
 
   {#await searchResults}
-    <p>loading...</p>
+    <div>loading...</div>
   {:then results}
     {#each results as result}
       <div class="flex flex-col gap-1">
         <a href={result.url} class="link-hover text-sm font-bold">
           {result.meta.title}
         </a>
-        <p class="text-xs">{@html result.excerpt}</p>
+        <div class="text-xs">{@html result.excerpt}</div>
       </div>
     {/each}
   {/await}
