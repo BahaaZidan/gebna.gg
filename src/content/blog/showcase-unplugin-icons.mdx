@@ -1,0 +1,104 @@
+---
+title: Access thousands of icons as components on-demand universally
+description: Showcasing unplugin-icons. An Icon framework to access thousands of icons as components on-demand universally
+pubDate: "2025-05-16"
+heroImage: "/hero-images/showcase-unplugin-icons.jpg"
+---
+
+Today I'm showcasing [unplugin-icons](https://github.com/unplugin/unplugin-icons). An amazing library that basically solved the icon problem for me. Here's a feature list from their README:
+
+## Features
+
+- 🌏 Universal
+  - 🤹 **Any** icon sets - ~150 popular sets with over 200,000 icons, logos, emojis, etc. Powered by [Iconify](https://github.com/iconify/iconify).
+  - 📦 **Major** build tools - Vite, Webpack, Rollup, Nuxt, Rspack, etc. Powered by [unplugin](https://github.com/unjs/unplugin).
+  - 🚀 **Major** frameworks - Vanilla, Web Components, React, Vue 3, Vue 2, Solid, Svelte, and more. [Contribute](./src/core/compilers).
+  - 🍱 **Any** combinations of them!
+- ☁️ On-demand - Only bundle the icons you really use, while having all the options.
+- 🖨 SSR / SSG friendly - Ship the icons with your page, no more FOUC.
+- 🌈 Stylable - Change size, color, or even add animations as you would with styles and classes.
+- 📥 [Custom icons](#custom-icons) - load your custom icons to get universal integrations at ease.
+- 📲 [Auto Importing](#auto-importing) - Use icons as components directly in your template.
+- 🦾 TypeScript support.
+- 🔍 [Browse Icons](https://icones.js.org/)
+
+## Usage (React)
+
+```tsx
+import IconAccessibility from "~icons/carbon/accessibility";
+import IconAccountBox from "~icons/mdi/account-box";
+
+function App() {
+  return (
+    <div>
+      <IconAccessibility />
+      <IconAccountBox style={{ fontSize: "2em", color: "red" }} />
+    </div>
+  );
+}
+```
+
+## Installation
+
+Since it's framework agnostic, I'm not gonna be listing all the different ways you can get it to work in your framework of choice. I'll only show how I got it to work in SvelteKit
+
+Install unplugin-icon
+
+```bash
+pnpm add -D unplugin-icons
+```
+
+Either install the full iconify pack or your icon pack of choice. I'll install the tabler pack:
+
+```bash
+pnpm add @iconify-json/tabler
+```
+
+In your `vite.config.ts`:
+
+```ts {8-10}
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vitest/config";
+import Icons from "unplugin-icons/vite";
+
+export default defineConfig({
+  plugins: [
+    sveltekit(),
+    Icons({
+      compiler: "svelte",
+    }),
+  ],
+});
+```
+
+Finally, in your `src/app.d.ts` file:
+
+```ts {1, 7}
+import "unplugin-icons/types/svelte";
+
+declare global {
+  namespace App {}
+}
+
+export {};
+```
+
+And that's it! Now you can import the icons across your SvelteKit project with ease:
+
+```svelte {2-3, 7, 11}
+<script>
+  import GoogleIcon from "virtual:icons/tabler/brand-google-filled";
+  import GitHubIcon from "virtual:icons/tabler/brand-github-filled";
+</script>
+
+<button class="btn btn-error btn-active text-white">
+  <GoogleIcon width={32} height={32} />
+  Google
+</button>
+<button class="btn btn-neutral btn-active">
+  <GitHubIcon width={32} height={32} />
+  GitHub
+</button>
+```
+
+_As you can see, you can also style them because at runtime it's just an svg._
