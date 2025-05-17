@@ -1,0 +1,36 @@
+---
+title: Notify Your Users of New App Version in SvelteKit
+description: To avoid the user running into bugs caused by the server and client going out of sync due to a breaking change, it's usually a good idea to make sure that your user is browsing the latest version of your web app. Typically you do that by providing an endpoint indicating the current version of your app. The client keeps polling that version id. If a mismatch is detected, then that indicates a code change was pushed. SvelteKit comes with that built-in.
+pubDate: "2025-05-17"
+heroImage: "/hero-images/notify-users-of-new-app-version-sveltekit.jpg"
+---
+
+To avoid the user running into bugs caused by the server and client going out of sync due to a breaking change, it's usually a good idea to make sure that your user is browsing the latest version of your web app. Typically you do that by providing an endpoint indicating the current version of your app. The client keeps polling that version id. If a mismatch is detected, then that indicates a code change was pushed (i.e. the app has been updated).
+
+SvelteKit comes with all of that out of the box. All we need to do is use the `updated` reactive value provided by the framework:
+
+In your root `+layout.svelte` file:
+
+```svelte
+<script>
+  import { updated } from "$app/state";
+</script>
+
+{#if updated.current}
+  <div class="toast toast-end">
+    <div class="alert alert-success">
+      <span>A new version of the app is available!</span>
+      <button
+        class="btn btn-neutral btn-active"
+        onclick={() => {
+          location.reload();
+        }}
+      >
+        Reload
+      </button>
+    </div>
+  </div>
+{/if}
+```
+
+Here we render a toast message in the bottom right of the screen notifying our user that a new version of the app is available and prompting them to reload the page.
