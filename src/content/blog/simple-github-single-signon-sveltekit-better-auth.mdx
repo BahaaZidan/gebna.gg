@@ -1,0 +1,120 @@
+---
+title: Simple Social Sign On (OAuth) Using better-auth and SvelteKit
+description: implementing a "SignIn with your GitHub account" feature using better-auth
+pubDate: "2025-05-18"
+heroImage: "/hero-images/simple-github-single-signon-sveltekit-better-auth.jpg"
+---
+
+There's no need for a cloud solution like Auth0 or Clerk. There many open source solutions that allow you to implement state of the art authentication techniques while keeping your user data on your own infrastructure.
+
+I just got done implementing a "SignIn with your GitHub account" feature using [better-auth](https://www.better-auth.com/) and I'm really surprised at how easy it was to get up and running.
+
+better-auth is framework agnostic and very customizable. Today, I'll walk you through how I got it to work in one of my SvelteKit projects. Bear in mind that I use SQLite and [Drizzle](https://orm.drizzle.team/) to manage my database.
+
+## Setup
+
+1. Install required package
+
+```bash
+pnpm add better-auth
+```
+
+2. GitHub App
+
+- Create a GitHub app [Here](https://github.com/settings/apps/new)
+- For local development puposes, add `http://localhost:5173/` as the home page of your app
+- Add `http://localhost:5173/api/auth/callback/github` as the **Callback URL**
+- Don't forget to grant the app read-only access to Email addresses of the user
+- Keep in mind that you'll have to create another GitHub app for production because GitHub apps only support one callback url.\_
+
+3. Add neccessary environment variables
+
+```env
+DATABASE_URL=local.db
+
+BETTER_AUTH_SECRET="askldasdasdasd==" # openssl rand --base64 16
+BETTER_AUTH_URL=http://localhost:5173 #Base URL of your app
+GITHUB_CLIENT_ID="sajkdaksdk"
+GITHUB_CLIENT_SECRET="adklmaskldmlasdmlaksmdklaskmdas"
+```
+
+4. Create a `src/lib/server/auth.ts` file
+
+```ts
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "$env/static/private";
+
+import { db } from "./db";
+
+export const auth = betterAuth({
+  database: drizzleAdapter(db, {
+    provider: "sqlite",
+  }),
+  socialProviders: {
+    github: {
+      clientId: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+    },
+  },
+});
+```
+
+_We're using the drizzle adapter for better-auth, giving it the db instance and the required env vars to get the github login to work._
+
+5. Generate the required database schema for better-auth
+
+```bash
+pnpx @better-auth/cli generate
+```
+
+This will generate an `auth-schema.ts` file in the root of your project. Copy its content to your main drizzle schema file. Usually it's in `src/lib/server/db/schema.ts`. You can then safely delete the `auth-schema.ts` file in the root of your project.
+
+6. Database Migrations
+
+```bash
+pnpm db:push
+```
+
+If you use the official SvelteKit CLI to scaffold your project `db:push` should run `drizzle-kit push`. If not make sure to install drizzle-kit manually and add the command. This command will run the database migrations. After they run, double check that all the tables have been created using `pnpm db:studio`.
+
+## Usage
+
+With all the pieces in place in the server. We can now use the utilities provided by better-auth to create a basic auth flow in the client.
+
+Create a `src/lib/client/auth.ts` file
+
+```ts
+import { createAuthClient } from "better-auth/svelte";
+
+export const authClient = createAuthClient();
+```
+
+Using the `authClient` we just created to check if the user is already logged in and also allow the user to signin using github or even logout:
+
+```svelte
+<script lang="ts">
+  import { authClient } from "$lib/client/auth";
+
+  const session = authClient.useSession();
+
+  async function githubSignIn() {
+    await authClient.signIn.social({ provider: "github" });
+  }
+
+  async function signOut() {
+    await authClient.signOut();
+  }
+</script>
+
+{#if $session.data}
+  <button onclick={signOut} class="btn">Signout</button>
+{:else}
+  <button onclick={githubSignIn} class="btn">Login with GitHub</button>
+{/if}
+```
+
+## Possible Improvements
+
+The sky really is the limit here. We can add more OAuth providers to allow our users to login using Google, Apple, Discord, and more, we can add 2 factor auth, we can add an email and password option, and a lot more. I encourage you to read through the [better-auth docs](https://www.better-auth.com/docs/introduction). They're really well written and easy to follow.
