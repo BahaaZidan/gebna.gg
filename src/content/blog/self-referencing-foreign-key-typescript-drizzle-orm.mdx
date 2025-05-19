@@ -1,0 +1,44 @@
+---
+title: Self Referencing Foreign Key in Drizzle ORM
+description: Showing how to overcome the TypeScript limitation by using Drizzle ORM's foreignKey operator
+pubDate: "2025-05-19"
+heroImage: "/hero-images/self-referencing-foreign-key-typescript-drizzle-orm.jpg"
+---
+
+I was implementing an infinitely nested commenting feature in my project today when I ran into this little problem. You see, in Drizzle ORM whenever you want to declare a column as a foreign key, you usually need to chain a `referencing` call to the column defenition like this:
+
+```ts {3-5}
+export const website = sqliteTable("website", {
+  id: integer("id").primaryKey(),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  name: text().notNull(),
+});
+```
+
+As you can see, the `ownerId` is a foreign key that references the users table. But what if we need to a foreign key that references the primary key of the same table ?
+
+```ts {1, 6, 9, 11-16}
+import { foreignKey } from "drizzle-orm/sqlite-core";
+
+export const comment = sqliteTable(
+  "comment",
+  {
+    id: integer("id").primaryKey(),
+    content: text("content").notNull(),
+    /** OTHER FIELDS */
+    parentId: integer("parent_id"),
+  },
+  (self) => [
+    foreignKey({
+      columns: [self.parentId],
+      foreignColumns: [self.id],
+    }).onDelete("cascade"),
+  ],
+);
+```
+
+> If you want to do a self reference, due to a TypeScript limitations you will have to either explicitly set return type for reference callback or use a standalone foreignKey operator.
+
+_Drizzle ORM Docs_
