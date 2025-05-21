@@ -6,14 +6,31 @@ import FormattedDate from "../components/FormattedDate.astro";
 import ShareMenu from "../components/ShareMenu.astro";
 import Html from "./Html.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"blog">["data"] & { id: string };
 
-const { title, description, pubDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  heroImage,
+  // id
+} = Astro.props;
+
+// const website_id = 1;
+// const callbackURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <Html>
   <head>
     <BaseHead title={title} description={description} image={heroImage} />
+    <!-- <script is:inline>
+      window.addEventListener("message", function (event) {
+        if (event.data.type === "resize" && event.data.height) {
+          const iframe = document.getElementById("comments");
+          iframe.style.height = event.data.height + "px";
+        }
+      });
+    </script> -->
   </head>
 
   <body>
@@ -31,6 +48,12 @@ const { title, description, pubDate, heroImage } = Astro.props;
     </main>
 
     <footer class="mb-3 flex w-full flex-col items-center gap-1 px-1">
+      <!-- <iframe
+        id="comments"
+        src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&callback_url=${callbackURL}`}
+        class="w-full max-w-[55rem]"
+      >
+      </iframe> -->
       <ShareMenu title={title} />
       <div class="text-2xl font-bold">Thank you for reading!</div>
       <div>
