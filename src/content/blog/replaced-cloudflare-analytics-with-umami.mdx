@@ -1,0 +1,18 @@
+---
+title: I Replaced Cloudflare Web Analytics With Umami
+description: Toasts or toast messages is a UI pattern that exists on most apps outthere. When we mention toasts in the web, the first instinct of most people is usually to reach for a library or an external package. I'm here to say that it's quite trivial to implement toasts in your web app.
+pubDate: "2025-05-21"
+heroImage: "/hero-images/replaced-cloudflare-analytics-with-umami.jpg"
+---
+
+Cloudflare Web Analytics never really wowed me to begin with. The dashboard was very buggy and slow. The filters leave so much to be desired. But it worked. And because it did, I couldn't find the motivation to move to a better alternative. Even though I knew many. But that all changed when it stopped working.
+
+I spent the better part of today banging my head trying to figure out why my Cloudflare Web Analytics has stopped working all of a sudden. All the metrics suddenly went to zero. And I had no visibility regarding the performance of my blog. Turns out Cloudflare just decided to stop injecting the analytics script tag into my builds. I don't know why. This blog is completely static. I'm basically shipping a bunch of HTML files. I tried triggering rebuilds. I thought maybe it's just their website acting up. So I cleared all the cache and resigned in. Nothing works. And since the whole thing is proprietary and lives on Cloudflare's servers, there's no way for me to debug this problem. And to be honest this was for the best.
+
+I decided to replace it with [Umami](https://umami.is/docs). It's open-source, privacy respecting, and most importantly: **self hostable**. It's super [easy to install](https://umami.is/docs/install#installing-with-docker) on your server too.
+
+The [documentation](https://umami.is/docs) is great, it has far more capabilities than Cloudflare Web Analytics, it's super stable, worlds ahead in terms of performance, and it looks super clean. I'm falling in love.
+
+This is just a brief post about my experience. Turns out the companies burning billions to make you think your too dumb to deploy a website on a server are yet to figure out how to make web analytics.
+
+Long live open-source ✌️
