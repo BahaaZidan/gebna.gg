@@ -2,6 +2,10 @@
   "name": "gebna-gg",
   "type": "module",
   "version": "0.1.0",
+  "engines": {
+    "pnpm": ">=10.6.5",
+    "node": ">=18.20.8"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
