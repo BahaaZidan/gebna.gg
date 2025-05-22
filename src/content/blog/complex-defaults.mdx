@@ -1,0 +1,56 @@
+---
+title: Complex Defaults
+description: Discussing the tradeoffs behind microservices, serverless, edge computing, and using multiple programming languages.
+pubDate: "2025-05-22"
+heroImage: "/hero-images/complex-defaults.jpg"
+---
+
+There's elegance in simplicity. To be clever is to be able to achieve something with the least amount of complexity possible. As programmers we know that a pillar of our craft is to come up with the simplest solutions. Despite knowing that, we often allow ourselves to stray away from simplicity and into the depths of over engineering. Or as I like to call it, premature engineering.
+
+Don't get me wrong, I've always found that doing things the complicated way usually led me to simpler solutions. But that doesn't work in every context. No one will wrong you if you rewrite the entire codebase of your side-project in Rust. But if you're in a professional setting, the first solution you come up with is often the one that sticks. Simply because there's not enough time.
+
+There lies the importance of defaults. You see, adding complexity is a lot easier than removing it after the fact. A few examples come to mind:
+
+## Microservices
+
+The microservices architecture is a tradeoff. No, it's technical debt. From an engineering perspective, there's no upside. Many people repeat the myth that it makes it easier to scale your compute. In reality, it'll only make it more complicated. Everything becomes a distributed system and you spend so much time just trying to solve the technical problems you introduced when you decided to split your monolith into smaller services that talk with each other.
+
+Microservices is a technical solution to an organizational problem. When engineering teams get so big to the point where collaborating on the same monolith becomes brittle and error prone. That's it. It's technical debt that **BIG** engineering teams sometimes have to make in order to get by. It's not a "best practice". It shouldn't be your default. Always start with a monolith.
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/y8OnoxKotPQ"
+  title="Microservices"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
+
+## Serverless
+
+When people talk about serverless, they usually refer to ephemeral computing. The idea is to dynamically allocate and release computing resources based on demand. Instead of having a server running at all times, AWS will let you use their servers to run a function and they'll charge you based on how many times you've run it. Sounds good right ? Well, not quite.
+
+Aside from the popular flaws like memory limitations, restrictive cpu time, the dreaded cold starts and more, it's when you try to develop something using these platforms that the real tradeoffs start to appear:
+
+- The local development story is so unbelievably bad.
+- Because the platform is very limited, you'll find yourself having to make a choice between opting to use Amazon's proprietary solutions like Amazon SQS, or rent a VM to run these tasks on. Full circle.
+
+You should never start on these proprietary platforms. Start with a simple linux box.
+
+## The Edge™
+
+Your service doesn't need to run at the closest possible point to your user. The people selling these "edge compute" platforms claim it's better for performance. In practice, it's almost always worse. Because while they do allow you to run your _code_ on the edge. They forget to mention that your database is almost always going to be in one place. And that the roundtrip between _the edge™_ and your database server is a lot longer than if your code was running on the same machine your database is running on.
+
+Edge database solutions exist. But they're not ready yet. Some of these edge dbs (PlanetScale for example) are even pivoting away from the idea of the edge and becoming normal managed database cloud products.
+
+Another big asterisk is that all of these edge platforms don't run Node.js. They have to run a much smaller runtime like workerd. This results in an abysmal software compatibility story.
+
+## Using Multiple Languages
+
+Using more than one programming language in your project might be necessary in some contexts. It never makes sense to start your project with multiple languages. It complicates development, tooling, infrastructure, and hiring. Not just that, it results in artificial silos within the team. These silos only came about because of the technical separation not because it makes sense product wise.
+
+## Conclusion
+
+None of the approaches I mentioned is inherently wrong. But it is in fact wrong to pick these things up without realizing the tradeoff you're making or the technical debt you're committing to. That is to say **Keep it simple** for as long as you can.
