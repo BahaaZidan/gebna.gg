@@ -25,7 +25,7 @@ export async function handle({ event, resolve }) {
   });
   event.locals.session = session;
 
-  if (event.url.pathname.includes("console") && !session?.user)
+  if (event.url.pathname.includes("admin") && !session?.user)
     throw redirect(303, "/");
 
   return svelteKitHandler({ event, resolve, auth });
