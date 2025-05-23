@@ -1,0 +1,39 @@
+---
+title: Protected Routes in SvelteKit (Don't Use +layout.server.ts)
+description: Discussing the right and the wrong ways to implement protected routes in SvelteKit
+pubDate: "2025-05-23"
+heroImage: "/hero-images/protected-routes-svelte-kit.jpg"
+---
+
+I just [found out](https://youtu.be/UbhhJWV3bmI) that I've been implementing protected routes wrong in my SvelteKit apps. Like many people, I assumed a certain hierarchy to the execution of load functions. That is to say I thought that if a load function in `+layout.server.ts` returns an error, it will short circuit preventing the rest of the load functions _down the hierarchy_ from even running. I was wrong.
+
+In SvelteKit, `load` functions [run in parallel](https://svelte.dev/docs/kit/load#Parallel-loading). That's great for performance. Also very counterintuitive. Turns out there is no hierarchy. So what do we do ?
+
+## The Solution
+
+There is one function that always runs **before** all the load functions or even the form actions. It's the [handle](https://svelte.dev/docs/kit/hooks#Server-hooks-handle) function in `hooks.server.ts`. We can protect our routes there.
+
+```ts {12-13}
+import { redirect } from "@sveltejs/kit";
+import { svelteKitHandler } from "better-auth/svelte-kit";
+
+import { auth } from "$lib/server/auth";
+
+export async function handle({ event, resolve }) {
+  const session = await auth.api.getSession({
+    headers: event.request.headers,
+  });
+  event.locals.session = session;
+
+  if (event.url.pathname.includes("console") && !session?.user)
+    throw redirect(303, "/");
+
+  return svelteKitHandler({ event, resolve, auth });
+}
+```
+
+## What about parent data?
+
+Since SvelteKit allows us to [use parent data](https://svelte.dev/docs/kit/load#Using-parent-data), why don't we just add `await event.parent` in the beginning of any load function we want to protect ?
+
+That will create the waterfall of requests that SvelteKit was trying to protect us from. It also makes the code quite difficult to reason about. So I recommend the hooks based [solution](#the-solution).
