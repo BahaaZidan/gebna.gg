@@ -1,0 +1,102 @@
+---
+title: Supercharged Code Blocks in Astro
+description: Showcasing rehype-pretty-code. It brings amazing syntax highlighting capabilities, and also a neat copy code button.
+pubDate: "2025-05-24"
+heroImage: "/hero-images/supercharge-code-blocks-astro-js.jpg"
+---
+
+One of the awesome things about Astro is that it comes with built-in [syntax highlighting](https://docs.astro.build/en/guides/syntax-highlighting/). It's powered by the very powerful [Shiki](https://shiki.style/). And you can use it in markdown, MDX, or .astro files. It being powered by shiki means that it supports many programming languages and many themes.
+
+I found that Shiki on its own isn't enough. What if you want to go beyond pretty colors and want your code blocks to resemble a capable editor where functions, variables, literals, and other syntax are easily distinguishable and uniquely colored ? What if you wanted a "Copy code" button on hover ? What if you wanted to highlight certain lines in a code block ? What about certain words ?
+
+What if you could do all of that ? All while still retaining the rich ecosystem of plugins and themes for Shiki ?
+
+Introducing [rehype-pretty-code](https://rehype-pretty.pages.dev/). An incredibly powerful [rehype](https://github.com/rehypejs/rehype) plugin.
+
+Even though I'm going to be assuming you use Astro in this post, shiki, rehype, and rehype-pretty-code are all universal and can work anywhere. Keep that in mind.
+
+## Installation
+
+```bash
+pnpm add rehype-pretty-code
+```
+
+_Since Astro comes with shiki, you don't **need** to install it explicitly_
+
+In your `astro.config.mjs`, disable the built-in syntax highlight and add `rehypePrettyCode` to your `rehypePlugins` field:
+
+```js {1, 6-7}
+import rehypePrettyCode from "rehype-pretty-code";
+
+export default defineConfig({
+  /* other fields ... */
+  markdown: {
+    syntaxHighlight: false,
+    rehypePlugins: [[rehypePrettyCode, {}]],
+  },
+});
+```
+
+Let's add the `github-dark` theme:
+
+```js /{ theme: "github-dark" }/
+import rehypePrettyCode from "rehype-pretty-code";
+
+export default defineConfig({
+  /* other fields ... */
+  markdown: {
+    syntaxHighlight: false,
+    rehypePlugins: [[rehypePrettyCode, { theme: "github-dark" }]],
+  },
+});
+```
+
+Let's add Copy button for out code blocks using transformers:
+
+```bash
+pnpm add @rehype-pretty/transformers
+```
+
+```js {2, 13-18}
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
+
+export default defineConfig({
+  /* other fields ... */
+  markdown: {
+    syntaxHighlight: false,
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          transformers: [
+            transformerCopyButton({
+              visibility: "hover",
+              feedbackDuration: 3_000,
+            }),
+          ],
+        },
+      ],
+    ],
+  },
+});
+```
+
+## Styles
+
+If you've been following the article to this point, go and try it out. Aside from a possible change in syntax highlighting theme and context aware highlighting, you shouldn't find much visual difference. Why is that ?
+
+> This library is unstyled. This means it does not provide a CSS file that applies styling by default. Rather, it provides logical attributes that you use to apply the styling yourself.
+
+> Features including highlighted lines, chars, and line numbers expose data attributes that enable you to add your own styling, which are explained below.
+
+_Rehype Pretty Code Documentation_
+
+So what do we do ? Well depending on the styling framework of your choice and also the features you're interested in, you might start to style targeting these data attributes that the library injects.
+
+I use Tailwind. And I'm too lazy. The documentation provides a few fully functional [examples](https://rehype-pretty.pages.dev/examples/). One of these examples is built using Astro and Tailwind. That example comes with a [`globals.css`](https://github.com/rehype-pretty/rehype-pretty-code/blob/master/examples/astro/src/globals.css) file that basically implements all the highlight features and is compatible with Tailwind. I copied that into my project. Aside from some small changes I made out of taste, it basically worked like a charm.
+
+## Conclusion
+
+I have only scratched the surface of what this amazing package can do. Feel free to read the [documentation](https://rehype-pretty.pages.dev/) to learn more.
