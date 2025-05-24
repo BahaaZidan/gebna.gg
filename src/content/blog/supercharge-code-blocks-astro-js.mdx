@@ -51,7 +51,7 @@ export default defineConfig({
 });
 ```
 
-Let's add Copy button for out code blocks using transformers:
+Let's add Copy button for our code blocks using transformers:
 
 ```bash
 pnpm add @rehype-pretty/transformers
@@ -93,7 +93,7 @@ If you've been following the article to this point, go and try it out. Aside fro
 
 _Rehype Pretty Code Documentation_
 
-So what do we do ? Well depending on the styling framework of your choice and also the features you're interested in, you might start to style targeting these data attributes that the library injects.
+So what do we do ? Well depending on the styling framework of your choice and also the features you're interested in, you might start to style targeting these data attributes the library injects.
 
 I use Tailwind. And I'm too lazy. The documentation provides a few fully functional [examples](https://rehype-pretty.pages.dev/examples/). One of these examples is built using Astro and Tailwind. That example comes with a [`globals.css`](https://github.com/rehype-pretty/rehype-pretty-code/blob/master/examples/astro/src/globals.css) file that basically implements all the highlight features and is compatible with Tailwind. I copied that into my project. Aside from some small changes I made out of taste, it basically worked like a charm.
 
