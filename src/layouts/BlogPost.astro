@@ -50,7 +50,7 @@ const {
     <footer class="mb-3 flex w-full flex-col items-center gap-1 px-1">
       <!-- <iframe
         id="comments"
-        src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&callback_url=${callbackURL}`}
+        src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&url=${callbackURL}`}
         class="w-full max-w-[55rem]"
       >
       </iframe> -->
@@ -60,15 +60,22 @@ const {
         For any questions or comments, feel free to <a
           href="/whoami"
           class="link"
+          data-umami-event="Contact Me Link"
         >
           contact me
         </a>
       </div>
       <div>
-        Add <a href="/rss.xml" class="link">my blog's rss</a>
+        Add <a href="/rss.xml" class="link" data-umami-event="RSS Link">
+          my blog's rss
+        </a>
         to your feed
       </div>
-      <div><a href="/support" class="link">Buy me a coffee</a></div>
+      <div>
+        <a href="/support" class="link" data-umami-event="Buy Me A Coffee Link">
+          Buy me a coffee
+        </a>
+      </div>
       <p>🍉</p>
     </footer>
   </body>
