@@ -18,25 +18,29 @@ const posts = (await getCollection("blog")).sort(
   </head>
   <body>
     <Header />
-    <main>
-      <div class="flex justify-center">
-        <div class="flex max-w-[55rem] flex-col p-4">
-          {
-            posts.map((post, index) => (
-              <>
-                <a class="link-hover" href={`/blog/${post.id}/`}>
-                  <h2 class="text-4xl font-bold">{post.data.title}</h2>
-                  <div class="text-lg">
-                    <FormattedDate date={post.data.pubDate} />
-                  </div>
-                </a>
-
-                {index !== posts.length - 1 ? <div class="divider" /> : null}
-              </>
-            ))
-          }
-        </div>
-      </div>
+    <main class="flex justify-center">
+      <section class="my-4 flex max-w-7xl flex-wrap justify-center gap-4">
+        {
+          posts.map((post) => (
+            <a
+              class="card bg-base-100 custom-masonry-item w-sm shadow-sm"
+              href={`/blog/${post.id}/`}
+            >
+              <figure>
+                <img
+                  class="h-64 w-sm object-cover"
+                  src={post.data.heroImage}
+                  alt={`${post.data.title} Hero Image`}
+                />
+              </figure>
+              <div class="card-body">
+                <FormattedDate date={post.data.pubDate} />
+                <h2 class="card-title">{post.data.title}</h2>
+              </div>
+            </a>
+          ))
+        }
+      </section>
     </main>
   </body>
 </Html>
