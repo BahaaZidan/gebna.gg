@@ -1,5 +1,5 @@
 ---
-import SearchIcon from "./svg/mdi--search.svg";
+import { SearchIcon } from "@lucide/astro";
 import SearchBar from "./SearchBar.svelte";
 ---
 
@@ -21,7 +21,7 @@ import SearchBar from "./SearchBar.svelte";
         >
         </label>
         <ul
-          class="menu min-h-full w-80 gap-2 bg-base-200 p-4 text-base-content"
+          class="menu bg-base-200 text-base-content min-h-full w-80 gap-2 p-4"
         >
           <div class="revert-all">
             <SearchBar client:only />
