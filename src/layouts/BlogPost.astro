@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 
 // const website_id = 1;
-// const callbackURL = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <Html>
@@ -50,11 +50,11 @@ const {
     <footer class="mb-3 flex w-full flex-col items-center gap-1 px-1">
       <!-- <iframe
         id="comments"
-        src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&url=${callbackURL}`}
+        src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&url=${canonicalURL}`}
         class="w-full max-w-[55rem]"
       >
       </iframe> -->
-      <ShareMenu title={title} />
+      <ShareMenu title={title} canonicalURL={canonicalURL} />
       <div class="text-2xl font-bold">Thank you for reading!</div>
       <div>
         For any questions or comments, feel free to <a

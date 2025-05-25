@@ -1,15 +1,14 @@
 ---
 interface Props {
   title: string;
+  canonicalURL: string;
 }
-const { title } = Astro.props;
+const { title, canonicalURL } = Astro.props;
 
 import RedditIcon from "./svg/mdi--reddit.svg";
 import LinkedInIcon from "./svg/mdi--linkedin.svg";
 import TwitterIcon from "./svg/fa6-brands--square-x-twitter.svg";
 import HackerNewsIcon from "./svg/simple-icons--ycombinator.svg";
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <div
