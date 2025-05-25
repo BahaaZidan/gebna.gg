@@ -2,7 +2,7 @@
 title: How to Deploy Apollo GraphQL API on Vercel Serverless Functions
 description: Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it
 pubDate: "2022-05-21"
-heroImage: "/hero-images/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions.jpg"
+heroImage: "/content/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions/hero.jpg"
 ---
 
 Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it:
@@ -77,7 +77,7 @@ export default apolloServer.start().then(() => {
 
 All we need is to create an instance of ApolloServer from `apollo-server-micro`, start the server, and then create a handler. **Pay attention** to the `path` option in the `createHandler` method. The `path` needs to match the actual path of your serverless function. In our case it's `/api/graphql`. After creating the handler we'll return our handler function wrapped with `cors`. micro doesn't ship with a built-in `cors` module. So we have to use `micro-cors` for that. Lastly, we're checking for the method type and returning a constant _200 ok_ if it's `OPTIONS` to handle [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) otherwise, we let our apollo server handle the request like normal.
 
-![That's all folks!](/content/that's_all_folks.gif)
+![That's all folks!](/content/how-to-deploy-apollo-graphql-api-on-vercel-serverless-functions/that's_all_folks.gif)
 
 ## That's it
 
