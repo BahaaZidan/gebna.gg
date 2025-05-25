@@ -3,8 +3,11 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import FormattedDate from "../components/FormattedDate.astro";
-import ShareMenu from "../components/ShareMenu.astro";
 import Html from "./Html.astro";
+import { ShareIcon, CoffeeIcon, LinkedinIcon } from "@lucide/astro";
+import { siX, siReddit, siYcombinator } from "simple-icons";
+import BrandIcon from "../components/BrandIcon.astro";
+import Footer from "../components/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"] & { id: string };
 
@@ -40,43 +43,88 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         <h1>
           {title}
         </h1>
-        <h4>Written by <a href="/whoami">Bahaa Zidan</a></h4>
-        <h4><FormattedDate date={pubDate} /></h4>
+        <FormattedDate date={pubDate} />
         <div class="divider"></div>
         <slot />
+        <div class="not-prose flex w-full justify-between">
+          <div class="dropdown dropdown-top">
+            <div tabindex="0" role="button" class="btn btn-primary">
+              <ShareIcon /> Share
+            </div>
+            <ul
+              tabindex="0"
+              class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+            >
+              <li>
+                <a
+                  href={`https://www.reddit.com/submit?url=${canonicalURL}&type=LINK&title=${title}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-umami-event="Share"
+                  data-umami-event-target="Reddit"
+                >
+                  <BrandIcon icon={siReddit} />
+                  Reddit
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://news.ycombinator.com/submitlink?u=${canonicalURL}&t=${title}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-umami-event="Share"
+                  data-umami-event-target="Hacker News"
+                >
+                  <BrandIcon icon={siYcombinator} />
+                  Hacker News
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${title} by @GebnaTorky&url=${canonicalURL}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-umami-event="Share"
+                  data-umami-event-target="Twitter"
+                >
+                  <BrandIcon icon={siX} />
+                  Twitter
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href={`https://www.linkedin.com/shareArticle?mini=true&url=${canonicalURL}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-umami-event="Share"
+                  data-umami-event-target="LinkedIn"
+                >
+                  <LinkedinIcon />
+                  LinkedIn
+                </a>
+              </li>
+            </ul>
+          </div>
+          <a
+            class="btn btn-secondary"
+            href="/support"
+            target="_blank"
+            data-umami-event="Coffee Link"
+          >
+            <CoffeeIcon /> Buy me a coffee
+          </a>
+        </div>
       </article>
     </main>
 
-    <footer class="mb-3 flex w-full flex-col items-center gap-1 px-1">
-      <!-- <iframe
+    <Footer />
+  </body>
+</Html>
+
+<!-- <iframe
         id="comments"
         src={`http://localhost:5173/embeds/${website_id}/${id}/comments?name=${title}&url=${canonicalURL}`}
         class="w-full max-w-[55rem]"
       >
       </iframe> -->
-      <ShareMenu title={title} canonicalURL={canonicalURL} />
-      <div class="text-2xl font-bold">Thank you for reading!</div>
-      <div>
-        For any questions or comments, feel free to <a
-          href="/whoami"
-          class="link"
-          data-umami-event="Contact Me Link"
-        >
-          contact me
-        </a>
-      </div>
-      <div>
-        Add <a href="/rss.xml" class="link" data-umami-event="RSS Link">
-          my blog's rss
-        </a>
-        to your feed
-      </div>
-      <div>
-        <a href="/support" class="link" data-umami-event="Buy Me A Coffee Link">
-          Buy me a coffee
-        </a>
-      </div>
-      <p>🍉</p>
-    </footer>
-  </body>
-</Html>

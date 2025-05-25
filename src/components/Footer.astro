@@ -1,0 +1,76 @@
+---
+import { RssIcon, LinkedinIcon, MailIcon } from "@lucide/astro";
+import { siX, siGithub, siInstagram, siYoutube } from "simple-icons";
+import BrandIcon from "../components/BrandIcon.astro";
+---
+
+<footer
+  class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center p-4"
+>
+  <aside class="grid-flow-col items-center">
+    <img src="/avatar.jpg" class="size-9 rounded-full" />
+    <p>Bahaa Zidan's Thoughts</p>
+  </aside>
+  <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+    <a
+      href="/rss.xml"
+      target="_blank"
+      data-umami-event="Follow"
+      data-umami-event-target="RSS"
+    >
+      <RssIcon />
+    </a>
+    <a
+      href="mailto:gebnatorky@gmail.com"
+      data-umami-event="Follow"
+      data-umami-event-target="Email"
+    >
+      <MailIcon />
+    </a>
+    <a
+      href="https://github.com/BahaaZidan"
+      target="_blank"
+      rel="nofollow"
+      data-umami-event="Follow"
+      data-umami-event-target="GitHub"
+    >
+      <BrandIcon icon={siGithub} />
+    </a>
+    <a
+      href="https://youtube.com/@GebnaTorky"
+      target="_blank"
+      rel="nofollow"
+      data-umami-event="Follow"
+      data-umami-event-target="Youtube"
+    >
+      <BrandIcon icon={siYoutube} />
+    </a>
+    <a
+      href="https://www.instagram.com/gebnatorky/"
+      target="_blank"
+      rel="nofollow"
+      data-umami-event="Follow"
+      data-umami-event-target="Instagram"
+    >
+      <BrandIcon icon={siInstagram} />
+    </a>
+    <a
+      href="https://www.linkedin.com/in/bahaazidan/"
+      target="_blank"
+      rel="nofollow"
+      data-umami-event="Follow"
+      data-umami-event-target="LinkedIn"
+    >
+      <LinkedinIcon />
+    </a>
+    <a
+      href="https://x.com/GebnaTorky"
+      target="_blank"
+      rel="nofollow"
+      data-umami-event="Follow"
+      data-umami-event-target="Twitter"
+    >
+      <BrandIcon icon={siX} />
+    </a>
+  </nav>
+</footer>
