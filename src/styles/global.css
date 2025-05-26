@@ -39,7 +39,7 @@ h6 {
 }
 
 body {
-  @apply bg-zinc-900 text-zinc-100;
+  @apply flex min-h-screen flex-col bg-zinc-900 text-zinc-100;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
