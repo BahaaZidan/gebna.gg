@@ -24,12 +24,12 @@ const posts = (await getCollection("blog")).sort(
         {
           posts.map((post) => (
             <a
-              class="card bg-base-100 custom-masonry-item w-sm shadow-sm"
+              class="card bg-base-100 group w-sm shadow-sm"
               href={`/blog/${post.id}/`}
             >
               <figure>
                 <img
-                  class="h-64 w-sm object-cover"
+                  class="h-64 w-sm scale-100 object-cover duration-100 ease-in group-hover:scale-105"
                   src={post.data.heroImage}
                   alt={`${post.data.title} Hero Image`}
                 />
