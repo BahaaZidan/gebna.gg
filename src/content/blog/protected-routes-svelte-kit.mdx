@@ -2,7 +2,6 @@
 title: Protected Routes in SvelteKit (Don't Use +layout.server.ts)
 description: Discussing the right and the wrong ways to implement protected routes in SvelteKit
 pubDate: "2025-05-23"
-heroImage: "/content/protected-routes-svelte-kit/hero.jpg"
 ---
 
 I just [found out](https://youtu.be/UbhhJWV3bmI) that I've been implementing protected routes wrong in my SvelteKit apps. Like many people, I assumed a certain hierarchy to the execution of load functions. That is to say I thought that if a load function in `+layout.server.ts` returns an error, it will short circuit preventing the rest of the load functions _down the hierarchy_ from even running. I was wrong.
