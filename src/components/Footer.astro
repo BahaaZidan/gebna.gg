@@ -2,6 +2,8 @@
 import { RssIcon, LinkedinIcon, MailIcon } from "@lucide/astro";
 import { siX, siGithub, siInstagram, siYoutube } from "simple-icons";
 import BrandIcon from "../components/BrandIcon.astro";
+
+const iconClass = "transition-all duration-300 ease-in-out hover:text-gray-900";
 ---
 
 <footer class="bg-neutral flex w-full justify-center">
@@ -20,7 +22,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="RSS"
       >
-        <RssIcon />
+        <RssIcon class={iconClass} />
       </a>
       <a
         href="mailto:gebnatorky@gmail.com"
@@ -28,7 +30,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="Email"
       >
-        <MailIcon />
+        <MailIcon class={iconClass} />
       </a>
       <a
         href="https://github.com/BahaaZidan"
@@ -38,7 +40,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="GitHub"
       >
-        <BrandIcon icon={siGithub} />
+        <BrandIcon icon={siGithub} class={iconClass} />
       </a>
       <a
         href="https://youtube.com/@GebnaTorky"
@@ -48,7 +50,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="Youtube"
       >
-        <BrandIcon icon={siYoutube} />
+        <BrandIcon icon={siYoutube} class={iconClass} />
       </a>
       <a
         href="https://www.instagram.com/gebnatorky/"
@@ -58,7 +60,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="Instagram"
       >
-        <BrandIcon icon={siInstagram} />
+        <BrandIcon icon={siInstagram} class={iconClass} />
       </a>
       <a
         href="https://www.linkedin.com/in/bahaazidan/"
@@ -68,7 +70,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="LinkedIn"
       >
-        <LinkedinIcon />
+        <LinkedinIcon class={iconClass} />
       </a>
       <a
         href="https://x.com/GebnaTorky"
@@ -78,7 +80,7 @@ import BrandIcon from "../components/BrandIcon.astro";
         data-umami-event="Follow"
         data-umami-event-target="Twitter"
       >
-        <BrandIcon icon={siX} />
+        <BrandIcon icon={siX} class={iconClass} />
       </a>
     </nav>
   </div>

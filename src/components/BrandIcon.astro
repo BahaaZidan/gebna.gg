@@ -5,8 +5,9 @@ interface Props {
   icon: SimpleIcon;
   size?: number;
   color?: string;
+  class?: string;
 }
-const { icon, size = 24, color = "currentColor" } = Astro.props;
+const { icon, size = 24, color = "currentColor", class: class_ } = Astro.props;
 ---
 
 <svg
@@ -15,6 +16,7 @@ const { icon, size = 24, color = "currentColor" } = Astro.props;
   width={size}
   height={size}
   viewBox="0 0 24 24"
+  class={class_}
 >
   <title>{icon.title}</title>
   <path d={icon.path}></path>
