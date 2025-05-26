@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "convert": "node --experimental-strip-types ./scripts/convert-hero.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -33,5 +34,8 @@
     "svelte": "^5.30.1",
     "tailwindcss": "^4.1.6",
     "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.2"
   }
 }

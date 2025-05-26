@@ -9,14 +9,13 @@ import { siX, siReddit, siYcombinator } from "simple-icons";
 import BrandIcon from "../components/BrandIcon.astro";
 import Footer from "../components/Footer.astro";
 
-type Props = CollectionEntry<"blog">["data"] & { id: string };
+type Props = { post: CollectionEntry<"blog"> };
 
 const {
-  title,
-  description,
-  pubDate,
-  heroImage,
-  // id
+  post: {
+    id,
+    data: { title, pubDate, description },
+  },
 } = Astro.props;
 
 // const website_id = 1;
@@ -25,7 +24,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 
 <Html>
   <head>
-    <BaseHead title={title} description={description} image={heroImage} />
+    <BaseHead
+      title={title}
+      description={description}
+      image={`/content/${id}/og.jpg`}
+    />
     <!-- <script is:inline>
       window.addEventListener("message", function (event) {
         if (event.data.type === "resize" && event.data.height) {
