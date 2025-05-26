@@ -5,7 +5,7 @@ import Header from "../components/Header.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Html from "./Html.astro";
 import { ShareIcon, CoffeeIcon, LinkedinIcon, LinkIcon } from "@lucide/astro";
-import { siX, siReddit, siYcombinator } from "simple-icons";
+import { siX, siReddit, siYcombinator, siBluesky } from "simple-icons";
 import BrandIcon from "../components/BrandIcon.astro";
 import Footer from "../components/Footer.astro";
 
@@ -91,6 +91,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
                 >
                   <BrandIcon icon={siYcombinator} />
                   Hacker News
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://bsky.app/intent/compose?text=${title} by @gebna.bsky.social ${canonicalURL}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-umami-event="Share"
+                  data-umami-event-target="Bluesky"
+                >
+                  <BrandIcon icon={siBluesky} />
+                  Bluesky
                 </a>
               </li>
               <li>
