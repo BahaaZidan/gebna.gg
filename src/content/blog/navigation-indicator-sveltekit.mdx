@@ -1,0 +1,35 @@
+---
+title: Build a Navigation Indicator in SvelteKit
+description: Showcasing the navigating reactive value that comes built into SvelteKit
+pubDate: "2025-05-27"
+---
+
+This little progress indicator that appears while navigating websites like GitHub or Youtube is one of my absolute favorite features. This feature can't really be implemented in a purely server-rendered website.
+
+In SvelteKit, only the first page the user runs into is server-rendered. Kit's client-side router takes over right after that. Giving us the performance and maintainability of SSR with the app-like user experience of SPA. The client-side router also gives us the ability to subscribe to history changes / user navigation and potentially react to it. All we need is the built-in `navigating` reactive value.
+
+In the page/layout you'd want to react to the changes in navigation. I'll do it in my root `+layout.svelte` file:
+
+```svelte {4, 9-11}
+<script lang="ts">
+  import "../app.css";
+
+  import { navigating } from "$app/state";
+
+  let { children } = $props();
+</script>
+
+{#if navigating.from}
+  <progress class="progress"></progress>
+{/if}
+
+{@render children()}
+```
+
+> `navigating` is a read-only object representing an in-progress navigation, with `from`, `to`, `type` and (if `type === 'popstate'`) `delta` properties. Values are `null` when no navigation is occurring, or during server rendering.
+
+_SvelteKit [Documentation](https://svelte.dev/docs/kit/$app-state#navigating)_
+
+Here I'm just rendering a progress html element at the top of every page in my app. I'm using [DaisyUI's progress](https://svelte.dev/docs/kit/$app-state#navigating) utility class to style it. Feel free to use whatever you want. It looks like the GitHub/Youtube navigation thingy so I used it. 👇
+
+<progress class="progress"></progress>
