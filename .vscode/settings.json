@@ -1,3 +1,8 @@
 {
-  "css.customData": [".vscode/tailwindcss.json"]
+	"editor.formatOnSave": true,
+	"editor.tabSize": 2,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"svelte.enable-ts-plugin": true,
+	"eslint.validate": ["javascript", "typescript", "svelte"],
+	"css.customData": [".vscode/tailwindcss.json"]
 }

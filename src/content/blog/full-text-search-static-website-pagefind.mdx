@@ -1,7 +1,7 @@
 ---
 title: Full Text Search in The Browser Without Using Much Bandwidth
 description: Showcasing Pagefind. A fully static search library that aims to perform well on large sites, while using as little of your users bandwidth as possible, and without hosting any infrastructure.
-pubDate: "2025-05-26"
+pubDate: '2025-05-26'
 ---
 
 When running a big static website, you often run into the need for search. You want to allow your users to search the entire public content of your website. The higher the number of articles you've written, the bigger the need and the challenge. That has led most people to pick a service like [Algolia](https://www.algolia.com/) or self-host something like [Elastic Search](https://www.elastic.co/elasticsearch) or [Typesense](https://typesense.org/). These are all valid solutions. But what if we can do away with the infrastructure alltogether ? What if we can run fast and capable full text search in the browser ? Introducing [Pagefind](https://pagefind.app/).
@@ -29,14 +29,14 @@ pnpm add astro-pagefind
 Add integration to the Astro config:
 
 ```ts title="astro.config.ts" {2, 5-8}
-import { defineConfig } from "astro/config";
-import pagefind from "astro-pagefind";
+import pagefind from 'astro-pagefind';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  build: {
-    format: "file",
-  },
-  integrations: [pagefind()],
+	build: {
+		format: 'file',
+	},
+	integrations: [pagefind()],
 });
 ```
 
