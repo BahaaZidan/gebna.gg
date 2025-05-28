@@ -42,7 +42,6 @@
 <footer class="bg-neutral mt-auto flex w-full justify-center">
 	<div class="footer sm:footer-horizontal text-neutral-content w-full max-w-7xl items-center p-4">
 		<aside class="grid-flow-col items-center">
-			<img src="/avatar.webp" class="size-9 rounded-full" alt="my avatar" />
 			<p>Thank you for reading!</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
