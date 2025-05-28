@@ -1,4 +1,11 @@
-node_modules/**
-dist/**
-.astro/**
+# Package Managers
 package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+node_modules/**
+build/**
+
+src/lib/__generated__
