@@ -8,7 +8,7 @@ import type { RequestHandler } from './$types';
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
-	const posts = getBlogPostsMetadata();
+	const posts = getBlogPostsMetadata().slice(0, 15);
 
 	const rssObject = {
 		rss: {
