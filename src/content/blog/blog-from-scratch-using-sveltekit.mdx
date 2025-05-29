@@ -9,7 +9,7 @@ I just spent a couple hours porting this blog from Astro to SvelteKit.
 ## Why ?
 
 If you're happy with Astro, I'm not here to change your mind. But I genuinly think that SvelteKit is the better framework for content websites like this blog. I know the number of lines of code isn't always an indicator of code quality but I can't help but ogle at the fact that porting the same website with **_the exact same features_** from Astro to SvelteKit resulted in almost 50% less lines of code. Basically, Svelte allows you to do everything Astro does (and more) while writing way less code. Here's the [migration PR](https://github.com/BahaaZidan/gebna.gg/pull/1) to prove it.
-![delta lines of code](/content/blog-from-scratch-using-sveltekit/screen-1.webp)
+![delta lines of code](/content/blog-from-scratch-using-sveltekit/screen-0.webp)
 
 The resulting build (including assets) in both frameworks was around 12mb. SvelteKit somehow improved my lighthouse score from 80s and 90s to 100s across the board. I suspect it has to do with Astro's islands not being as lightweight as advertized.
 
@@ -27,7 +27,7 @@ pnpx sv create your-blog-name
 
 When prompted pick the static adapter, choose to install **tailwind** and **tailwindcss/typography** plugin. Feel free to install **prettier** and **eslint** as well. Here are my picks:
 
-![Screenshot](/content/blog-from-scratch-using-sveltekit/screen-0.webp)
+![Screenshot](/content/blog-from-scratch-using-sveltekit/screen-1.webp)
 
 To statically build all pages we also need to add a `+layout.server.ts` file in the root:
 
