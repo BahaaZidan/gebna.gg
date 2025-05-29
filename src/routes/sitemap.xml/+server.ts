@@ -18,12 +18,12 @@ export const GET: RequestHandler = async () => {
 			'@_xmlns:image': 'https://www.google.com/schemas/sitemap-image/1.1',
 			'@_xmlns:video': 'https://www.google.com/schemas/sitemap-video/1.1',
 			url: [
-				{ loc: BASE_URL, lastmod: new Date() },
-				{ loc: `${BASE_URL}support`, lastmod: new Date() },
+				{ loc: BASE_URL, lastmod: new Date().toISOString().split('T')[0] },
+				{ loc: `${BASE_URL}support`, lastmod: new Date().toISOString().split('T')[0] },
 			].concat(
 				posts.map((post) => ({
 					loc: post.canonicalURL,
-					lastmod: post.pubDate,
+					lastmod: post.pubDate.toISOString().split('T')[0],
 				}))
 			),
 		},
