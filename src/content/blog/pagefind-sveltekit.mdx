@@ -125,4 +125,4 @@ Let's break down what we're doing:
 
 All of this should work without a hitch in your production build. It won't work in development mode. The simplest workaround I found was to simply run the build every once in a while, copy the generated `pagefind` folder into the `static` folder in the root of your repo, and lastly put that folder in `.gitignore`.
 
-I know it's not a perfect solution. I've looked around and only found a vite plugin called `vite-plugin-pagefind`. I tried it and it just does the above workaround for you. You'll still need to add pagefind to your build script. And you'll have to list `pagefind` in your `.gitignore`. For me it's not worth the extra dependencay.
+I know it's not a perfect solution. I've looked around and only found a vite plugin called `vite-plugin-pagefind`. I tried it and it just does the above workaround for you. You'll still need to add pagefind to your build script. And you'll have to list `pagefind` in your `.gitignore`. For me it's not worth the extra dependency.
