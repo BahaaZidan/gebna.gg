@@ -1,0 +1,128 @@
+---
+title: How to Integrate Pagefind in a SvelteKit Project
+description: A simple way to install Pagefind in a SvelteKit project
+pubDate: '2025-05-30'
+---
+
+When running a big static website, you often run into the need for search. You want to allow your users to search the entire public content of your website. The higher the number of articles you've written, the bigger the need and the challenge. That has led most people to pick a service like [Algolia](https://www.algolia.com/) or self-host something like [Elastic Search](https://www.elastic.co/elasticsearch) or [Typesense](https://typesense.org/). These are all valid solutions. But what if we can do away with the infrastructure alltogether ? What if we can run fast and capable full text search in the browser ? Introducing [Pagefind](https://pagefind.app/).
+
+> Pagefind is a fully static search library that aims to perform well on large sites, while using as little of your users bandwidth as possible, and without hosting any infrastructure.
+
+I'll show you how I got it to work both locally and in production in my SvelteKit project. I'm not entirely satisfied yet. As you'll see, the setup is a bit rough around the edges when it comes to local development. But what the users are going to see is most important.
+
+## Installation
+
+```bash
+pnpm add -D pagefind
+```
+
+## Indicating Indexable Content
+
+You need to indicate to Pagefind what content you want it to index. In my case, I only want the blog posts to be discoverable so I'll do that:
+
+```svelte /data-pagefind-body/ /data-pagefind-ignore/
+<main data-pagefind-body>
+	<article class="prose prose-lg mx-auto p-4">
+		<h1>{data.title}</h1>
+
+		{@html data.contentHTML}
+
+		<div data-pagefind-ignore>
+			{/* NOT SEARCHABLE CONTENT */}
+		</div>
+	</article>
+</main>
+```
+
+I'm using 2 data attributes here:
+
+- `data-pagefind-body` to indicate to Pagefind that I want everything in this `<main>` block to be indexed.
+- `data-pagefind-ignore` to prevent Pagefind from indexing anything inside of that particular `<div>`.
+
+You can also [weigh the content](https://pagefind.app/docs/weighting/).
+
+## Generating The Pagefind Index
+
+Pagefind can only process HTML files. So we need to run the indexing script after the build:
+
+```json title="package.json" {5}
+{
+	"name": "gebna.gg",
+	"type": "module",
+	"scripts": {
+		"build": "vite build && pagefind --site \"build\""
+	}
+}
+```
+
+This will generate an additional directory named "pagefind" in our build files. That directory will contain the generated JavaScript file that we'll import next to make our Search UI.
+
+## Custom Search UI
+
+Pagefind provides a [prebuilt search UI](https://pagefind.app/docs/) out of the box. I prefer to build my own. It's also super easy using Svelte's amazing reactivity:
+
+```svelte title="src/lib/components/SearchBar.svelte" showLineNumbers {4, 6-13, 15-24, 26-27, 35, 38-41, 43-44, 46}
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	let pagefind: any;
+
+	onMount(async () => {
+		pagefind = await import(
+			// WORKAROUND: we need this templating trick to stop vite from statically analyzing this import
+			/* @vite-ignore */
+			`${'/'}pagefind/pagefind.js`
+		);
+		pagefind.init();
+	});
+
+	async function fetchSearchResults(val: string) {
+		const search = await pagefind?.debouncedSearch(val);
+
+		if (search?.results?.length > 0) {
+			const results = search.results;
+			const data = await Promise.all(results.map(async (r) => await r.data()));
+			return data;
+		}
+		return [];
+	}
+
+	let searchValue = $state('');
+	let searchResults = $derived(fetchSearchResults(searchValue));
+</script>
+
+<div class="flex max-w-80 flex-col gap-6">
+	<input
+		type="text"
+		placeholder="search"
+		class="input input-bordered input-lg"
+		bind:value={searchValue}
+	/>
+
+	{#await searchResults}
+		<div>loading...</div>
+	{:then results}
+		{#each results as result (result.url)}
+			<div class="flex flex-col gap-1">
+				<a href={result.url.replace('.html', '')} class="link-hover text-sm font-bold">
+					{result.meta.title}
+				</a>
+				<div class="text-xs">{@html result.excerpt}</div>
+			</div>
+		{/each}
+	{/await}
+</div>
+```
+
+Let's break down what we're doing:
+
+1. On component mount, dynamically import the pagefind.js file we generated in the previous step
+2. We bind a search value to a text input
+3. Using Pagefind's builtin `debouncedSearch`, we get the results and store them in a $dervied state.
+4. Render the result and don't forget to remove the .html from the url of the result.
+
+## Local Development
+
+All of this should work without a hitch in your production build. It won't work in development mode. The simplest workaround I found was to simply run the build every once in a while, copy the generated `pagefind` folder into the `static` folder in the root of your repo, and lastly put that folder in `.gitignore`.
+
+I know it's not a perfect solution. I've looked around and only found a vite plugin called `vite-plugin-pagefind`. I tried it and it just does the above workaround for you. You'll still need to add pagefind to your build script. And you'll have to list `pagefind` in your `.gitignore`. For me it's not worth the extra dependencay.
