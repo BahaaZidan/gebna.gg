@@ -1,0 +1,43 @@
+---
+title: 'Husky: Easy Commit Hooks With One Tool'
+description: Showcasing Husky. The best tool for creating git commit hooks in a JavaScript project.
+pubDate: '2025-05-31'
+---
+
+Explaining constraints is more simple and sustainable compared to teaching best practices. One of the greatest tools for that is pre-commit hooks. Basically running a few scripts before commiting. If any of the scripts exits with an error, you prevent the user from committing. [Husky](https://typicode.github.io/husky/) is the simplest way to implement this. All you need is install Husky and then run one command.
+
+```bash
+pnpm add -D husky
+
+pnpx husky init
+```
+
+This will create a pre-commit script in `.husky/` and update the `prepare` script in `package.json`. By default the hook only contains `pnpm test` but I like to add more checks to it. I like to run the formatter (Prettier) and linter (ESLint). I also like to run the TypeScript and Svelte compilers to make sure everything compiles correctly.
+
+```json title="package.json" showLineNumbers {6, 7, 10}
+{
+	"name": "something",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"prepare": "husky",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"codegen:swagger": "node --experimental-strip-types ./scripts/codegen-swagger.ts",
+		"db:push": "drizzle-kit push",
+		"db:migrate": "drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio"
+	},
+	"devDependencies": {
+		"husky": "^9.1.7"
+	}
+}
+```
+
+```bash title=".husky/pre-commit"
+pnpm check && pnpm lint
+```
+
+You can do [a lot more](https://typicode.github.io/husky/how-to.html) with Husky. But that's it for today's showcase.
