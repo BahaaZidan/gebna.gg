@@ -28,7 +28,7 @@
 			<img
 				alt="{data.title} hero image"
 				src={`/content/${data.id}/hero.webp`}
-				class="max-h-96 w-full max-w-xl object-cover"
+				class="max-h-96 w-full max-w-2xl object-cover"
 			/>
 		</div>
 		<div class="divider"></div>

@@ -1,0 +1,73 @@
+---
+title: Automatically Sort Your Imports Using This Prettier Plugin
+description: Showcasing @ianvs/prettier-plugin-sort-imports. An amazing Prettier plugin that lets your formatter order your imports for you.
+pubDate: '2025-06-01'
+---
+
+Why you ask ? Because it makes reading code easier ? Maybe I'm pedantic and I already sorted my imports manually and this saved so much time. Anyway, give it a go and it may save you time too.
+
+```bash
+pnpm add -D @ianvs/prettier-plugin-sort-imports
+```
+
+Now all you need is to add it to the plugins array in your prettier config file:
+
+```json title=".prettierrc" showLineNumbers {10}
+{
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"printWidth": 100,
+	"htmlWhitespaceSensitivity": "ignore",
+	"plugins": [
+		"prettier-plugin-svelte",
+		"prettier-plugin-tailwindcss",
+		"@ianvs/prettier-plugin-sort-imports"
+	],
+	"overrides": [
+		{
+			"files": "*.svelte",
+			"options": {
+				"parser": "svelte"
+			}
+		}
+	]
+}
+```
+
+You can stop here. I believe the default sorting is alright. But as you may know, I'm pedantic. And this plugin allows you to customize everything about its behaviour. So for my SvelteKit project, I'll customize the sorting as follows:
+
+```json title=".prettierrc" showLineNumbers {20}
+{
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"printWidth": 100,
+	"htmlWhitespaceSensitivity": "ignore",
+	"plugins": [
+		"prettier-plugin-svelte",
+		"prettier-plugin-tailwindcss",
+		"@ianvs/prettier-plugin-sort-imports"
+	],
+	"overrides": [
+		{
+			"files": "*.svelte",
+			"options": {
+				"parser": "svelte"
+			}
+		}
+	],
+	"importOrder": ["^@", "<THIRD_PARTY_MODULES>", "", "^\\$(?!lib/)", "", "^\\$lib/", "", "^[.]"]
+}
+```
+
+Here's my order:
+
+1. Namespaced third party packages
+2. Other third party packages
+3. An empty line to make it easier to make a distinction between internal and 3rd party imports
+4. All imports starting with `$lib` which is Kit's alias for your internal packages you export from `src/lib`
+5. An empty line
+6. Relatively imported internal imports
+
+A pleasant surprise for me was the fact that it handled `.svelte` files without a hitch. You can also customize [a lot more](https://github.com/IanVS/prettier-plugin-sort-imports?tab=readme-ov-file#options). I hope you find it useful.
