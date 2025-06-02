@@ -1,0 +1,70 @@
+---
+title: Client-side Theme Changer Using Tailwind, DaisyUI, and SvelteKit
+description: Implementing a simple multi-theme setup using Tailwind, Daisy, and Svelte
+pubDate: '2025-06-02'
+---
+
+One of the great things about DaisyUI is that it offers more than [35 built-in themes](https://daisyui.com/docs/themes/#list-of-themes). Today, we're going to implement a very simple theme changer.
+
+First lets enable the DaisyUI themes we want:
+
+```css title="app.css" {4-6, 9-10}
+@import 'tailwindcss';
+
+@plugin "daisyui" {
+	themes:
+		business --default,
+		corporate;
+}
+
+@custom-variant theme-business (&:where([data-theme=business], [data-theme=business] *));
+@custom-variant theme-corporate (&:where([data-theme=corporate], [data-theme=corporate] *));
+```
+
+_I'm assiging a [Tailwind custom variant](https://tailwindcss.com/docs/adding-custom-styles#adding-custom-variants) to every theme so that we can easily style based on them later_
+
+Install `theme-change`:
+
+```bash
+pnpm add theme-change
+```
+
+In your root layout, initialize `themeChange`:
+
+```svelte title="src/routes/+layout.svelte" {4-5, 9-11}
+<script lang="ts">
+	import '../app.css';
+
+	import { onMount } from 'svelte';
+	import { themeChange } from 'theme-change';
+
+	let { children } = $props();
+
+	onMount(() => {
+		themeChange(false);
+	});
+</script>
+
+{@render children()}
+```
+
+Anywhere in the app you wish to allow your user to change themes:
+
+```svelte
+<button
+	data-set-theme="corporate"
+	data-act-class="ACTIVECLASS"
+	class="btn btn-ghost btn-circle theme-corporate:hidden"
+>
+	<SunIcon />
+</button>
+<button
+	data-set-theme="business"
+	data-act-class="ACTIVECLASS"
+	class="btn btn-ghost btn-circle theme-business:hidden"
+>
+	<MoonIcon />
+</button>
+```
+
+And that's it. You can add as many DaisyUI themes as you'd like.
