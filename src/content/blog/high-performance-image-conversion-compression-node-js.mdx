@@ -1,0 +1,29 @@
+---
+title: 'Sharp: High Performance Image Conversion & Compression in NodeJS'
+description: Showcasing Sharp. The typical use case for this high speed Node-API module is to convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions.
+pubDate: '2025-06-03'
+---
+
+Turns out the best way to make an image compression library in JavaScript is to write it in C.
+
+[Sharp](https://sharp.pixelplumbing.com/) is just that. It doesn't just handle compression or format conversion. The official docs state the use cases clearly:
+
+> The typical use case for this high speed Node-API module is to convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions.
+>
+> It can be used with all JavaScript runtimes that provide support for Node-API v9, including Node.js >= 18.17.0, Deno and Bun.
+>
+> Resizing an image is typically 4x-5x faster than using the quickest ImageMagick and GraphicsMagick settings due to its use of [libvips](https://github.com/libvips/libvips).
+>
+> Colour spaces, embedded ICC profiles and alpha transparency channels are all handled correctly. Lanczos resampling ensures quality is not sacrificed for speed.
+>
+> As well as image resizing, operations such as rotation, extraction, compositing and gamma correction are available.
+
+Here's how easy it is to convert image format from `jpg` images to `webp`:
+
+```ts
+import sharp from 'sharp';
+
+await sharp(inputPath).webp({ quality: 50 }).toFile(webpPath);
+```
+
+That's it. Super straight forward. I've used this library in many contexts. Whether it's compressing user generated images to store them into an S3 bucket or writing a script to compress and resize the images of this blog, Sharp handles it all like a champ. It really is an amazing library and I implore you to [read the docs](https://sharp.pixelplumbing.com/).
