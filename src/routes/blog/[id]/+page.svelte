@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { CoffeeIcon, LinkedinIcon, LinkIcon, ShareIcon } from '@lucide/svelte';
 	import { siBluesky, siReddit, siX, siYcombinator } from 'simple-icons';
+	import { onMount } from 'svelte';
+
+	import { PUBLIC_COMMENTS_PREALPHA } from '$env/static/public';
 
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import FormattedDate from '$lib/components/FormattedDate.svelte';
@@ -9,6 +12,19 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	const website_id = 1;
+	let iframe: HTMLIFrameElement;
+
+	onMount(() => {
+		if (PUBLIC_COMMENTS_PREALPHA === '1') {
+			window.addEventListener('message', function (event) {
+				if (event.data.type === 'resize' && event.data.height) {
+					iframe.style.height = event.data.height + 'px';
+				}
+			});
+		}
+	});
 </script>
 
 <Head
@@ -127,5 +143,15 @@
 				<CoffeeIcon /> Buy me a coffee
 			</a>
 		</div>
+		{#if PUBLIC_COMMENTS_PREALPHA === '1'}
+			<div data-pagefind-ignore class="not-prose">
+				<iframe
+					class="w-full"
+					bind:this={iframe}
+					title="comments"
+					src="http://localhost:5173/embeds/{website_id}/{data.id}/comments?url={data.canonicalURL}&name={data.title}"
+				></iframe>
+			</div>
+		{/if}
 	</article>
 </main>
