@@ -1,0 +1,30 @@
+---
+title: Simple Defaults
+description: This article is part 2 of a series that started with Complex Defaults. I'm yet to give this series a name. But if there's one thing I'd want you to take away from it, it's that software engineering can be much simpler and you can become a lot more capable and valuable software engineer if you allow yourself to question all the trends.
+pubDate: '2025-06-04'
+---
+
+As programmers we know that a pillar of our craft is to come up with the simplest solutions. Despite knowing that, we often allow ourselves to stray away from simplicity and into the depths of over engineering. Or as I like to call it, premature engineering.
+
+Don't get me wrong, I've always found that doing things the complicated way usually led me to simpler solutions. But that doesn't work in every context. No one will wrong you if you rewrite the entire codebase of your side-project in Rust. But if you're in a professional setting, the first solution you come up with is often the one that sticks. Simply because there's not enough time.
+
+There lies the importance of defaults. You see, adding complexity is a lot easier than removing it after the fact. Today I'm going to share the three most important defaults in app development.
+
+**TLDR: A monolith written in one programming language deployed on one linux box.**
+
+## One Programming Language
+
+Imagine a full stack codebase. All written in one programming language. It doesn't really matter what that is. What matters is that you and your team can write good code in it. Sharing code is a simple matter of export and import. The tooling you develop works across your stack. No more two teams wasting time developing different solutions to the same problem. Hiring technical people becomes trivial since everyone is speaking the same language. Literally.
+
+## Monolith
+
+Are you building the next tiktok ? Are you sure you're going to succeed ? Your answer doesn't really matter because whether you're building the next facebook, tiktok, or a blog for your family recipes, it only makes sense for your code to be a monolith. From development all the way to deployment, breaking down your app into services that have to communicate will only increase complexity.
+
+## One Linux Box
+
+No, I don't want you to caveman it. You can have CI/CD, DDoS protection, and all the nice things cloud companies offer without having to spend that much money or suffer the abysmal real world performance. All you need is [Coolify](https://coolify.io/) (or anything like it). Coolify is basically your self-hosted Vercel, Netlify, or Heroku. You get all the bells and whistles these platforms spend millions in marketing telling you that you can't have on your own.
+Worried about DDoS ?, you can [easily](https://coolify.io/docs/knowledge-base/cloudflare/tunnels/overview) hide your IP behind something like Cloudflare. Having your server and your database living in the same box will also make you reach performance levels you never achieved using _The Edge™_.
+
+## Footnotes
+
+This article is part 2 of a series that started with [Complex Defaults](https://gebna.gg/blog/complex-defaults). I'm yet to give this series a name. But if there's one thing I'd want you to take away from it, it's that software engineering can be much simpler and you can become a lot more capable and valuable software engineer if you allow yourself to question all the trends. Just because something is new doesn't mean it's good. Just because your favorite tech influencer is enamoured by it doesn't mean it's good. Break free.
