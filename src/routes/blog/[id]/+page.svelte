@@ -38,7 +38,7 @@
 	<article class="prose prose-lg mx-auto p-4">
 		<div class="flex flex-col items-center">
 			<FormattedDate date={data.pubDate} />
-			<h1>
+			<h1 class="wrap-anywhere">
 				{data.title}
 			</h1>
 			<img
