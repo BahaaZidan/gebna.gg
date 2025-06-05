@@ -37,7 +37,7 @@ async function convertAndRename(inputPath: string): Promise<void> {
 
 	try {
 		// Convert to WEBP
-		await sharp(inputPath).webp({ quality: 50 }).toFile(webpPath);
+		await sharp(inputPath).webp({ quality: 80 }).toFile(webpPath);
 		console.log(`Converted: ${inputPath} → ${webpPath}`);
 
 		// Rename original to og.jpg or og.png
