@@ -28,7 +28,7 @@
 				</figure>
 				<div class="card-body">
 					<FormattedDate date={post.pubDate} />
-					<h2 class="card-title">{post.title}</h2>
+					<h2 class="card-title wrap-anywhere">{post.title}</h2>
 				</div>
 			</a>
 		{/each}
