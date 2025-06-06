@@ -1,0 +1,33 @@
+---
+title: Break Long Unbreakable Words With CSS overflow-wrap
+description: A quick explanation and example of the overflow-wrap CSS property.
+pubDate: '2025-06-06'
+---
+
+If you're facing a problem with long text breaking layouts, you need to familiarize yourself with the CSS property `overflow-wrap`.
+
+| CSS                          | Tailwind          | Description                                                                                                                                       |
+| ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `overflow-wrap: normal;`     | `wrap-normal`     | The default. Only allow line breaks at natural wrapping points, like spaces, hyphens, and punctuation.                                            |
+| `overflow-wrap: break-word;` | `wrap-break-word` | Allow line breaks between letters in a word if needed.                                                                                            |
+| `overflow-wrap: anywhere;`   | `wrap-anywhere`   | Behaves similarly to wrap-break-word, except that the browser factors in mid-word line breaks when calculating the intrinsic size of the element. |
+
+## break-word:
+
+<div class="flex max-w-sm">
+	<img class="size-16 rounded-full" src="/avatar.webp" />
+	<div class="wrap-break-word">
+		<p class="font-medium">Jay Riemenschneider</p>
+		<p>jason.riemenschneider@vandelayindustries.com</p>
+	</div>
+</div>
+
+## anywhere:
+
+<div class="flex max-w-sm">
+	<img class="size-16 rounded-full" src="/avatar.webp" />
+	<div class="wrap-anywhere">
+		<p class="font-medium">Jay Riemenschneider</p>
+		<p>jason.riemenschneider@vandelayindustries.com</p>
+	</div>
+</div>
