@@ -5,6 +5,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
@@ -38,6 +39,7 @@ export const load: PageServerLoad = async ({ params }) => {
 				],
 			})
 			.use(rehypeStringify, { allowDangerousHtml: true })
+			.use(remarkGfm)
 			.process(content)
 	).toString();
 
