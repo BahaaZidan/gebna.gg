@@ -42,7 +42,10 @@
 	{:then results}
 		{#each results as result (result.url)}
 			<div class="flex flex-col gap-1">
-				<a href={result.url.replace('.html', '')} class="link-hover text-sm font-bold">
+				<a
+					href={result.url.replace('.html', '')}
+					class="link-hover text-sm font-bold wrap-anywhere"
+				>
 					{result.meta.title}
 				</a>
 				<div class="text-xs">{@html result.excerpt}</div>
