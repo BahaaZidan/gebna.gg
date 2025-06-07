@@ -1,0 +1,96 @@
+---
+title: Do More In Your Markdown With GitHub Flavoured Markdown
+description: Showcasing GitHub Flavoured Markdown and how to install it on any unified or remark codebase.
+pubDate: '2025-06-07'
+---
+
+Strikethrough, Table, Autolink literals, Footnote, and Tasklist. Those are the things GitHub [supports](https://github.github.com/gfm/) in any markdown hosted on their website. [remark-gfm](https://github.com/remarkjs/remark-gfm) brings all those features to any projoct that support remark or unified.
+
+# Installation
+
+```bash
+pnpm add -D remark-gfm
+```
+
+```ts showLineNumbers {1, 4, 19}
+import remarkGfm from 'remark-gfm';
+
+const contentHTML = (
+	await unified()
+		.use(remarkParse)
+		.use(remarkRehype, { allowDangerousHtml: true })
+		.use(rehypeSlug)
+		.use(rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: ['link-hover'] } })
+		.use(rehypePrettyCode, {
+			theme: 'github-dark',
+			transformers: [
+				transformerCopyButton({
+					visibility: 'hover',
+					feedbackDuration: 3_000,
+				}),
+			],
+		})
+		.use(rehypeStringify, { allowDangerousHtml: true })
+		.use(remarkGfm)
+		.process(content)
+).toString();
+```
+
+# Usage
+
+```md
+# GFM
+
+## Autolink literals
+
+www.example.com, https://example.com, and contact@example.com.
+
+## Footnote
+
+A note[^1]
+
+[^1]: Big note.
+
+## Strikethrough
+
+~one~ or ~~two~~ tildes.
+
+## Table
+
+| a   | b   |   c |  d  |
+| --- | :-- | --: | :-: |
+
+## Tasklist
+
+- [ ] to do
+- [x] done
+```
+
+# Live Examples
+
+## Autolink literals
+
+www.example.com, https://example.com, and contact@example.com.
+
+## Footnote
+
+A note[^1]
+
+[^1]: Big note.
+
+## Strikethrough
+
+~one~ or ~~two~~ tildes.
+
+## Table
+
+| CSS                          | Tailwind          |
+| ---------------------------- | ----------------- |
+| `overflow-wrap: normal;`     | `wrap-normal`     |
+| `overflow-wrap: break-word;` | `wrap-break-word` |
+| `overflow-wrap: anywhere;`   | `wrap-anywhere`   |
+
+## Tasklist
+
+- [ ] to do
+- [x] done
