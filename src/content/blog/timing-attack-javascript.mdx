@@ -1,0 +1,41 @@
+---
+title: Timing Attacks
+description: Exploring timing and enumeration attacks in the context of websites.
+pubDate: '2025-06-08'
+---
+
+Take a look at the following code block. Do you see anything wrong ?
+
+```js
+const SECRET_API_KEY = 'qwerty';
+
+app.post('/login', (req, res) => {
+	if (req.body.apiKey === SECRET_API_KEY) {
+		res.status(200).send('Success');
+	}
+	res.status(403).send('Access denied');
+});
+```
+
+Well I didn't. Untill I came across this [reddit post](https://www.reddit.com/r/webdev/comments/1l5g40t/whats_timing_attack/).
+
+You see, in JavaScript, `===` doesn't perform constant-time operations. Meaning that comparing 2 strings where the first charachters don't match will be faster than comparing 2 strings where the 10th characters don't match. `"qwerty" === "awerty"` is a bit faster than `"qwerty" === "qwerta"`
+
+This means that an attacker can **technically** brute-force his way into your application, supplying this endpoint with different keys and checking the time it takes for each to complete.
+
+How to prevent this? Use `crypto.timingSafeEqual(req.body.apiKey, SECRET_API_KEY)` which doesn't give away the time it takes to complete the comparison.
+
+Now, in the real world random network delays and rate limiting make this attack basically impossible to pull off, but the same idea can be used in combination with other techniques to break your security.
+
+# Timing + Enumeration
+
+This is much more relavent and dangerous to web apps. A malicious actor can determine if a user exists with a certain email/username using timing differences. Here's a typical user login scenarios:
+
+1.  Someone tries to login with an email and password.
+2.  If the email exists, the server hashes the password. Which is computationally expensive and slow.
+3.  If the password is wrong, the server returns an error after 200ms.
+4.  If the email doesn't exist, the server skips hashing and responds in much less time.
+
+Same error message, different timing. This is both an enumeration attack and a timing attack.
+
+To circumvent this, some people perform a dummy hashing operation even for nonexistent users. Inserting random waits is tricky, because the length of the hashing operation can change based on the resources available to it. Rate limiting requests will slow this down too.
