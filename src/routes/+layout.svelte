@@ -2,7 +2,7 @@
 	import '../app.css';
 
 	import { LinkedinIcon, MailIcon, RssIcon, SearchIcon } from '@lucide/svelte';
-	import { siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
+	import { siBluesky, siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
 
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
@@ -111,6 +111,16 @@
 				data-umami-event-target="Twitter"
 			>
 				<BrandIcon icon={siX} class={iconClass} />
+			</a>
+			<a
+				href="https://bsky.app/profile/gebna.gg"
+				target="_blank"
+				rel="nofollow"
+				aria-label="Bluesky"
+				data-umami-event="Follow"
+				data-umami-event-target="Bluesky"
+			>
+				<BrandIcon icon={siBluesky} class={iconClass} />
 			</a>
 		</nav>
 	</div>
