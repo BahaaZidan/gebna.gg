@@ -104,7 +104,7 @@
 					</li>
 					<li>
 						<a
-							href={`https://bsky.app/intent/compose?text=${data.title} by @gebna.bsky.social ${data.canonicalURL}`}
+							href={`https://bsky.app/intent/compose?text=${data.title} by @gebna.gg ${data.canonicalURL}`}
 							target="_blank"
 							rel="noreferrer noopener"
 							data-umami-event="Share"
