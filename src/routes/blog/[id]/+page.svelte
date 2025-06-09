@@ -14,11 +14,12 @@
 	let { data }: PageProps = $props();
 
 	const website_id = 1;
-	let iframe: HTMLIFrameElement;
+	let iframe: HTMLIFrameElement | undefined = $state();
 
 	onMount(() => {
 		if (PUBLIC_COMMENTS_PREALPHA === '1') {
 			window.addEventListener('message', function (event) {
+				if (!iframe) return;
 				if (event.data.type === 'resize' && event.data.height) {
 					iframe.style.height = event.data.height + 'px';
 				}
