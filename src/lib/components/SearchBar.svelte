@@ -3,14 +3,12 @@
 	// TODO: figure out a way to use the types directly from pagefind. we're not using this vite-plugin anyway
 	import type { Pagefind } from 'vite-plugin-pagefind/types';
 
+	import { importWithoutVite } from '$lib/util';
+
 	let pagefind: Pagefind;
 
 	onMount(async () => {
-		pagefind = await import(
-			// WORKAROUND: we need this templating trick to stop vite from statically analyzing this import
-			/* @vite-ignore */
-			`${'/'}pagefind/pagefind.js`
-		);
+		pagefind = await importWithoutVite('/pagefind/pagefind.js');
 		pagefind.init();
 	});
 
