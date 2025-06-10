@@ -4,12 +4,12 @@
 	"compatibility_date": "2025-06-10",
 	"assets": {
 		"directory": "./build/",
-		"not_found_handling": "single-page-application",
+		"not_found_handling": "single-page-application"
 	},
 	"compatibility_flags": ["nodejs_compat"],
 	"vars": {
 		"NODE_VERSION": "22.13.1",
 		"PNPM_VERSION": "10.6.5",
-		"PUBLIC_COMMENTS_PREALPHA": "0",
-	},
+		"PUBLIC_COMMENTS_PREALPHA": "0"
+	}
 }

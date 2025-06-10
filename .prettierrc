@@ -15,6 +15,12 @@
 			"options": {
 				"parser": "svelte"
 			}
+		},
+		{
+			"files": "*.jsonc",
+			"options": {
+				"trailingComma": "none"
+			}
 		}
 	],
 	"importOrder": ["^@", "<THIRD_PARTY_MODULES>", "", "^\\$(?!lib/)", "", "^\\$lib/", "", "^[.]"]
