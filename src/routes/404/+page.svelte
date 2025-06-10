@@ -1,3 +1,5 @@
+<!-- WORKAROUND: make it work w/ cf pages fallback behaviour -->
+
 <div class="flex min-h-[calc(100vh-8rem)] items-center justify-center p-4">
 	<div class="text-center">
 		<h1 class="text-primary text-9xl font-bold">404</h1>
