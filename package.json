@@ -53,13 +53,10 @@
 		"typescript-eslint": "^8.20.0",
 		"unified": "^11.0.5",
 		"valibot": "^1.1.0",
-		"vite": "npm:rolldown-vite@latest",
+		"vite": "^6.2.6",
 		"vite-plugin-pagefind": "^1.0.5"
 	},
 	"pnpm": {
-		"overrides": {
-			"vite": "npm:rolldown-vite@latest"
-		},
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
