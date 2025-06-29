@@ -1,7 +1,10 @@
 <script lang="ts">
 	import '../app.css';
 
-	import { LinkedinIcon, MailIcon, RssIcon, SearchIcon } from '@lucide/svelte';
+	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
+	import MailIcon from '@lucide/svelte/icons/mail';
+	import RssIcon from '@lucide/svelte/icons/rss';
+	import SearchIcon from '@lucide/svelte/icons/search';
 	import { siBluesky, siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
 
 	import BrandIcon from '$lib/components/BrandIcon.svelte';

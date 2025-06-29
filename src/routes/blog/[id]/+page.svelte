@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { CoffeeIcon, LinkedinIcon, LinkIcon, ShareIcon } from '@lucide/svelte';
+	import CoffeeIcon from '@lucide/svelte/icons/coffee';
+	import LinkIcon from '@lucide/svelte/icons/link';
+	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
+	import ShareIcon from '@lucide/svelte/icons/share';
 	import { siBluesky, siReddit, siX, siYcombinator } from 'simple-icons';
 	import { onMount } from 'svelte';
 
@@ -13,7 +16,7 @@
 
 	let { data }: PageProps = $props();
 
-	const website_id = 1;
+	const website_id = 'V2Vic2l0ZTox';
 	let iframe: HTMLIFrameElement | undefined = $state();
 
 	onMount(() => {
