@@ -15,26 +15,15 @@
 	let { data }: PageProps = $props();
 
 	onMount(() => {
-		const script_src = 'https://kelma.dev/scripts/comments-embed.js';
-		let script: HTMLScriptElement | null = document.querySelector(`script[src="${script_src}"]`);
-		if (!script) {
-			script = document.createElement('script');
-			script.src = script_src;
-			script.async = true;
+		if (window.embedCommentIframe) {
+			window.embedCommentIframe({
+				container: 'kelma-container',
+				website_id: 'V2Vic2l0ZTox',
+				page_id: data.id,
+				language: 'en',
+				theme: 'business',
+			});
 		}
-		script.addEventListener('load', () => {
-			if (window.embedCommentIframe) {
-				window.embedCommentIframe({
-					container: 'kelma-container',
-					website_id: 'V2Vic2l0ZTox',
-					page_id: data.id,
-					language: 'en',
-					theme: 'business',
-				});
-			}
-		});
-
-		document.body.appendChild(script);
 	});
 </script>
 
