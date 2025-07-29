@@ -3,6 +3,15 @@
 @plugin "daisyui" {
 	themes: business;
 }
+@plugin "daisyui/theme" {
+	name: 'business';
+	color-scheme: 'dark';
+	--radius-selector: 1rem;
+	--radius-field: 1rem;
+	--radius-box: 1rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+}
 
 :root {
 	color-scheme: dark;
