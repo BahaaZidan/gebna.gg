@@ -6,8 +6,6 @@
 	import { siBluesky, siReddit, siX, siYcombinator } from 'simple-icons';
 	import { onMount } from 'svelte';
 
-	import { PUBLIC_COMMENTS_PREALPHA } from '$env/static/public';
-
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import FormattedDate from '$lib/components/FormattedDate.svelte';
 	import Head from '$lib/components/Head.svelte';
@@ -16,16 +14,14 @@
 
 	let { data }: PageProps = $props();
 
-	const website_id = 'V2Vic2l0ZTox';
-	let iframe: HTMLIFrameElement | undefined = $state();
-
 	onMount(() => {
-		if (PUBLIC_COMMENTS_PREALPHA === '1') {
-			window.addEventListener('message', function (event) {
-				if (!iframe) return;
-				if (event.data.type === 'resize' && event.data.height) {
-					iframe.style.height = event.data.height + 'px';
-				}
+		if (window.embedCommentIframe) {
+			window.embedCommentIframe({
+				container: 'kelma-container',
+				website_id: 'V2Vic2l0ZTox',
+				page_id: data.id,
+				language: 'en',
+				theme: 'business',
 			});
 		}
 	});
@@ -37,6 +33,10 @@
 	pathname={data.relativeURL}
 	imagePath={data.ogImage}
 />
+
+<svelte:head>
+	<script src="https://kelma.dev/scripts/comments-embed.js"></script>
+</svelte:head>
 
 <main data-pagefind-body>
 	<article class="prose prose-lg mx-auto p-4">
@@ -147,15 +147,7 @@
 				<CoffeeIcon /> Buy me a coffee
 			</a>
 		</div>
-		{#if PUBLIC_COMMENTS_PREALPHA === '1'}
-			<div data-pagefind-ignore class="not-prose">
-				<iframe
-					class="w-full"
-					bind:this={iframe}
-					title="comments"
-					src="http://localhost:5173/embeds/{website_id}/{data.id}/comments?url={data.canonicalURL}&name={data.title}"
-				></iframe>
-			</div>
-		{/if}
+
+		<div data-pagefind-ignore class="not-prose" id="kelma-container"></div>
 	</article>
 </main>
