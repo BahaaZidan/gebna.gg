@@ -15,15 +15,26 @@
 	let { data }: PageProps = $props();
 
 	onMount(() => {
-		if (window.embedCommentIframe) {
-			window.embedCommentIframe({
-				container: 'kelma-container',
-				website_id: 'V2Vic2l0ZTox',
-				page_id: data.id,
-				language: 'en',
-				theme: 'business',
-			});
+		const script_src = 'https://kelma.dev/scripts/comments-embed.js';
+		let script: HTMLScriptElement | null = document.querySelector(`script[src="${script_src}"]`);
+		if (!script) {
+			script = document.createElement('script');
+			script.src = script_src;
+			script.async = true;
 		}
+		script.addEventListener('load', () => {
+			if (window.embedCommentIframe) {
+				window.embedCommentIframe({
+					container: 'kelma-container',
+					website_id: 'V2Vic2l0ZTox',
+					page_id: data.id,
+					language: 'en',
+					theme: 'business',
+				});
+			}
+		});
+
+		document.body.appendChild(script);
 	});
 </script>
 
@@ -33,10 +44,6 @@
 	pathname={data.relativeURL}
 	imagePath={data.ogImage}
 />
-
-<svelte:head>
-	<script src="https://kelma.dev/scripts/comments-embed.js"></script>
-</svelte:head>
 
 <main data-pagefind-body>
 	<article class="prose prose-lg mx-auto p-4">
