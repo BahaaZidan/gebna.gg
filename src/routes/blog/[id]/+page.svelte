@@ -15,15 +15,15 @@
 	let { data }: PageProps = $props();
 
 	onMount(() => {
-		if (window.embedCommentIframe) {
-			window.embedCommentIframe({
-				container: 'kelma-container',
-				website_id: 'V2Vic2l0ZTox',
-				page_id: data.id,
-				language: 'en',
-				theme: 'business',
-			});
-		}
+		// if (window.embedCommentIframe) {
+		// 	window.embedCommentIframe({
+		// 		container: 'kelma-container',
+		// 		website_id: 'V2Vic2l0ZTox',
+		// 		page_id: data.id,
+		// 		language: 'en',
+		// 		theme: 'business',
+		// 	});
+		// }
 	});
 </script>
 
