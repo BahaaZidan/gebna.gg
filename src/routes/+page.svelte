@@ -12,7 +12,7 @@
 	title={DEFAULT_TITLE}
 	description={DEFAULT_DESCRIPTION}
 	pathname="/"
-	imagePath="/avatar.webp"
+	imagePath="/avatar.jpeg"
 />
 
 <main class="flex justify-center">

@@ -17,7 +17,7 @@
 <header class="flex w-full justify-center">
 	<div class="flex w-full max-w-7xl justify-between p-4">
 		<a class="btn btn-ghost text-xl" href="/">
-			<img src="/avatar.webp" class="size-9 rounded-full" alt="my avatar" />
+			<img src="/avatar.jpeg" class="size-9 rounded-full" alt="my avatar" />
 			Bahaa Zidan
 		</a>
 		<div class="drawer w-28">
