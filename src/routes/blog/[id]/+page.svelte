@@ -42,10 +42,17 @@
 <main data-pagefind-body>
 	<article class="prose prose-lg mx-auto p-4">
 		<div class="flex flex-col items-center">
-			<FormattedDate date={data.pubDate} />
 			<h1 class="wrap-anywhere">
 				{data.title}
 			</h1>
+			<span>
+				Published on <b><FormattedDate date={data.pubDate} /></b>
+			</span>
+			{#if data.lastMod}
+				<span>
+					Updated on <b><FormattedDate date={data.lastMod} /></b>
+				</span>
+			{/if}
 			<img
 				alt="{data.title} hero image"
 				src={`/content/${data.id}/hero.webp`}
