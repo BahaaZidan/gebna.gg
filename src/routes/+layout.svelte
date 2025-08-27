@@ -4,11 +4,10 @@
 	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
 	import MailIcon from '@lucide/svelte/icons/mail';
 	import RssIcon from '@lucide/svelte/icons/rss';
-	import SearchIcon from '@lucide/svelte/icons/search';
 	import { siBluesky, siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
 
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
-	import SearchBar from '$lib/components/SearchBar.svelte';
+	import Search from '$lib/components/Search.svelte';
 
 	let { children } = $props();
 	const iconClass = 'transition-all duration-300 ease-in-out hover:text-gray-900';
@@ -20,23 +19,7 @@
 			<img src="/avatar.jpeg" class="size-9 rounded-full" alt="my avatar" />
 			Bahaa Zidan
 		</a>
-		<div class="drawer w-28">
-			<input id="my-drawer" type="checkbox" class="drawer-toggle" />
-			<div class="drawer-content">
-				<label for="my-drawer" class="btn drawer-button">
-					<SearchIcon />
-					Search
-				</label>
-			</div>
-			<div class="drawer-side">
-				<label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-				<ul class="menu bg-base-200 text-base-content min-h-full w-80 gap-2 p-4">
-					<div class="revert-all">
-						<SearchBar />
-					</div>
-				</ul>
-			</div>
-		</div>
+		<Search />
 	</div>
 </header>
 
