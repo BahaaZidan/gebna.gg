@@ -31,6 +31,7 @@ export const GET: RequestHandler = async () => {
 					guid: post.canonicalURL,
 					description: post.description,
 					pubDate: post.pubDate.toUTCString(),
+					'dc:date': post.lastMod?.toISOString(),
 				})),
 			},
 		},

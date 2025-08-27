@@ -33,6 +33,11 @@
 	pathname={data.relativeURL}
 	imagePath={data.ogImage}
 />
+<svelte:head>
+	<meta property="article:published_time" content={data.pubDate.toISOString()} />
+	<meta name="last-modified" content={(data.lastMod || data.pubDate).toISOString()} />
+	<meta property="article:modified_time" content={(data.lastMod || data.pubDate).toISOString()} />
+</svelte:head>
 
 <main data-pagefind-body>
 	<article class="prose prose-lg mx-auto p-4">

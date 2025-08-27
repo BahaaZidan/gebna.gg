@@ -23,7 +23,7 @@ export const GET: RequestHandler = async () => {
 			].concat(
 				posts.map((post) => ({
 					loc: post.canonicalURL,
-					lastmod: post.pubDate.toISOString().split('T')[0],
+					lastmod: (post.lastMod || post.pubDate).toISOString().split('T')[0],
 				}))
 			),
 		},

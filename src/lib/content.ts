@@ -20,6 +20,13 @@ export const blogPostMetadataSchema = v.object({
 		v.transform((i) => new Date(i)),
 		v.date()
 	),
+	lastMod: v.optional(
+		v.pipe(
+			v.string(),
+			v.transform((i) => new Date(i)),
+			v.date()
+		)
+	),
 });
 
 export function getMetadataFromMatter(
