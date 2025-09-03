@@ -4,7 +4,6 @@
 	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
 	import ShareIcon from '@lucide/svelte/icons/share';
 	import { siBluesky, siReddit, siX, siYcombinator } from 'simple-icons';
-	import { onMount } from 'svelte';
 
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import FormattedDate from '$lib/components/FormattedDate.svelte';
@@ -13,18 +12,6 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-
-	onMount(() => {
-		if (window.embedCommentIframe) {
-			window.embedCommentIframe({
-				container: 'kelma-container',
-				website_id: 'V2Vic2l0ZTox',
-				page_id: data.id,
-				language: 'en',
-				theme: 'business',
-			});
-		}
-	});
 </script>
 
 <Head
@@ -155,7 +142,5 @@
 				<CoffeeIcon /> Buy me a coffee
 			</a>
 		</div>
-
-		<div data-pagefind-ignore class="not-prose" id="kelma-container"></div>
 	</article>
 </main>
