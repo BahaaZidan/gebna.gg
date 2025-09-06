@@ -1,0 +1,24 @@
+---
+title: Speed Up Build Time By Changing How You Import
+description: Showcasing the build time improvement one can attain by switching to absolute imports
+pubDate: '2025-09-06'
+---
+
+What's the difference between the following two code blocks ?
+
+```ts
+import { CoffeeIcon, LinkedinIcon, LinkIcon, ShareIcon } from '@lucide/svelte';
+```
+
+```ts
+import CoffeeIcon from '@lucide/svelte/icons/coffee';
+import LinkIcon from '@lucide/svelte/icons/link';
+import LinkedinIcon from '@lucide/svelte/icons/linkedin';
+import ShareIcon from '@lucide/svelte/icons/share';
+```
+
+Coding wise, the former is easier to write and is the result of VS Code's auto import functionality while the latter needs to be typed by hand.
+
+At runtime, there's no difference because Vite takes care of tree shaking the `@lucide/svelte` package for you and so the resulting build will only contain the SVGs you need. Tree shaking doesn't take much time but as the project scales, it actually ends up ballooning your build times. Which is what I ran into with the icon package `@lucide/svelte`.
+
+If you're suffering from long build times and they're affecting your bottom line, consider changing how you import. A project of mine went from taking 50 seconds to 27 seconds of build time. Shaved almost half the build time by changing how I import one icon library.
