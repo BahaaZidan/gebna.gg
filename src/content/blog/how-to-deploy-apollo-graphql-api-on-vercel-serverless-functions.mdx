@@ -1,7 +1,8 @@
 ---
 title: How to Deploy Apollo GraphQL API on Vercel Serverless Functions
 description: Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it
-pubDate: "2022-05-21"
+pubDate: '2022-05-21'
+tags: Tutorial,Vercel
 ---
 
 Apollo's documentation doesn't mention Vercel anywhere. Every single tutorial that claims to show you how to deploy an apollo graphql server on Vercel is either outdated or incomplete. Here's how I managed to do it:
@@ -47,16 +48,17 @@ Inside the new `api` folder create a file called `graphql.ts`. Both JavaScript a
 Inside `graphql.ts` paste the following code:
 
 ```ts
-import { ApolloServer } from "apollo-server-micro";
-import { send } from "micro";
-import Cors from "micro-cors";
-import { typeDefs, resolvers } from "../schema";
+import { ApolloServer } from 'apollo-server-micro';
+import { send } from 'micro';
+import Cors from 'micro-cors';
+
+import { resolvers, typeDefs } from '../schema';
 
 const cors = Cors();
 
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+	typeDefs,
+	resolvers,
 });
 ```
 
@@ -66,11 +68,11 @@ Now onto our default export. Any file inside the `api` directory must have a fun
 
 ```ts
 export default apolloServer.start().then(() => {
-  const handler = apolloServer.createHandler({ path: "/api/graphql" });
+	const handler = apolloServer.createHandler({ path: '/api/graphql' });
 
-  return cors((req, res) => {
-    return req.method === "OPTIONS" ? send(res, 200, "ok") : handler(req, res);
-  });
+	return cors((req, res) => {
+		return req.method === 'OPTIONS' ? send(res, 200, 'ok') : handler(req, res);
+	});
 });
 ```
 

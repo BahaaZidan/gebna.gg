@@ -1,7 +1,8 @@
 ---
 title: 0 Dependency Toast Messages in Svelte
 description: Toasts or toast messages is a UI pattern that exists on most apps outthere. When we mention toasts in the web, the first instinct of most people is usually to reach for a library or an external package. I'm here to say that it's quite trivial to implement toasts in your web app.
-pubDate: "2025-05-12"
+pubDate: '2025-05-12'
+tags: Tutorial,Svelte
 ---
 
 Toasts or toast messages is a UI pattern that exists on most apps out there. When we mention toasts in the web, the first instinct of most people is to reach for a library or an external package. I'm here to say that it's quite trivial to implement toasts in your web app.
@@ -12,20 +13,20 @@ Let's create a class to hold our state. Bear in mind that the file name must end
 
 ```typescript
 type Toast = {
-  type: "info" | "success" | "error";
-  message?: string;
+	type: 'info' | 'success' | 'error';
+	message?: string;
 };
 
 class ToastsBase {
-  values: Toast[] = $state([]);
+	values: Toast[] = $state([]);
 
-  add(toast: Toast) {
-    this.values.push(toast);
+	add(toast: Toast) {
+		this.values.push(toast);
 
-    setTimeout(() => {
-      this.values = this.values.filter((t) => t.message !== toast.message);
-    }, 5000);
-  }
+		setTimeout(() => {
+			this.values = this.values.filter((t) => t.message !== toast.message);
+		}, 5000);
+	}
 }
 
 export const Toasts = new ToastsBase();
@@ -39,19 +40,19 @@ Now that we have our state and logic, all we need is the UI to actually render a
 
 ```svelte
 <script lang="ts">
-  import "../app.css";
+	import '../app.css';
 
-  import { Toasts } from "$lib/client/state/toasts.svelte";
+	import { Toasts } from '$lib/client/state/toasts.svelte';
 
-  let { children } = $props();
+	let { children } = $props();
 </script>
 
 <div class="toast toast-end">
-  {#each Toasts.values as toast}
-    <div class="alert alert-{toast.type}">
-      <span>{toast.message}</span>
-    </div>
-  {/each}
+	{#each Toasts.values as toast}
+		<div class="alert alert-{toast.type}">
+			<span>{toast.message}</span>
+		</div>
+	{/each}
 </div>
 
 {@render children()}
@@ -63,11 +64,11 @@ And we're done. Now we can call `Toasts.add` anywhere in the code. For example, 
 
 ```typescript
 const formOptions: FormOptions = {
-  onSubmission({ form }) {
-    if (form.valid) {
-      Toasts.add({ type: "success", message: form.message });
-    }
-  },
+	onSubmission({ form }) {
+		if (form.valid) {
+			Toasts.add({ type: 'success', message: form.message });
+		}
+	},
 };
 ```
 

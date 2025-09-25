@@ -1,7 +1,8 @@
 ---
 title: A brief history of web development. And why your framework doesn't matter.
 description: This is how I remember the crazy journey that web development has gone through in the past few years. Or rather this is *my* journey being a web developer. So I will omit events. I may mess up the timeline. This whole article may not be of any use to you. But for me, putting all the history I know into writing helped me appreciate how much things stay the same no matter how much they change.
-pubDate: "2024-04-25"
+pubDate: '2024-04-25'
+tags: Feature
 ---
 
 History is very important. It helps keep our perspectives in check. This is how I remember the crazy journey that web development has gone through in the past few years. This is my telling of it. So I will omit events. I may mess up the timeline. This whole article may not be of any use to you. But for me, putting all of it into writing helped me appreciate how much things stay the same no matter how much they change. So if you're curious and undeterred, allow me to start with ...
@@ -42,34 +43,34 @@ To a strictly typed, queryable schema like this:
 
 ```graphql
 type Post {
-  id: ID!
-  body: String
-  date: Date
-  Author: User
+	id: ID!
+	body: String
+	date: Date
+	Author: User
 }
 
 type User {
-  id: ID!
-  username: String
-  first_name: String
-  last_name: String
-  full_name: String
-  name: String @deprecated
-  avatar_url: Url
+	id: ID!
+	username: String
+	first_name: String
+	last_name: String
+	full_name: String
+	name: String @deprecated
+	avatar_url: Url
 }
 
 scalar Url
 scalar Date
 
 type Query {
-  Post(id: ID!): Post
-  Posts(limit: Int, skip: Int, sort_field: String, sort_order: String): [Post]
-  User(id: ID!): User
+	Post(id: ID!): Post
+	Posts(limit: Int, skip: Int, sort_field: String, sort_order: String): [Post]
+	User(id: ID!): User
 }
 
 type Mutation {
-  createPost(body: String): Post
-  deletePost(id: ID!): Tweet
+	createPost(body: String): Post
+	deletePost(id: ID!): Tweet
 }
 ```
 

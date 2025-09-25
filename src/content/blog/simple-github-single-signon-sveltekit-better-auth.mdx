@@ -1,7 +1,8 @@
 ---
 title: Simple Social Sign On (OAuth) Using better-auth and SvelteKit
 description: implementing a "SignIn with your GitHub account" feature using better-auth
-pubDate: "2025-05-18"
+pubDate: '2025-05-18'
+tags: Tutorial,Node.js,SvelteKit
 ---
 
 There's no need for a cloud solution like Auth0 or Clerk. There many open source solutions that allow you to implement state of the art authentication techniques while keeping your user data on your own infrastructure.
@@ -40,23 +41,23 @@ GITHUB_CLIENT_SECRET="adklmaskldmlasdmlaksmdklaskmdas"
 4. Create a `src/lib/server/auth.ts` file
 
 ```ts
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "$env/static/private";
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private';
 
-import { db } from "./db";
+import { db } from './db';
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
-    provider: "sqlite",
-  }),
-  socialProviders: {
-    github: {
-      clientId: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
-    },
-  },
+	database: drizzleAdapter(db, {
+		provider: 'sqlite',
+	}),
+	socialProviders: {
+		github: {
+			clientId: GITHUB_CLIENT_ID,
+			clientSecret: GITHUB_CLIENT_SECRET,
+		},
+	},
 });
 ```
 
@@ -85,7 +86,7 @@ With all the pieces in place in the server. We can now use the utilities provide
 Create a `src/lib/client/auth.ts` file
 
 ```ts
-import { createAuthClient } from "better-auth/svelte";
+import { createAuthClient } from 'better-auth/svelte';
 
 export const authClient = createAuthClient();
 ```
@@ -94,23 +95,23 @@ Using the `authClient` we just created to check if the user is already logged in
 
 ```svelte
 <script lang="ts">
-  import { authClient } from "$lib/client/auth";
+	import { authClient } from '$lib/client/auth';
 
-  const session = authClient.useSession();
+	const session = authClient.useSession();
 
-  async function githubSignIn() {
-    await authClient.signIn.social({ provider: "github" });
-  }
+	async function githubSignIn() {
+		await authClient.signIn.social({ provider: 'github' });
+	}
 
-  async function signOut() {
-    await authClient.signOut();
-  }
+	async function signOut() {
+		await authClient.signOut();
+	}
 </script>
 
 {#if $session.data}
-  <button onclick={signOut} class="btn">Signout</button>
+	<button onclick={signOut} class="btn">Signout</button>
 {:else}
-  <button onclick={githubSignIn} class="btn">Login with GitHub</button>
+	<button onclick={githubSignIn} class="btn">Login with GitHub</button>
 {/if}
 ```
 

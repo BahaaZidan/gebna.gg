@@ -1,7 +1,8 @@
 ---
 title: Track User Behaviour in Your Static Website Using Umami Events
 description: Track User Behaviour in Your Static Website Using Umami Events
-pubDate: "2025-05-25"
+pubDate: '2025-05-25'
+tags: Tutorial,Analytics
 ---
 
 A few days ago I switched from using Cloudflare Web Analytics to Umami. You can read about it [here](https://gebna.gg/blog/replaced-cloudflare-analytics-with-umami). My experience so far has been nothing short of incredible. At first I thought Umami was just a simple tool capable of simple things like logging visitors. Now I know that Umami is a simple tool capable of really powerful stuff.
@@ -11,22 +12,20 @@ While reading the docs I discovered that Umami can log **Events**. An event can 
 Simple events like clicks on buttons or links can be achieved with a simple data attribute:
 
 ```html /data-umami-event="Buy Me a Coffee Link"/
-<a href="/support" class="link" data-umami-event="Buy Me a Coffee Link">
-  Buy me a coffee
-</a>
+<a href="/support" class="link" data-umami-event="Buy Me a Coffee Link">Buy me a coffee</a>
 ```
 
 You can also add payload to the event not just a name:
 
 ```html {5-6}
 <a
-  href="/support"
-  class="link"
-  data-umami-event="Buy Me a Coffee Link"
-  data-umami-event-email="bob@aol.com"
-  data-umami-event-id="123"
+	href="/support"
+	class="link"
+	data-umami-event="Buy Me a Coffee Link"
+	data-umami-event-email="bob@aol.com"
+	data-umami-event-id="123"
 >
-  Buy me a coffee
+	Buy me a coffee
 </a>
 ```
 
@@ -36,8 +35,8 @@ Here's a screenshot from my Umami dashboard:
 You don't have to use data attributes. You can also use JavaScript to listen or emit events to Umami:
 
 ```js
-const button = document.getElementById("signup-button");
-button.onclick = () => umami.track("Signup button");
+const button = document.getElementById('signup-button');
+button.onclick = () => umami.track('Signup button');
 ```
 
 This is so powerful. Especially for a static website like this blog. It gives me all the insight I need regarding user behaviour. Long live open-source.

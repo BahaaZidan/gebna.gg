@@ -1,7 +1,8 @@
 ---
 title: REST APIs are instant legacy code. Here's why
 description: REST APIs have been the industry standard for a very long time. They're so ubiquitous to the point of making it nearly impossible for developers to think API in a different way. This post tries to poke at the status quo and invites us to rethink the way we do things by discussing some flaws of that convention.
-pubDate: "2022-05-05"
+pubDate: '2022-05-05'
+tags: Opinion,REST,GraphQL
 ---
 
 REST APIs have been the industry standard for a very long time. They're so ubiquitous to the point of making it nearly impossible for developers to think API in a different way. This post tries to poke at the status quo and invites us to rethink the way we do things by discussing some flaws of that convention.
@@ -34,32 +35,32 @@ GraphQL was developed and used internally by engineers at Facebook (now Meta) in
 
 ```graphql
 enum Episode {
-  NEWHOPE
-  EMPIRE
-  JEDI
+	NEWHOPE
+	EMPIRE
+	JEDI
 }
 
 interface Character {
-  id: String!
-  name: String
-  friends: [Character]
-  appearsIn: [Episode]
+	id: String!
+	name: String
+	friends: [Character]
+	appearsIn: [Episode]
 }
 
 type Human implements Character {
-  id: String!
-  name: String
-  friends: [Character]
-  appearsIn: [Episode]
-  homePlanet: String
+	id: String!
+	name: String
+	friends: [Character]
+	appearsIn: [Episode]
+	homePlanet: String
 }
 
 type Droid implements Character {
-  id: String!
-  name: String
-  friends: [Character]
-  appearsIn: [Episode]
-  primaryFunction: String
+	id: String!
+	name: String
+	friends: [Character]
+	appearsIn: [Episode]
+	primaryFunction: String
 }
 ```
 
@@ -67,9 +68,9 @@ The schema is written is GrpahQL schema definition language or SDL for short. As
 
 ```graphql
 type Query {
-  hero(episode: Episode): Character
-  human(id: String!): Human
-  droid(id: String!): Droid
+	hero(episode: Episode): Character
+	human(id: String!): Human
+	droid(id: String!): Droid
 }
 ```
 
@@ -77,9 +78,9 @@ Now whenever a client wants to consume our API, they just need to send an HTTP r
 
 ```graphql
 query HeroNameQuery {
-  hero {
-    name
-  }
+	hero {
+		name
+	}
 }
 ```
 

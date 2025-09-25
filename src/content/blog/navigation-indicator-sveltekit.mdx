@@ -1,7 +1,8 @@
 ---
 title: Build a Navigation Indicator in SvelteKit
 description: Showcasing the navigating reactive value that comes built into SvelteKit
-pubDate: "2025-05-27"
+pubDate: '2025-05-27'
+tags: Tutorial,SvelteKit
 ---
 
 This little progress indicator that appears while navigating websites like GitHub or Youtube is one of my absolute favorite features. This feature can't really be implemented in a purely server-rendered website.
@@ -12,15 +13,15 @@ In the page/layout you'd want to react to the changes in navigation. I'll do it 
 
 ```svelte {4, 9-11}
 <script lang="ts">
-  import "../app.css";
+	import '../app.css';
 
-  import { navigating } from "$app/state";
+	import { navigating } from '$app/state';
 
-  let { children } = $props();
+	let { children } = $props();
 </script>
 
 {#if navigating.from}
-  <progress class="progress"></progress>
+	<progress class="progress"></progress>
 {/if}
 
 {@render children()}

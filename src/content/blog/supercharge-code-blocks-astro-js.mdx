@@ -1,7 +1,8 @@
 ---
 title: Supercharged Code Blocks in Astro
 description: Showcasing rehype-pretty-code. It brings amazing syntax highlighting capabilities, and also a neat copy code button.
-pubDate: "2025-05-24"
+pubDate: '2025-05-24'
+tags: Showcase,Astro,Markdown
 ---
 
 One of the awesome things about Astro is that it comes with built-in [syntax highlighting](https://docs.astro.build/en/guides/syntax-highlighting/). It's powered by the very powerful [Shiki](https://shiki.style/). And you can use it in markdown, MDX, or .astro files. It being powered by shiki means that it supports many programming languages and many themes.
@@ -25,28 +26,28 @@ _Since Astro comes with shiki, you don't **need** to install it explicitly_
 In your `astro.config.mjs`, disable the built-in syntax highlight and add `rehypePrettyCode` to your `rehypePlugins` field:
 
 ```js {1, 6-7}
-import rehypePrettyCode from "rehype-pretty-code";
+import rehypePrettyCode from 'rehype-pretty-code';
 
 export default defineConfig({
-  /* other fields ... */
-  markdown: {
-    syntaxHighlight: false,
-    rehypePlugins: [[rehypePrettyCode, {}]],
-  },
+	/* other fields ... */
+	markdown: {
+		syntaxHighlight: false,
+		rehypePlugins: [[rehypePrettyCode, {}]],
+	},
 });
 ```
 
 Let's add the `github-dark` theme:
 
 ```js /{ theme: "github-dark" }/
-import rehypePrettyCode from "rehype-pretty-code";
+import rehypePrettyCode from 'rehype-pretty-code';
 
 export default defineConfig({
-  /* other fields ... */
-  markdown: {
-    syntaxHighlight: false,
-    rehypePlugins: [[rehypePrettyCode, { theme: "github-dark" }]],
-  },
+	/* other fields ... */
+	markdown: {
+		syntaxHighlight: false,
+		rehypePlugins: [[rehypePrettyCode, { theme: 'github-dark' }]],
+	},
 });
 ```
 
@@ -57,28 +58,28 @@ pnpm add @rehype-pretty/transformers
 ```
 
 ```js title="astro.config.mjs" {2, 13-18}
-import rehypePrettyCode from "rehype-pretty-code";
-import { transformerCopyButton } from "@rehype-pretty/transformers";
+import { transformerCopyButton } from '@rehype-pretty/transformers';
+import rehypePrettyCode from 'rehype-pretty-code';
 
 export default defineConfig({
-  /* other fields ... */
-  markdown: {
-    syntaxHighlight: false,
-    rehypePlugins: [
-      [
-        rehypePrettyCode,
-        {
-          theme: "github-dark",
-          transformers: [
-            transformerCopyButton({
-              visibility: "hover",
-              feedbackDuration: 3_000,
-            }),
-          ],
-        },
-      ],
-    ],
-  },
+	/* other fields ... */
+	markdown: {
+		syntaxHighlight: false,
+		rehypePlugins: [
+			[
+				rehypePrettyCode,
+				{
+					theme: 'github-dark',
+					transformers: [
+						transformerCopyButton({
+							visibility: 'hover',
+							feedbackDuration: 3_000,
+						}),
+					],
+				},
+			],
+		],
+	},
 });
 ```
 

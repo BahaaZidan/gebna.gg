@@ -1,7 +1,8 @@
 ---
 title: Secure Your GraphQL API With This One Line of Code
 description: One the greatest things about having a GraphQL API is the flexibility it gives your users to query the types you expose. A user can choose to query one field in one type or they can choose to query every type you expose. That's great and all but it opens the door for a very dangerous denial-of-service attack.
-pubDate: "2022-09-18"
+pubDate: '2022-09-18'
+tags: Tip,GraphQL,Node.js,Security
 ---
 
 One the greatest things about having a GraphQL API is the flexibility it gives your users to query the types you expose. A user can choose to query one field in one type or they can choose to query every type you expose. That's great and all but it opens the door for a very dangerous denial-of-service attack.
@@ -10,18 +11,18 @@ Imagine your GraphQL schema have two types: Author and Article.
 
 ```graphql
 type Author {
-  name: String
-  articles: [Article]
+	name: String
+	articles: [Article]
 }
 
 type Article {
-  title: String
-  content: String
-  author: Author
+	title: String
+	content: String
+	author: Author
 }
 
 type Query {
-  articles: [Article]
+	articles: [Article]
 }
 ```
 
@@ -29,19 +30,19 @@ This is a valid GraphQL schema. Let's try to query it:
 
 ```graphql
 query GetArticles {
-  articles {
-    title
-    content
-    author {
-      name
-      articles {
-        title
-        author {
-          name
-        }
-      }
-    }
-  }
+	articles {
+		title
+		content
+		author {
+			name
+			articles {
+				title
+				author {
+					name
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -63,9 +64,9 @@ That will result in the following apollo-server config:
 
 ```js
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  validationRules: [depthLimit(10)],
+	typeDefs,
+	resolvers,
+	validationRules: [depthLimit(10)],
 });
 ```
 

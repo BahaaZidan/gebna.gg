@@ -1,7 +1,8 @@
 ---
 title: A Guide on GraphQL Authorization
 description: In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
-pubDate: "2022-09-16"
+pubDate: '2022-09-16'
+tags: Guide,GraphQL,Node.js
 ---
 
 The GraphQL spec is very open-ended. It leaves many concerns to be implemented by programmers as they see fit. Among the concerns that are not strictly outlined in the spec are Authentication and Authorization. In this article, I'll walk you through one possible approach to building a great authorization framework for use in your GraphQL API.
@@ -14,17 +15,17 @@ Before we get into authorization, let's have a super basic authentication setup 
 
 ```js
 const server = new ApolloServer({
-  schema,
-  // ...
-  context: ({ req }) => {
-    return {
-      authenticatedUser: getAuthenticatedUser(req),
-      // ...
-    };
-  },
-  plugins: [
-    //...
-  ],
+	schema,
+	// ...
+	context: ({ req }) => {
+		return {
+			authenticatedUser: getAuthenticatedUser(req),
+			// ...
+		};
+	},
+	plugins: [
+		//...
+	],
 });
 ```
 
@@ -40,27 +41,27 @@ The simplest way to start implementing authorization is to have your authorizati
 
 ```js
 export const postResolvers = {
-  Query: {
-    // ...
-  },
-  Mutation: {
-    editArticle: async (_parent, args, context) => {
-      const authenticatedUser = await context.authenticatedUser;
-      // Check if a user is logged in
-      if (!authenticatedUser) throw new Error("User must be authenticated!");
+	Query: {
+		// ...
+	},
+	Mutation: {
+		editArticle: async (_parent, args, context) => {
+			const authenticatedUser = await context.authenticatedUser;
+			// Check if a user is logged in
+			if (!authenticatedUser) throw new Error('User must be authenticated!');
 
-      // Check if a user is authorized to perform this action
-      // i.e. check if the user is the author of the article
-      const post = await context.repos.post.findOne(args.post.id);
-      if (authenticatedUser.id !== post.author.id) {
-        throw new Error("User must be the author of the post!");
-      }
+			// Check if a user is authorized to perform this action
+			// i.e. check if the user is the author of the article
+			const post = await context.repos.post.findOne(args.post.id);
+			if (authenticatedUser.id !== post.author.id) {
+				throw new Error('User must be the author of the post!');
+			}
 
-      // Otherwise we proceed with the main resolver code.
-      // Note: `context.repo` is just an abstraction layer that maps to a data source.
-      return context.repos.post.editAritcle(args);
-    },
-  },
+			// Otherwise we proceed with the main resolver code.
+			// Note: `context.repo` is just an abstraction layer that maps to a data source.
+			return context.repos.post.editAritcle(args);
+		},
+	},
 };
 ```
 
@@ -73,23 +74,15 @@ A much better approach is using middlewares. Continuing with our `editArticle` e
 We first start by defining our rules. These are functions that return a boolean. If true, execution will continue.
 
 ```js
-const isAuthenticated = rule({ cache: "contextual" })(async (
-  _parent,
-  _args,
-  context,
-) => {
-  const authenticatedUser = await context.authenticatedUser;
-  return authenticatedUser !== null;
+const isAuthenticated = rule({ cache: 'contextual' })(async (_parent, _args, context) => {
+	const authenticatedUser = await context.authenticatedUser;
+	return authenticatedUser !== null;
 });
 
-const isArticleAuthor = rule({ cache: "contextual" })(async (
-  _parent,
-  args,
-  context,
-) => {
-  const authenticatedUser = await context.authenticatedUser;
-  const post = await context.repos.post.findOne(args.post.id);
-  return authenticatedUser.id === post.author.id;
+const isArticleAuthor = rule({ cache: 'contextual' })(async (_parent, args, context) => {
+	const authenticatedUser = await context.authenticatedUser;
+	const post = await context.repos.post.findOne(args.post.id);
+	return authenticatedUser.id === post.author.id;
 });
 ```
 
@@ -97,12 +90,12 @@ Then we create the permissions map.
 
 ```js
 const permissions = shield({
-  Query: {
-    // ...
-  },
-  Mutation: {
-    editArticle: and(isAuthenticated, isArticleAuthor),
-  },
+	Query: {
+		// ...
+	},
+	Mutation: {
+		editArticle: and(isAuthenticated, isArticleAuthor),
+	},
 });
 ```
 
@@ -116,14 +109,14 @@ And since we've externalized all our auth checks into their own functions and mi
 
 ```js
 export const resolvers = {
-  Query: {
-    // ...
-  },
-  Mutation: {
-    editArticle: async (_parent, args, context) => {
-      return context.repos.post.editAritcle(args);
-    },
-  },
+	Query: {
+		// ...
+	},
+	Mutation: {
+		editArticle: async (_parent, args, context) => {
+			return context.repos.post.editAritcle(args);
+		},
+	},
 };
 ```
 
@@ -137,13 +130,13 @@ Continuing with our `editArticle` mutation example, assume that this is the sche
 
 ```graphql
 type Post {
-  id: ID!
-  title: String!
-  content: String!
+	id: ID!
+	title: String!
+	content: String!
 }
 
 extend type Mutation {
-  editArticle(title: String!, postId: ID!, content: String!): Post
+	editArticle(title: String!, postId: ID!, content: String!): Post
 }
 ```
 
@@ -154,8 +147,8 @@ First we define an enum called `Scope` this enum is going to hold all the possib
 
 ```graphql
 enum Scope {
-  write_article
-  # ...
+	write_article
+	# ...
 }
 ```
 
@@ -247,17 +240,15 @@ export const requireAuthDirectiveTransformer = (schema) => {
 All that's left is to run the transformer function on our schema before we export it:
 
 ```js
-const schema = requireAuthDirectiveTransformer(
-  makeExecutableSchema(typeDefs, resolvers),
-);
+const schema = requireAuthDirectiveTransformer(makeExecutableSchema(typeDefs, resolvers));
 ```
 
 Finally we can use the `requireAuth` directive anywhere in our schema.
 
 ```graphql
 extend type Mutation {
-  editArticle(title: String!, postId: ID!, content: String!): Post
-    @requireAuth(scopes: [write_post])
+	editArticle(title: String!, postId: ID!, content: String!): Post
+		@requireAuth(scopes: [write_post])
 }
 ```
 

@@ -1,7 +1,8 @@
 ---
 title: Brand Icons Made Simple
 description: Showcasing simple-icons, a library for more than 3295 brand icons
-pubDate: "2025-05-20"
+pubDate: '2025-05-20'
+tags: Showcase,SVG
 ---
 
 Most icon packs and libraries out there don't include brand icons. The ones that do usually have a very limited set of them. There's also the problem of brand guidelines. You see, not all companies are chill when it comes to you using their logos or other brand assets. For example, Discord has a dedicated page for [legal brand guidelines](https://discord.com/branding).
@@ -12,24 +13,18 @@ Here's a simple component I made in Svelte to allow me to use simple-icons throu
 
 ```svelte
 <script lang="ts">
-  import type { SimpleIcon } from "simple-icons";
+	import type { SimpleIcon } from 'simple-icons';
 
-  let {
-    icon,
-    size = 24,
-    color = "currentColor",
-  }: { icon: SimpleIcon; size?: number; color?: string } = $props();
+	let {
+		icon,
+		size = 24,
+		color = 'currentColor',
+	}: { icon: SimpleIcon; size?: number; color?: string } = $props();
 </script>
 
-<svg
-  role="img"
-  fill={color ?? `#${icon.hex}`}
-  width={size}
-  height={size}
-  viewBox="0 0 24 24"
->
-  <title>{icon.title}</title>
-  <path d={icon.path} />
+<svg role="img" fill={color ?? `#${icon.hex}`} width={size} height={size} viewBox="0 0 24 24">
+	<title>{icon.title}</title>
+	<path d={icon.path} />
 </svg>
 ```
 
@@ -37,14 +32,14 @@ Here's how it's used:
 
 ```svelte {9}
 <script lang="ts">
-  import { siGithub } from "simple-icons";
+	import { siGithub } from 'simple-icons';
 
-  import BrandIcon from "$lib/components/BrandIcon.svelte";
+	import BrandIcon from '$lib/components/BrandIcon.svelte';
 </script>
 
 <button onclick={githubSignIn} class="btn">
-  Login
-  <BrandIcon icon={siGithub} />
+	Login
+	<BrandIcon icon={siGithub} />
 </button>
 ```
 

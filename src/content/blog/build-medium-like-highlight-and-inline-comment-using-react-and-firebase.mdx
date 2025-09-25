@@ -1,7 +1,8 @@
 ---
 title: Build Medium like highlight and inline comment using React and Firebase
 description: I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
-pubDate: "2022-03-17"
+pubDate: '2022-03-17'
+tags: Tutorial,Firebase,Firestore,React
 ---
 
 A few days ago, I sat out to achieve the same inline commenting and highlight functionality that is found on Medium.com.
@@ -51,37 +52,33 @@ Given the scale and the time I had to finish this project, I chose not to make a
 
 ```ts
 export async function getPosts() {
-  const postsCollection = collection(db, "posts");
-  const postsSnapshot = await getDocs(postsCollection);
-  const posts = postsSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      title: data.title,
-      slug: data.slug,
-      date: data.date.toDate().toDateString(),
-    };
-  });
+	const postsCollection = collection(db, 'posts');
+	const postsSnapshot = await getDocs(postsCollection);
+	const posts = postsSnapshot.docs.map((doc) => {
+		const data = doc.data();
+		return {
+			title: data.title,
+			slug: data.slug,
+			date: data.date.toDate().toDateString(),
+		};
+	});
 
-  return posts;
+	return posts;
 }
 
-export async function createPost(post: {
-  slug: string;
-  title: string;
-  content: string;
-}) {
-  const postDocumentRef = doc(db, `posts/${post.slug}`);
-  await setDoc(postDocumentRef, {
-    slug: post.slug,
-    title: post.title,
-    date: Timestamp.fromDate(new Date()),
-  });
+export async function createPost(post: { slug: string; title: string; content: string }) {
+	const postDocumentRef = doc(db, `posts/${post.slug}`);
+	await setDoc(postDocumentRef, {
+		slug: post.slug,
+		title: post.title,
+		date: Timestamp.fromDate(new Date()),
+	});
 
-  const versionsCollectionRef = collection(db, `posts/${post.slug}/versions`);
-  await addDoc(versionsCollectionRef, {
-    content: post.content,
-    date: Timestamp.fromDate(new Date()),
-  });
+	const versionsCollectionRef = collection(db, `posts/${post.slug}/versions`);
+	await addDoc(versionsCollectionRef, {
+		content: post.content,
+		date: Timestamp.fromDate(new Date()),
+	});
 }
 ```
 
@@ -122,26 +119,26 @@ Since we have the XPath and Range information. We can just wrap a quote in a `<m
 
 ```ts
 const handleQuoteClick = (quote) => {
-  unwrap(currentMarkElement);
-  try {
-    const range = toRange(
-      quote.startXpath,
-      quote.startOffset,
-      quote.endXpath,
-      quote.endOffset,
-      document,
-    );
+	unwrap(currentMarkElement);
+	try {
+		const range = toRange(
+			quote.startXpath,
+			quote.startOffset,
+			quote.endXpath,
+			quote.endOffset,
+			document
+		);
 
-    const markElement = document.createElement("mark");
-    markElement.style.backgroundColor = "rgba(52, 211, 153, 1)";
+		const markElement = document.createElement('mark');
+		markElement.style.backgroundColor = 'rgba(52, 211, 153, 1)';
 
-    range.surroundContents(markElement);
-    markElement.scrollIntoView();
+		range.surroundContents(markElement);
+		markElement.scrollIntoView();
 
-    setCurrentMarkElement(markElement);
-  } catch (e) {
-    console.error(e);
-  }
+		setCurrentMarkElement(markElement);
+	} catch (e) {
+		console.error(e);
+	}
 };
 ```
 
