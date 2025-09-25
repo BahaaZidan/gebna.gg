@@ -27,6 +27,16 @@ export const blogPostMetadataSchema = v.object({
 			v.date()
 		)
 	),
+	tags: v.optional(
+		v.pipe(
+			v.string(),
+			v.regex(
+				/^(?:[A-Za-z0-9._~-]|%[0-9A-Fa-f]{2})+(?:,(?:[A-Za-z0-9._~-]|%[0-9A-Fa-f]{2})+)*$/,
+				'Must be comma-separated URL-safe segments.'
+			),
+			v.transform((value) => value.split(','))
+		)
+	),
 });
 
 export function getMetadataFromMatter(
@@ -46,6 +56,8 @@ export function getMetadataFromMatter(
 
 	return { ...post, canonicalURL, relativeURL, ogImage, heroImage };
 }
+
+export type Post = ReturnType<typeof getMetadataFromMatter>;
 
 export function getBlogPostsMetadata() {
 	const posts = Object.entries(blogPosts)

@@ -45,6 +45,13 @@
 				src={`/content/${data.id}/hero.webp`}
 				class="max-h-96 w-full max-w-2xl object-cover"
 			/>
+			{#if data.tags}
+				<div class="flex gap-2">
+					{#each data.tags as tag (tag)}
+						<a href="/blog/tag/{tag}" class="link-hover">#{tag}</a>
+					{/each}
+				</div>
+			{/if}
 		</div>
 		<div class="divider"></div>
 
