@@ -56,21 +56,32 @@ export const load: PageServerLoad = async ({ params }) => {
 	};
 };
 
+const CATEGORY_TAGS = new Set([
+	'Tip',
+	'Essay',
+	'Showcase',
+	'Tutorial',
+	'Opinion',
+	'Workshop',
+	'Guide',
+]);
+
 function getRecommendations(current: Post, allPosts: Post[], limit = 6): Post[] {
 	const currentId = current.id;
-	const currentTags = new Set(current.tags);
+
+	// ignore category tags
+	const currentTags = new Set(current.tags.filter((t) => !CATEGORY_TAGS.has(t)));
 
 	const scored = allPosts
-		.filter((p) => p.id !== currentId) // exclude current post
+		.filter((p) => p.id !== currentId)
 		.map((p) => {
-			const overlap = countOverlap(currentTags, p.tags);
-			return {
-				post: p,
-				overlap,
-			};
+			const overlap = countOverlap(
+				currentTags,
+				p.tags.filter((t) => !CATEGORY_TAGS.has(t))
+			);
+			return { post: p, overlap };
 		});
 
-	// Sort by: overlap desc -> pubDate desc -> title asc
 	scored.sort((a, b) => {
 		if (b.overlap !== a.overlap) return b.overlap - a.overlap;
 		const byDate = b.post.pubDate.getTime() - a.post.pubDate.getTime();
@@ -83,8 +94,6 @@ function getRecommendations(current: Post, allPosts: Post[], limit = 6): Post[] 
 
 function countOverlap(currentTags: Set<string>, otherTags: string[]): number {
 	let matches = 0;
-	for (const t of otherTags) {
-		if (currentTags.has(t)) matches++;
-	}
+	for (const t of otherTags) if (currentTags.has(t)) matches++;
 	return matches;
 }
