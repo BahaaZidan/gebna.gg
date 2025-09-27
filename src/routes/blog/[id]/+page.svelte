@@ -8,6 +8,7 @@
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import FormattedDate from '$lib/components/FormattedDate.svelte';
 	import Head from '$lib/components/Head.svelte';
+	import PostCard from '$lib/components/PostCard.svelte';
 
 	import type { PageProps } from './$types';
 
@@ -45,13 +46,11 @@
 				src={`/content/${data.id}/hero.webp`}
 				class="max-h-96 w-full max-w-2xl object-cover"
 			/>
-			{#if data.tags}
-				<div class="flex gap-2">
-					{#each data.tags as tag (tag)}
-						<a href="/blog/tag/{tag}" class="link-hover">#{tag}</a>
-					{/each}
-				</div>
-			{/if}
+			<div class="flex gap-2">
+				{#each data.tags as tag (tag)}
+					<a href="/blog/tag/{tag}" class="link-hover">#{tag}</a>
+				{/each}
+			</div>
 		</div>
 		<div class="divider"></div>
 
@@ -150,4 +149,14 @@
 			</a>
 		</div>
 	</article>
+	<section data-pagefind-ignore class="flex w-full justify-center p-4">
+		<div class="flex w-full max-w-[54rem] flex-col items-center gap-2">
+			<h3 class="text-lg font-bold">Related Articles:</h3>
+			<div class="flex w-full flex-wrap justify-center gap-4">
+				{#each data.recommendations as rec (rec.id)}
+					<PostCard post={rec} />
+				{/each}
+			</div>
+		</div>
+	</section>
 </main>

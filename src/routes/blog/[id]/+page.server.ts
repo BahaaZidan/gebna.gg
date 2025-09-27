@@ -10,7 +10,13 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
-import { blogPosts, CONTENT_BASE_PATH, getMetadataFromMatter } from '$lib/content';
+import {
+	blogPosts,
+	CONTENT_BASE_PATH,
+	getBlogPostsMetadata,
+	getMetadataFromMatter,
+	type Post,
+} from '$lib/content';
 
 import type { PageServerLoad } from './$types';
 
@@ -44,7 +50,41 @@ export const load: PageServerLoad = async ({ params }) => {
 	).toString();
 
 	return {
+		recommendations: getRecommendations(postMetaData, getBlogPostsMetadata(), 2),
 		...postMetaData,
 		contentHTML,
 	};
 };
+
+function getRecommendations(current: Post, allPosts: Post[], limit = 6): Post[] {
+	const currentId = current.id;
+	const currentTags = new Set(current.tags);
+
+	const scored = allPosts
+		.filter((p) => p.id !== currentId) // exclude current post
+		.map((p) => {
+			const overlap = countOverlap(currentTags, p.tags);
+			return {
+				post: p,
+				overlap,
+			};
+		});
+
+	// Sort by: overlap desc -> pubDate desc -> title asc
+	scored.sort((a, b) => {
+		if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+		const byDate = b.post.pubDate.getTime() - a.post.pubDate.getTime();
+		if (byDate !== 0) return byDate;
+		return a.post.title.localeCompare(b.post.title);
+	});
+
+	return scored.slice(0, limit).map((s) => s.post);
+}
+
+function countOverlap(currentTags: Set<string>, otherTags: string[]): number {
+	let matches = 0;
+	for (const t of otherTags) {
+		if (currentTags.has(t)) matches++;
+	}
+	return matches;
+}
