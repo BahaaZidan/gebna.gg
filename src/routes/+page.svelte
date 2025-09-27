@@ -20,7 +20,7 @@
 />
 
 <main class="flex flex-col items-center">
-	<button class="btn min-w-52" onclick={() => dialog.showModal()}>
+	<button class="btn min-w-48" onclick={() => dialog.showModal()}>
 		<FunnelIcon />
 		Filter
 	</button>
