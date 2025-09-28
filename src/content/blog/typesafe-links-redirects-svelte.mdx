@@ -3,7 +3,29 @@ title: Typesafe Links, Redirects, and Form Actions in SvelteKit
 description: Showcasing a Vite plugin to generate a typesafe function for routes and form actions
 pubDate: '2025-05-13'
 tags: Showcase,SvelteKit,TypeScript,Vite
+lastMod: '2025-09-28'
 ---
+
+<div role="alert" class="alert alert-info">
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		class="h-6 w-6 shrink-0 stroke-current"
+	>
+		<path
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="2"
+			d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+		></path>
+	</svg>
+	<span>
+		This article is outdated. Type-safe paths `resolve` is now built into SvelteKit from version
+		2.26. Read more
+		<a href="https://svelte.dev/docs/kit/$app-paths#resolve">here</a>.
+	</span>
+</div>
 
 One of the great features of SvelteKit is its phenomenal built-in routing and data loading capabilities. But as the number of pages and forms grows in your app, making refactors or changes to a page or even a layout might introduce some runtime bugs. That is because SvelteKit doesn't provide any way to check if an `href` in an anchor tag or a url value in a `redirect` is valid. We need a way to guarantee that all our links, redirects, and even form actions are valid at compile time.
 
