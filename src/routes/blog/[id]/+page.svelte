@@ -5,6 +5,8 @@
 	import ShareIcon from '@lucide/svelte/icons/share';
 	import { siBluesky, siReddit, siX, siYcombinator } from 'simple-icons';
 
+	import { resolve } from '$app/paths';
+
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import FormattedDate from '$lib/components/FormattedDate.svelte';
 	import Head from '$lib/components/Head.svelte';
@@ -48,7 +50,7 @@
 			/>
 			<div class="flex gap-2">
 				{#each data.tags as tag (tag)}
-					<a href="/blog/tag/{tag}" class="link-hover">#{tag}</a>
+					<a href={resolve('/blog/tag/[tag]', { tag })} class="link-hover">#{tag}</a>
 				{/each}
 			</div>
 		</div>

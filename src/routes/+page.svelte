@@ -2,6 +2,8 @@
 	import FunnelIcon from '@lucide/svelte/icons/funnel';
 	import XIcon from '@lucide/svelte/icons/x';
 
+	import { resolve } from '$app/paths';
+
 	import Head from '$lib/components/Head.svelte';
 	import PostCard from '$lib/components/PostCard.svelte';
 	import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '$lib/constants';
@@ -32,7 +34,9 @@
 				</form>
 				<div class="flex max-w-7xl flex-wrap gap-2 px-4">
 					{#each data.tags as tag (tag)}
-						<a class="link-hover badge badge-secondary" href="/blog/tag/{tag}">#{tag}</a>
+						<a class="link-hover badge badge-secondary" href={resolve('/blog/tag/[tag]', { tag })}>
+							#{tag}
+						</a>
 					{/each}
 				</div>
 			</div>
