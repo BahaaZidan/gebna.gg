@@ -149,9 +149,9 @@
 			</a>
 		</div>
 	</article>
-	<section data-pagefind-ignore class="flex w-full justify-center p-4">
+	<section data-pagefind-ignore class="mb-4 flex w-full justify-center p-2">
 		<div class="flex w-full max-w-[54rem] flex-col items-center gap-2">
-			<h3 class="text-lg font-bold">Related Articles:</h3>
+			<div class="divider">Related Articles</div>
 			<div class="flex w-full flex-wrap justify-center gap-4">
 				{#each data.recommendations as rec (rec.id)}
 					<PostCard post={rec} />
