@@ -17,6 +17,7 @@ import {
 	getMetadataFromMatter,
 	type Post,
 } from '$lib/content';
+import { rehypeGraphvizWasm } from '$lib/server/rehypeGraphvizWasm';
 
 import type { PageServerLoad } from './$types';
 
@@ -32,7 +33,9 @@ export const load: PageServerLoad = async ({ params }) => {
 	const contentHTML = (
 		await unified()
 			.use(remarkParse)
+			.use(remarkGfm)
 			.use(remarkRehype, { allowDangerousHtml: true })
+			.use(rehypeGraphvizWasm)
 			.use(rehypeSlug)
 			.use(rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: ['link-hover'] } })
 			.use(rehypePrettyCode, {
@@ -45,7 +48,6 @@ export const load: PageServerLoad = async ({ params }) => {
 				],
 			})
 			.use(rehypeStringify, { allowDangerousHtml: true })
-			.use(remarkGfm)
 			.process(content)
 	).toString();
 
