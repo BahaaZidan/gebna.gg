@@ -3,7 +3,6 @@ import { Graphviz } from '@hpcc-js/wasm';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
-// Pull plain text from a HAST subtree
 function getText(node: any): string {
 	if (!node) return '';
 	if (node.type === 'text') return node.value ?? '';
@@ -11,30 +10,42 @@ function getText(node: any): string {
 	return '';
 }
 
-function getLang(preNode: any, codeEl: any): string {
-	const classes = [
-		...((preNode?.properties?.className as string[]) ?? []),
-		...((codeEl?.properties?.className as string[]) ?? []),
-	].map(String);
+/**
+ * Defaults injected into every diagram.
+ * Users can still override any of these inside their own DOT.
+ */
+const DEFAULTS = `
+  bgcolor=transparent;
+  rankdir=LR;
+  nodesep=0.6;
+	graph [dpi=300];
+  // let Graphviz break long text and add internal padding
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fillcolor="white",
+    color="black",
+    fontsize=24,
+    margin="0.4,0.3",   // left/right , top/bottom padding (in inches)
+    wrap=true,
+    width=2.3,            // min width so wrap has room
+		fontname="Arial, Helvetica, sans-serif",
+  ];
+  edge [
+		color="#facc15",
+		penwidth=2,
+		arrowsize=0.8,
+		fontsize=22,
+		fontname="Arial, Helvetica, sans-serif",
+	];
+`;
 
-	const classLang = classes.map((c) => (c.startsWith('language-') ? c.slice(9) : '')).find(Boolean);
-
-	const dataLang =
-		codeEl?.properties?.['data-language'] ??
-		codeEl?.properties?.dataLanguage ??
-		preNode?.properties?.['data-language'] ??
-		preNode?.properties?.dataLanguage ??
-		'';
-
-	return String(classLang || dataLang || '').toLowerCase();
+function injectDefaults(dot: string): string {
+	return dot.replace(/(^\s*(?:strict\s+)?digraph\b[^{]*\{)/m, `$1\n${DEFAULTS}\n`);
 }
 
-/**
- * Rehype plugin: converts ```dot / ```graphviz / ```gv code fences to inline SVG.
- * Pure WASM – runs in Cloudflare Workers (no Node/DOM).
- */
 export const rehypeGraphvizWasm: Plugin = () => {
-	let gv: any = null; // Graphviz instance
+	let gv: any = null;
 
 	return async (tree: any) => {
 		const tasks: Promise<void>[] = [];
@@ -43,21 +54,25 @@ export const rehypeGraphvizWasm: Plugin = () => {
 			if (!parent || preNode.tagName !== 'pre') return;
 
 			const codeEl = preNode.children?.[0];
-			if (!codeEl || codeEl.tagName !== 'code') return;
+			const classList: string[] = (codeEl?.properties?.className as string[]) ?? [];
+			const isDot =
+				codeEl?.tagName === 'code' &&
+				(classList.includes('language-dot') ||
+					classList.includes('language-graphviz') ||
+					classList.includes('language-gv'));
 
-			const lang = getLang(preNode, codeEl);
-			if (!['dot', 'graphviz', 'gv'].includes(lang)) return;
+			if (!isDot) return;
 
-			const dot = getText(codeEl).trim();
-			if (!dot) return;
+			const rawDot = getText(codeEl).trim();
+			if (!rawDot) return;
 
 			const task = (async () => {
-				if (!gv) {
-					// Optional: Graphviz.wasmFolder('https://your-cdn/path/'); // pin WASM location if desired
-					gv = await Graphviz.load(); // returns an instance (cached here)
-				}
+				if (!gv) gv = await Graphviz.load();
 
-				const rawSvg = await gv.layout(dot, 'svg', 'dot');
+				// prepend defaults so user attributes can override them
+				const dotWithDefaults = injectDefaults(rawDot);
+
+				const rawSvg = await gv.layout(dotWithDefaults, 'svg', 'dot');
 
 				const svg = rawSvg.replace(
 					'<svg ',

@@ -268,10 +268,28 @@ That was a lot. And we haven't even gotten into any WebSockets or Realtime shena
 We know what our state look like. We've defined the operations that can be done on it. But where exactly is this state going to be stored ? What's our source of truth ? It can't be the client. Because then each client would have it's own version of the state and syncing that would be a nightmare. The optimal approach here is to make the server a single source of truth. With that constraint, we don't have to worry about conflicting versions of the state from multiple clients. Clients just emit an event with a minimal payload. The server then handles that event and then emits the new version of the state to all clients.
 
 Here's how creating a room would work:
-![Untitled Diagram (1).png](/content/how-to-build-a-game-with-socket-io-and-typescript/u_ASZFy52.png)
+
+```graphviz
+digraph CreateRoomFlow {
+  A [label="The client emits an event that it wants to\ncreate a room\nPLAYER_CREATE_ROOM_EVENT"];
+  B [label="The server creates the room\n then emits another event that the room\nhas been created\nROOM_CREATED_EVENT"];
+  C [label="Once the client receives the ROOM_CREATED_EVENT\n it redirects the user\ninto a new page where the game can be played"];
+
+  A -> B -> C;
+}
+```
 
 Here's how making a move would work:
-![Copy of Untitled Diagram (1).png](/content/how-to-build-a-game-with-socket-io-and-typescript/38rCnMGNI.png)
+
+```graphviz
+digraph MoveFlow {
+  A [label="The client emits an event that\n the player wants to make a move\nPLAYER_MOVED_EVENT"];
+  B [label="The server handles that and if it's successful,\n the server broadcasts the new state\n as another event GAME_STATE_CHANGED"];
+  C [label="Once the client receives the GAME_STATE_CHANGED\n it redraws the UI to reflect the new state."];
+
+  A -> B -> C;
+}
+```
 
 Keep in mind that each operation would generally include 2 events. An event the client emits to the server whenever it wants to do an operation. Another event the server emits whenever the state changes. Again, the server is the single source of truth here. So no client would be sending new versions of the state. The client will only be allowed to send an event with minimal payload. For example when a player makes a move, they won't send the whole board. They will only send the slot they want to make a move on. The server will then decide whether that was a valid move or not and only emits a new state then.
 
