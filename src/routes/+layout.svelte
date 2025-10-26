@@ -6,6 +6,8 @@
 	import RssIcon from '@lucide/svelte/icons/rss';
 	import { siBluesky, siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
 
+	import { resolve } from '$app/paths';
+
 	import BrandIcon from '$lib/components/BrandIcon.svelte';
 	import Search from '$lib/components/Search.svelte';
 
@@ -15,7 +17,7 @@
 
 <header class="flex w-full justify-center">
 	<div class="flex w-full max-w-7xl justify-between p-4">
-		<a class="btn btn-ghost text-xl" href="/">
+		<a class="btn btn-ghost text-xl" href={resolve('/')}>
 			<img src="/avatar.jpeg" class="size-9 rounded-full" alt="my avatar" />
 			Bahaa Zidan
 		</a>
@@ -32,7 +34,7 @@
 		</aside>
 		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
 			<a
-				href="/rss.xml"
+				href={resolve('/rss.xml')}
 				target="_blank"
 				aria-label="RSS"
 				data-umami-event="Follow"

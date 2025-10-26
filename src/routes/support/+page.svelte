@@ -31,7 +31,7 @@
 	<iframe
 		id="kofiframe"
 		src="https://ko-fi.com/gebna/?hidefeed=true&widget=true&embed=true&preview=true"
-		class="mx-auto h-[665px] w-full sm:w-[25rem]"
+		class="mx-auto h-[665px] w-full sm:w-100"
 		title="gebna"
 	></iframe>
 	<h2 class="text-2xl font-bold">Crypto addresses</h2>
@@ -39,7 +39,7 @@
 		{#each coins as coin (coin.protocol)}
 			<li>
 				<span>{coin.label}:</span>
-				<a class="link break-words" href="{coin.protocol}:{coin.address}">
+				<a class="link wrap-break-word" href="{coin.protocol}:{coin.address}">
 					{coin.address}
 				</a>
 			</li>
