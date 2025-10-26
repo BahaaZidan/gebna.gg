@@ -33,7 +33,10 @@
 
 	function showAndFocus() {
 		dialog.showModal();
-		setTimeout(() => input.focus(), 50);
+		setTimeout(() => {
+			input.value = '';
+			input.focus();
+		}, 50);
 	}
 </script>
 
@@ -59,12 +62,12 @@
 				<input
 					type="text"
 					placeholder="Search..."
-					class="input input-bordered input-lg join-item grow"
+					class="input-bordered input input-lg join-item grow"
 					bind:value={searchValue}
 					bind:this={input}
 				/>
 				<form method="dialog">
-					<button class="btn btn-lg join-item"><XIcon /></button>
+					<button class="btn join-item btn-lg"><XIcon /></button>
 				</form>
 			</div>
 
@@ -72,11 +75,11 @@
 				<div>loading...</div>
 			{:then results}
 				{#each results as result (result.url)}
-					<div class="bg-base-300 flex flex-col gap-1 rounded-lg p-4">
+					<div class="flex flex-col gap-1 rounded-lg bg-base-300 p-4">
 						<a
 							data-sveltekit-reload
 							href={result.url.replace('.html', '')}
-							class="link-hover text-sm font-bold wrap-anywhere"
+							class="text-sm font-bold wrap-anywhere link-hover"
 						>
 							{result.meta.title}
 						</a>
