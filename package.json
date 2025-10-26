@@ -6,13 +6,14 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && pagefind --site \"build\"",
-		"preview": "vite preview",
+		"preview": "vite preview && wrangler dev",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"convert": "node --experimental-strip-types ./scripts/convert-hero.ts"
+		"convert": "node --experimental-strip-types ./scripts/convert-hero.ts",
+		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
@@ -21,7 +22,7 @@
 		"@ianvs/prettier-plugin-sort-imports": "^4.7.0",
 		"@lucide/svelte": "^0.511.0",
 		"@rehype-pretty/transformers": "^0.13.2",
-		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/adapter-cloudflare": "^7.2.4",
 		"@sveltejs/kit": "^2.47.3",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
 		"@tailwindcss/typography": "^0.5.19",
@@ -56,7 +57,8 @@
 		"unist-util-visit": "^5.0.0",
 		"valibot": "^1.1.0",
 		"vite": "^6.4.1",
-		"vite-plugin-pagefind": "^1.0.7"
+		"vite-plugin-pagefind": "^1.0.7",
+		"wrangler": "^4.45.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

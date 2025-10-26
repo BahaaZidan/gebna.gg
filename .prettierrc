@@ -23,5 +23,6 @@
 			}
 		}
 	],
-	"importOrder": ["^@", "<THIRD_PARTY_MODULES>", "", "^\\$(?!lib/)", "", "^\\$lib/", "", "^[.]"]
+	"importOrder": ["^@", "<THIRD_PARTY_MODULES>", "", "^\\$(?!lib/)", "", "^\\$lib/", "", "^[.]"],
+	"tailwindStylesheet": "./src/app.css"
 }
