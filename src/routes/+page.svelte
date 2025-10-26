@@ -27,7 +27,7 @@
 		Filter
 	</button>
 	<dialog bind:this={dialog} class="modal">
-		<div class="modal-box h-[36rem] w-[22rem] md:w-xl">
+		<div class="modal-box h-144 w-88 md:w-xl">
 			<div class="flex flex-col items-end">
 				<form method="dialog">
 					<button class="btn btn-lg join-item rounded-full"><XIcon /></button>

@@ -53,7 +53,7 @@
 	<kbd class="kbd">/</kbd>
 </div>
 <dialog bind:this={dialog} class="modal">
-	<div class="modal-box h-[36rem] w-[22rem] md:w-xl">
+	<div class="modal-box h-144 w-88 md:w-xl">
 		<div class="flex flex-col gap-4">
 			<div class="join">
 				<input
