@@ -146,7 +146,12 @@
 					</li>
 				</ul>
 			</div>
-			<a class="btn btn-secondary" href="/support" target="_blank" data-umami-event="Coffee Link">
+			<a
+				class="btn btn-secondary"
+				href={resolve('/support')}
+				target="_blank"
+				data-umami-event="Coffee Link"
+			>
 				<CoffeeIcon /> Buy me a coffee
 			</a>
 		</div>
