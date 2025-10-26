@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-svelte-app",
+	"name": "blog-1",
 	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_date": "2025-10-24",
 	"compatibility_flags": ["nodejs_compat"],
