@@ -1,0 +1,99 @@
+---
+title: The Docs Are Wrong! Here's How to Implement Presigned URLs using Cloudflare R2 and Workers
+description: The Docs Are Wrong! Here's How to Implement Presigned URLs using Cloudflare R2 and Workers.
+pubDate: '2025-12-24'
+tags: Tutorial,Cloudflare,Cloudflare-Worker,S3,Cloudflare-R2
+---
+
+For some reason, [the main docs page](https://developers.cloudflare.com/r2/api/s3/presigned-urls/) about implementing presigned URLs in Cloudflare R2 recommends the usage of `@aws-sdk` which doesn't work inside Cloudflare Workers. Not even with the `nodejs_compat` flag. If you try the following code excerpt from the docs:
+
+```ts
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
+const S3 = new S3Client({
+	region: 'auto', // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	credentials: {
+		accessKeyId: '<ACCESS_KEY_ID>',
+		secretAccessKey: '<SECRET_ACCESS_KEY>',
+	},
+});
+
+// Generate presigned URL for reading (GET)
+const getUrl = await getSignedUrl(
+	S3,
+	new GetObjectCommand({ Bucket: 'my-bucket', Key: 'image.png' }),
+	{ expiresIn: 3600 } // Valid for 1 hour
+);
+// https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
+
+// Generate presigned URL for writing (PUT)
+// Specify ContentType to restrict uploads to a specific file type
+const putUrl = await getSignedUrl(
+	S3,
+	new PutObjectCommand({
+		Bucket: 'my-bucket',
+		Key: 'image.png',
+		ContentType: 'image/png',
+	}),
+	{ expiresIn: 3600 }
+);
+```
+
+You'll initially get the following error:
+
+```bash
+Unexpected Node.js imports for environment "gebna_backend". Do you need to enable the "nodejs_compat" compatibility flag? Refer to https://developers.cloudflare.com/workers/runtime-apis/nodejs/ for more details.
+```
+
+Which will prompt you to add the `nodejs_compat` flag to your `wrangler.jsonc` file. This would compile fine. But then at runtime, you'll get the following error when the example above is reached:
+
+```bash
+Error: [unenv] fs.readFile is not implemented yet!
+```
+
+`@aws/sdk` was built for Node.js. It simply does not work inside workerd. So the solution is to use a more modern AWS client: [awsfetch](https://github.com/mhart/aws4fetch). Here's the code:
+
+```ts
+async function getObjectURLInWorkers({ object, env }) {
+	const R2_URL = `https://${env.CF_ACCOUNT_ID}.r2.cloudflarestorage.com`;
+	const client = new AwsClient({
+		service: 's3',
+		region: 'auto',
+		accessKeyId: env.CF_R2_ACCESS_KEY_ID,
+		secretAccessKey: env.CF_R2_SECRET_ACCESS_KEY,
+	});
+
+	const url = (
+		await client.sign(
+			new Request(`${R2_URL}/${env.R2_BUCKET_NAME}/${object.storageKey}?X-Amz-Expires=${3600 * 6}`),
+			{
+				aws: { signQuery: true },
+			}
+		)
+	).url.toString();
+
+	return url;
+}
+```
+
+This can slot into your current workers-powered backend very easily. `env` is the bindings and object is just a dummy source for the object storageKey. You can replace that with anything. You need the url param `X-Amz-Expires` to set a timer for the URL to expire. You can also do something very similar that works with PutObject:
+
+```ts
+await client.sign(
+	new Request(`${R2_URL}/my-bucket/dog.png?X-Amz-Expires=${3600}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'image/png',
+		},
+	}),
+	{
+		aws: { signQuery: true },
+	}
+);
+```
+
+You can see to added an http method `PUT` and the `Content-Type` header to make sure R2 only accepts png images.
