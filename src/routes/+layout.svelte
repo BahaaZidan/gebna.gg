@@ -3,7 +3,7 @@
 
 	import MailIcon from '@lucide/svelte/icons/mail';
 	import RssIcon from '@lucide/svelte/icons/rss';
-	import { siBluesky, siGithub, siX, siYoutube } from 'simple-icons';
+	import { siBluesky, siGithub, siX } from 'simple-icons';
 
 	import { resolve } from '$app/paths';
 
@@ -58,16 +58,6 @@
 				data-umami-event-target="GitHub"
 			>
 				<BrandIcon icon={siGithub} class={iconClass} />
-			</a>
-			<a
-				href="https://youtube.com/@GebnaTorky"
-				target="_blank"
-				rel="nofollow"
-				aria-label="Youtube"
-				data-umami-event="Follow"
-				data-umami-event-target="Youtube"
-			>
-				<BrandIcon icon={siYoutube} class={iconClass} />
 			</a>
 			<a
 				href="https://x.com/GebnaTorky"
