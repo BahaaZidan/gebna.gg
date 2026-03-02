@@ -14,6 +14,25 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
+
+	const ctas: Array<[text: string, linkLabel: string]> = [
+		['If you’re building something similar and want a hand,', 'reach out'],
+		['If you want me to help you ship this kind of work,', 'let’s chat'],
+		['If you’re hiring and this is the kind of thinking you want,', 'talk to me'],
+		['If you’re looking for someone to own the gnarly parts,', 'I’m available'],
+		['If you want to move faster without breaking things,', 'let’s talk'],
+		['If you’re scaling and need help untangling complexity,', 'reach out'],
+		['If you want help turning an idea into a shipped product,', 'let’s work together'],
+		['If you’re looking for a senior engineer to jump in and deliver,', 'hire me'],
+		['If this post was useful and you want help applying it,', 'message me'],
+		['If you want me to review your plan or code before you commit,', 'send it over'],
+		['If you’re building on Cloudflare/Workers and want guidance,', 'let’s chat'],
+		['If you want a practical code/architecture review,', 'book a quick call'],
+		['If you want ongoing help on a product team,', 'let’s connect'],
+		['If you’re trying to make your app faster and more reliable,', 'I can help'],
+		['If you want to collaborate on something interesting,', 'say hi'],
+	];
+	const [ctaText, ctaLink] = ctas[Math.floor(Math.random() * ctas.length)];
 </script>
 
 <Head
@@ -59,9 +78,8 @@
 
 		<div data-pagefind-ignore class="not-prose flex w-full flex-col gap-2">
 			<p>
-				Hi there {'{person who made it this far}'}👋. My name is Bahaa. I'm a programmer
-				(whodathunk). I like full stack web development. If you like it too, consider
-				<a class="link" href="mailto:gebnatorky@gmail.com">hiring me!</a>
+				{ctaText}
+				<a class="link" href="mailto:gebnatorky@gmail.com">{ctaLink}</a>
 			</p>
 			<div class="dropdown dropdown-top">
 				<div tabindex="0" role="button" class="btn btn-primary">
