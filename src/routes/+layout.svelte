@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 
-	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
 	import MailIcon from '@lucide/svelte/icons/mail';
 	import RssIcon from '@lucide/svelte/icons/rss';
-	import { siBluesky, siGithub, siInstagram, siX, siYoutube } from 'simple-icons';
+	import { siBluesky, siGithub, siX, siYoutube } from 'simple-icons';
 
 	import { resolve } from '$app/paths';
 
@@ -17,7 +16,7 @@
 
 <header class="flex w-full justify-center">
 	<div class="flex w-full max-w-7xl justify-between p-4">
-		<a class="btn btn-ghost text-xl" href={resolve('/')}>
+		<a class="btn text-xl btn-ghost" href={resolve('/')}>
 			<img src="/avatar.jpeg" class="size-9 rounded-full" alt="my avatar" />
 			Bahaa Zidan
 		</a>
@@ -27,8 +26,8 @@
 
 {@render children()}
 
-<footer class="bg-neutral mt-auto flex w-full justify-center">
-	<div class="footer sm:footer-horizontal text-neutral-content w-full max-w-7xl items-center p-4">
+<footer class="mt-auto flex w-full justify-center bg-neutral">
+	<div class="footer w-full max-w-7xl items-center p-4 text-neutral-content sm:footer-horizontal">
 		<aside class="grid-flow-col items-center">
 			<p>Thank you for reading!</p>
 		</aside>
@@ -69,26 +68,6 @@
 				data-umami-event-target="Youtube"
 			>
 				<BrandIcon icon={siYoutube} class={iconClass} />
-			</a>
-			<a
-				href="https://www.instagram.com/gebnatorky/"
-				target="_blank"
-				rel="nofollow"
-				aria-label="Instagram"
-				data-umami-event="Follow"
-				data-umami-event-target="Instagram"
-			>
-				<BrandIcon icon={siInstagram} class={iconClass} />
-			</a>
-			<a
-				href="https://www.linkedin.com/in/bahaazidan/"
-				target="_blank"
-				rel="nofollow"
-				aria-label="LinkedIn"
-				data-umami-event="Follow"
-				data-umami-event-target="LinkedIn"
-			>
-				<LinkedinIcon class={iconClass} />
 			</a>
 			<a
 				href="https://x.com/GebnaTorky"

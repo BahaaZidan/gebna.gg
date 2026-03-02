@@ -1,5 +1,4 @@
 <script lang="ts">
-	import CoffeeIcon from '@lucide/svelte/icons/coffee';
 	import LinkIcon from '@lucide/svelte/icons/link';
 	import LinkedinIcon from '@lucide/svelte/icons/linkedin';
 	import ShareIcon from '@lucide/svelte/icons/share';
@@ -30,7 +29,7 @@
 </svelte:head>
 
 <main data-pagefind-body>
-	<article class="prose prose-lg mx-auto p-4">
+	<article class="mx-auto prose prose-lg p-4">
 		<div class="flex flex-col items-center">
 			<h1 class="wrap-anywhere">
 				{data.title}
@@ -58,7 +57,12 @@
 
 		{@html data.contentHTML}
 
-		<div data-pagefind-ignore class="not-prose flex w-full justify-between">
+		<div data-pagefind-ignore class="not-prose flex w-full flex-col gap-2">
+			<p>
+				Hi there {'{person who made it this far}'}👋. My name is Bahaa. I'm a programmer
+				(whodathunk). I like full stack web development. If you like it too, consider
+				<a class="link" href="mailto:gebnatorky@gmail.com">hiring me!</a>
+			</p>
 			<div class="dropdown dropdown-top">
 				<div tabindex="0" role="button" class="btn btn-primary">
 					<ShareIcon /> Share
@@ -67,7 +71,7 @@
 				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 				<ul
 					tabindex="0"
-					class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+					class="dropdown-content menu z-1 w-52 rounded-box bg-base-100 p-2 shadow-sm"
 				>
 					<li>
 						<button
@@ -146,14 +150,6 @@
 					</li>
 				</ul>
 			</div>
-			<a
-				class="btn btn-secondary"
-				href={resolve('/support')}
-				target="_blank"
-				data-umami-event="Coffee Link"
-			>
-				<CoffeeIcon /> Buy me a coffee
-			</a>
 		</div>
 	</article>
 	<section data-pagefind-ignore class="mb-4 flex w-full justify-center p-2">

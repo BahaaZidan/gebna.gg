@@ -17,10 +17,7 @@ export const GET: RequestHandler = async () => {
 			'@_xmlns:news': 'https://www.google.com/schemas/sitemap-news/0.9',
 			'@_xmlns:image': 'https://www.google.com/schemas/sitemap-image/1.1',
 			'@_xmlns:video': 'https://www.google.com/schemas/sitemap-video/1.1',
-			url: [
-				{ loc: BASE_URL, lastmod: new Date().toISOString().split('T')[0] },
-				{ loc: `${BASE_URL}support`, lastmod: new Date().toISOString().split('T')[0] },
-			].concat(
+			url: [{ loc: BASE_URL, lastmod: new Date().toISOString().split('T')[0] }].concat(
 				posts.map((post) => ({
 					loc: post.canonicalURL,
 					lastmod: (post.lastMod || post.pubDate).toISOString().split('T')[0],
