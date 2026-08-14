@@ -1,4 +1,6 @@
-# sv
+
+
+# io.bahaazidan.com
 
 A static blog powered by MDX, built entirely in SvelteKit without the need for Astro or mdsvex. Read more about it [`here`](https://io.bahaazidan.com/blog/blog-from-scratch-using-sveltekit).
 
